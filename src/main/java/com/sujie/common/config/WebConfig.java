@@ -1,4 +1,3 @@
-
 package com.sujie.common.config;
 
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/statics/**").addResourceLocations("classpath:/statics/");
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
     }
 
 }

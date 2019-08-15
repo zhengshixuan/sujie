@@ -1,4 +1,3 @@
-
 package com.sujie.common.shiro;
 
 import org.apache.shiro.SecurityUtils;

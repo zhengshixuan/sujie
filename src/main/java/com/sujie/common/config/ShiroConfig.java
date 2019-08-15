@@ -20,16 +20,28 @@ import java.util.Map;
 public class ShiroConfig {
 
     @Bean
-    @ConditionalOnProperty(prefix = "renren", name = "cluster", havingValue = "false")
     public DefaultWebSessionManager sessionManager(@Value("${renren.globalSessionTimeout:3600}") long globalSessionTimeout){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionIdUrlRewritingEnabled(false);
         sessionManager.setSessionValidationInterval(globalSessionTimeout * 1000);
         sessionManager.setGlobalSessionTimeout(globalSessionTimeout * 1000);
+
         return sessionManager;
     }
 
+
+    @Bean("lifecycleBeanPostProcessor")
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+        advisor.setSecurityManager(securityManager);
+        return advisor;
+    }
 
     @Bean("securityManager")
     public SecurityManager securityManager(UserRealm userRealm, SessionManager sessionManager) {
@@ -44,43 +56,23 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
-        shiroFilter.setLoginUrl("/login.html");
+        shiroFilter.setLoginUrl("/a.html");
         shiroFilter.setUnauthorizedUrl("/");
-
-//      添加过滤条件
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/swagger/**", "anon");
         filterMap.put("/v2/api-docs", "anon");
         filterMap.put("/swagger-ui.html", "anon");
         filterMap.put("/webjars/**", "anon");
         filterMap.put("/swagger-resources/**", "anon");
-        filterMap.put("/login.html", "anon");
         filterMap.put("/statics/**", "anon");
+        filterMap.put("/login.html", "anon");
         filterMap.put("/sys/login", "anon");
         filterMap.put("/favicon.ico", "anon");
         filterMap.put("/captcha.jpg", "anon");
-        filterMap.put("/**", "authc");
+        filterMap.put("/**", "anon");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
+
         return shiroFilter;
-    }
-
-
-    @Bean("lifecycleBeanPostProcessor")
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
-    }
-
-    /**
-     * 开启shiro aop注解支持.
-     * 使用代理方式;所以需要开启代码支持;
-     * @param securityManager
-     * @return
-     */
-    @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
-        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
-        advisor.setSecurityManager(securityManager);
-        return advisor;
     }
 
 }
