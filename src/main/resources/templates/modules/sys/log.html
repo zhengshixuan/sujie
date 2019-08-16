@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>系统日志</title>
-<#include "/header.html">
+	<!--引入通用css、js-->
+	<div th:replace="header"></div>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -19,6 +20,6 @@
     
 </div>
 
-<script src="${request.contextPath}/statics/js/modules/sys/log.js?_${.now?long}"></script>
+<script th:src="@{/static/js/modules/sys/log.js}" src="/static/js/modules/sys/log.js"></script>
 </body>
 </html>
