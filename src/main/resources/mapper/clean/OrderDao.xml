@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sujie.modules.clean.dao.OrderDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sujie.modules.clean.entity.OrderEntity" id="orderMap">
+        <result property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="homestayId" column="homestay_id"/>
+        <result property="roomId" column="room_id"/>
+        <result property="cleanType" column="clean_type"/>
+        <result property="preCleanDate" column="pre_clean_date"/>
+        <result property="cleanPrice" column="clean_price"/>
+        <result property="isCheckOut" column="is_check_out"/>
+        <result property="checkOutDate" column="check_out_date"/>
+        <result property="cleanStatusCode" column="clean_status_code"/>
+        <result property="createDate" column="create_date"/>
+    </resultMap>
+    <select id="listPreOrder" resultType="java.util.Map">
+        SELECT
+        a.id id,
+        a.homestay_name homestayName,
+        a.province_name privinceName,
+        a.city_name cityName,
+        a.county_name countyName,
+        a.homestay_address homestayAddress,
+        count( 1 ) count
+        FROM
+        homestay.ORDER t
+        INNER JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
+        WHERE
+        1 = 1
+        <if test="#{status}">
+            AND t.clean_status_code = 0
+        </if>
+        GROUP BY
+        a.id,
+        a.homestay_name,
+        a.province_name,
+        a.city_name,
+        a.county_name,
+        a.homestay_address
+    </select>
+
+
+</mapper>

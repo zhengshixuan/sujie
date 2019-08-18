@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sujie.modules.clean.dao.HomestayInfoDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sujie.modules.clean.entity.HomestayInfoEntity" id="homestayInfoMap">
+        <result property="id" column="id"/>
+        <result property="homestayId" column="homestay_id"/>
+        <result property="homestayName" column="homestay_name"/>
+        <result property="bossName" column="boss_name"/>
+        <result property="bossTelephone" column="boss_telephone"/>
+        <result property="operatorsName" column="operators_name"/>
+        <result property="operatorsTelephone" column="operators_telephone"/>
+        <result property="provinceCode" column="province_code"/>
+        <result property="provinceName" column="province_name"/>
+        <result property="cityCode" column="city_code"/>
+        <result property="cityName" column="city_name"/>
+        <result property="countyCode" column="county_code"/>
+        <result property="countyName" column="county_name"/>
+        <result property="homestayAddress" column="homestay_address"/>
+        <result property="roomsNumber" column="rooms_number"/>
+        <result property="isReception" column="is_reception"/>
+        <result property="isVip" column="is_vip"/>
+        <result property="balance" column="balance"/>
+    </resultMap>
+
+
+</mapper>

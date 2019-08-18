@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sujie.modules.clean.dao.RoomClainInfoDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sujie.modules.clean.entity.RoomClainInfoEntity" id="roomClainInfoMap">
+        <result property="id" column="id"/>
+        <result property="roomClainId" column="room_clain_id"/>
+        <result property="toothbruthAddr" column="toothbruth_addr"/>
+        <result property="toiletPaperAddr" column="toilet_paper_addr"/>
+        <result property="quiltAddr" column="quilt_addr"/>
+        <result property="washingPowderAddr" column="washing_powder_addr"/>
+        <result property="hangerAddr" column="hanger_addr"/>
+        <result property="kitchenwareAddr" column="kitchenware_addr"/>
+    </resultMap>
+
+
+</mapper>

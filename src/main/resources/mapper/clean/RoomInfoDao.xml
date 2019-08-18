@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sujie.modules.clean.dao.RoomInfoDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sujie.modules.clean.entity.RoomInfoEntity" id="roomInfoMap">
+        <result property="id" column="id"/>
+        <result property="homestayId" column="homestay_id"/>
+        <result property="roomId" column="room_id"/>
+        <result property="roomAddress" column="room_address"/>
+        <result property="openMethod" column="open_method"/>
+        <result property="roomPassword" column="room_password"/>
+        <result property="roomType" column="room_type"/>
+        <result property="roomDecoration" column="room_decoration"/>
+        <result property="roomClainId" column="room_clain_id"/>
+        <result property="needWashingSheets" column="need_washing_sheets"/>
+        <result property="price" column="price"/>
+        <result property="comments" column="comments"/>
+    </resultMap>
+
+
+</mapper>

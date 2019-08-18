@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sujie.modules.clean.dao.StaffCommissionDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sujie.modules.clean.entity.StaffCommissionEntity" id="staffCommissionMap">
+        <result property="id" column="id"/>
+        <result property="staffId" column="staff_id"/>
+        <result property="roomType" column="room_type"/>
+        <result property="commission" column="commission"/>
+        <result property="comments" column="comments"/>
+    </resultMap>
+
+
+</mapper>
