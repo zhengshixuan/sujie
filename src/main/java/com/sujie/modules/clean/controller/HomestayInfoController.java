@@ -5,11 +5,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.sujie.modules.clean.entity.HomestayInfoEntity;
 import com.sujie.modules.clean.service.HomestayInfoService;
@@ -26,7 +22,6 @@ import com.sujie.common.utils.R;
  * @date 2019-08-18 10:33:16
  */
 @RestController
-@RequestMapping("/homestayInfo")
 public class HomestayInfoController {
     @Autowired
     private HomestayInfoService homestayInfoService;
@@ -34,7 +29,7 @@ public class HomestayInfoController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
+    @GetMapping("/homestayInfos")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = homestayInfoService.queryPage(params);
 
@@ -45,7 +40,7 @@ public class HomestayInfoController {
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/homestayInfo/{id}")
     public R info(@PathVariable("id") Integer id){
 		HomestayInfoEntity homestayInfo = homestayInfoService.getById(id);
 
@@ -55,8 +50,9 @@ public class HomestayInfoController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/homestayInfo")
     public R save(@RequestBody HomestayInfoEntity homestayInfo){
+
 		homestayInfoService.save(homestayInfo);
 
         return R.ok();
@@ -65,21 +61,27 @@ public class HomestayInfoController {
     /**
      * 修改
      */
-    @RequestMapping("/update")
+    @PutMapping("/homestayInfo")
     public R update(@RequestBody HomestayInfoEntity homestayInfo){
 		homestayInfoService.updateById(homestayInfo);
 
         return R.ok();
     }
 
-    /**
-     * 删除
-     */
-    @RequestMapping("/delete")
-    public R delete(@RequestBody Integer[] ids){
-		homestayInfoService.removeByIds(Arrays.asList(ids));
-
+    @DeleteMapping("/homestayInfo/{id}")
+    public R delete(@PathVariable("id") Integer id){
+        homestayInfoService.removeById(id);
         return R.ok();
     }
+
+//    /**
+//     * 删除
+//     */
+//    @RequestMapping("/delete")
+//    public R delete(@RequestBody Integer[] ids){
+//		homestayInfoService.removeByIds(Arrays.asList(ids));
+//
+//        return R.ok();
+//    }
 
 }

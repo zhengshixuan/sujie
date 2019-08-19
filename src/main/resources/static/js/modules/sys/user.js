@@ -146,6 +146,7 @@ var vm = new Vue({
         },
         saveOrUpdate: function () {
             var url = vm.user.userId == null ? "sys/user/save" : "sys/user/update";
+            console.log(vm.user);
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
