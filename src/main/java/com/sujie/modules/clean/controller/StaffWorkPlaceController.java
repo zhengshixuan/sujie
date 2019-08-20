@@ -58,9 +58,9 @@ public class StaffWorkPlaceController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("clean:staffworkplace:save")
     public R save(@RequestBody StaffWorkPlaceEntity staffWorkPlace){
-		staffWorkPlaceService.save(staffWorkPlace);
+
+        staffWorkPlaceService.save(staffWorkPlace);
 
         return R.ok();
     }

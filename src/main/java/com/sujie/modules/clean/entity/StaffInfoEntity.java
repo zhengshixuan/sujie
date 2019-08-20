@@ -1,8 +1,10 @@
 package com.sujie.modules.clean.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
@@ -15,7 +17,7 @@ import lombok.Data;
  * @date 2019-08-18 10:15:19
  */
 @Data
-@TableName("staff_info")
+@TableName("homestay.staff_info")
 public class StaffInfoEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

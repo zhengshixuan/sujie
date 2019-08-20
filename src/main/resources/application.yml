@@ -18,6 +18,8 @@ spring:
       enabled: true
   thymeleaf:
     cache: false
+img:
+  location: c:\upload\
 #  redis:
 #    database: 0
 #    host: localhost

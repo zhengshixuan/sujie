@@ -5,11 +5,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.sujie.modules.clean.entity.StaffInfoEntity;
 import com.sujie.modules.clean.service.StaffInfoService;
@@ -35,7 +31,6 @@ public class StaffInfoController {
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("clean:staffinfo:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = staffInfoService.queryPage(params);
 
@@ -46,8 +41,7 @@ public class StaffInfoController {
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
-    @RequiresPermissions("clean:staffinfo:info")
+    @GetMapping("/info/{id}")
     public R info(@PathVariable("id") Integer id){
 		StaffInfoEntity staffInfo = staffInfoService.getById(id);
 
@@ -57,8 +51,7 @@ public class StaffInfoController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
-    @RequiresPermissions("clean:staffinfo:save")
+    @PostMapping("/save")
     public R save(@RequestBody StaffInfoEntity staffInfo){
 		staffInfoService.save(staffInfo);
 
@@ -69,7 +62,6 @@ public class StaffInfoController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("clean:staffinfo:update")
     public R update(@RequestBody StaffInfoEntity staffInfo){
 		staffInfoService.updateById(staffInfo);
 
@@ -80,7 +72,6 @@ public class StaffInfoController {
      * 删除
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("clean:staffinfo:delete")
     public R delete(@RequestBody Integer[] ids){
 		staffInfoService.removeByIds(Arrays.asList(ids));
 
