@@ -17,6 +17,12 @@ public class Query<T> {
         return this.getPage(params, null, false);
     }
 
+    /**
+     * @param params
+     * @param defaultOrderField
+     * @param isAsc 是否升序排列
+     * @return
+     */
     public IPage<T> getPage(Map<String, Object> params, String defaultOrderField, boolean isAsc) {
         //分页参数
         long curPage = 1;
