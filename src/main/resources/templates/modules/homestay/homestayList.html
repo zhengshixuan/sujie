@@ -9,7 +9,7 @@
     <link rel="stylesheet" th:href="@{/css/cleaning/manegerInfo-change.css}"
           href="../css/manegerInfo-change.css">
     <link rel="stylesheet" th:href="@{/css/cleaning/common.css}" href="../common/common.css">
-    <script th:src="@{/js/modules/cleaning/homestay.js}" ></script>
+
     <style>
         .ui-th-ltr{
 
@@ -30,11 +30,11 @@
                         <form class="form-inline">
                             <div class="form-group">
                                 <label for="exampleInputName2">名宿品牌</label>
-                                <input type="text" class="form-control" id="exampleInputName2" v-model="q.paramKey" @keyup.enter="query">
+                                <input type="text" class="form-control" id="exampleInputName2" v-model="q.homestayName" @keyup.enter="query">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail2">名字</label>
-                                <input type="email" class="form-control" id="exampleInputEmail2" v-model="q.operatorsName" >
+                                <input type="email" class="form-control" id="exampleInputEmail2" v-model="q.operatorsName"  @keyup.enter="query">
                             </div>
                             <button type="button" class="btn btn btn-success" @click="query">搜索</button>
                             <button type="button" class="btn">清空</button>
@@ -75,6 +75,6 @@
         </div>
     </div>
 </div>
-
+<script th:src="@{/js/modules/cleaning/homestay.js}" ></script>
 </body>
 </html>
