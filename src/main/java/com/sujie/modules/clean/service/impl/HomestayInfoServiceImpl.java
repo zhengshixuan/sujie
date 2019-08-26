@@ -1,6 +1,7 @@
 package com.sujie.modules.clean.service.impl;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -16,7 +17,6 @@ import com.sujie.modules.clean.service.HomestayInfoService;
 
 @Service("homestayInfoService")
 public class HomestayInfoServiceImpl extends ServiceImpl<HomestayInfoDao, HomestayInfoEntity> implements HomestayInfoService {
-
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         QueryWrapper<HomestayInfoEntity> queryWrapper = new QueryWrapper<HomestayInfoEntity>();
@@ -26,6 +26,7 @@ public class HomestayInfoServiceImpl extends ServiceImpl<HomestayInfoDao, Homest
         if(StringUtils.isNotBlank((String) params.get("operatorsName"))){
             queryWrapper.like("operators_name",params.get("operatorsName"));
         }
+
 
         IPage<HomestayInfoEntity> page = this.page(
                 new Query<HomestayInfoEntity>().getPage(params),

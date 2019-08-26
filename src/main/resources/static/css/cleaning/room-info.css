@@ -1,0 +1,82 @@
+.main{
+    position: relative;
+    width:100%;
+    height:100%;
+    padding:0 20px 20px 0;
+    box-sizing: border-box;
+    /* 每个页面通过改变main的颜色来控制边框的颜色不一样 */
+    background-color:#ccc;
+}
+.content-top form div:nth-of-type(1){
+    padding-top: 30px;
+    box-sizing: border-box;
+}
+.content-top{
+    padding-left:30px;
+    box-sizing: border-box;
+}
+.content-top form div span{
+    display:inline-block;
+    width:100px;
+    text-align:left;
+}
+.content-top form div{
+    margin-bottom:20px;
+}
+.content-top form div input{
+    width: 251px;
+    height:41px;
+    outline:none;
+    border:1px solid #ccc;
+}
+.content-top form div input[type=checkbox]{
+    width:20px;
+    height:20px
+}
+.open-style{
+    position:absolute;
+    left:440px;
+    top:280px;
+    
+}
+.content-top form div:nth-of-type(2) input{
+    width:581px;
+}
+.line{
+    width:100%;
+    height:20px;
+    background-image: url('../images/线段.png');
+}
+.photo-box{
+    position:relative;
+    padding-left:40px;
+    box-sizing: border-box;
+    /* display:flex; */
+   
+}
+.photo-box span{
+    /* padding-top:180px;
+    box-sizing: border-box; */
+    position:absolute;
+    bottom:26px;
+    left:300px;
+}
+.fileup-box{
+    width:260px;
+    height:200px;
+    background-image: url('../images/上传照片icon.png');
+}
+.fileup-box input{
+    width:260px;
+    height:200px;
+    opacity: 0;
+}
+.allphoto{
+    border-bottom:1px dashed #ccc;
+    padding-bottom:26px;
+    box-sizing: border-box;
+    padding-top:40px;
+}
+.allphoto div:nth-of-type(1){
+    margin-bottom:20px;
+}

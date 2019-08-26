@@ -1,13 +1,14 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + '/homestayInfos',
+        url: baseURL + '/roominfo/list',
         datatype: "json",
         colModel: [
             { label: '序号', name: 'id', width: 30, key: true },
             { label: '操作', name: 'id', sortable: false, width: 60 },
-            { label: '民宿品牌', name: 'homestayName', width: 100 },
-            { label: '名字', name: 'operatorsName', width: 80 },
-            { label: '电话', name: 'operatorsTelephone', width: 80 },
+            { label: '阿姨类别', name: 'staffType', width: 100 },
+            { label: '名字', name: 'staffName', width: 80 },
+            { label: '电话', name: 'telephone', width: 80 },
+            { label: '身份证', name: 'idNo', width: 80 },
             { label: '备注', name: 'comments', width: 80 }
         ],
         // viewrecords: true,

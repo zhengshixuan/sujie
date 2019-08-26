@@ -1,0 +1,101 @@
+.main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 17px;
+    /* 每个页面通过改变main的颜色来控制边框的颜色不一样 */
+    background-color: #ccc;
+    box-sizing: border-box;
+}
+
+.main-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* width:px; */
+}
+
+.main-content select {
+    position: relative;
+    border: 1px solid #ccc;
+    outline: none;
+    width: 251px;
+    height: 41px;
+    appearance: none;
+}
+
+.main-content input {
+    border: 1px solid #ccc;
+    outline: none;
+    width: 251px;
+    height: 41px;
+}
+
+.main-content div {
+    margin-bottom: 15px;
+}
+
+.main-content div span {
+    /* width:40px; */
+    text-align: left;
+    font-size: 24px;
+    color: #333333;
+    font-family: MicrosoftYaHei;
+    margin-right: 20px;
+}
+
+.main-content div:nth-of-type(1) input {
+    width: 20px;
+    height: 20px;
+}
+
+.btn-box {
+    position: relative;
+    height: 40px;
+    margin-top: 200px;
+}
+
+.btn-box button:nth-of-type(1) {
+    width: 110px;
+    height: 40px;
+    background-color: #D2D2D2;
+    font-size: 20px;
+    color: #333333;
+    font-family: MicrosoftYaHei;
+    outline: none;
+    position: absolute;
+    top: 0;
+    left: 360px;
+}
+
+.btn-box button:nth-of-type(2) {
+    background-color: #5A993E;
+    font-size: 20px;
+    color: #fff;
+    font-family: MicrosoftYaHei;
+    width: 110px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    right: 300px;
+}
+
+.name-input {
+    width: 150px !important;
+    height: 40px !important;
+}
+
+.workericon-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(1214%, 40%)
+}
+
+.my-postion {
+    width: 400px!important;
+}
+
+
+/* 此页面中的select下拉框里面的图标还没有进行设置 */

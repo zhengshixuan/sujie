@@ -6,6 +6,8 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
 html,body{
     width:100%;;
     height:100%;
+    padding-left: 0px;
+    padding-right: 0px;
     background-color: #2D6035
     /* background-image: url('../images/background.png'); */
     
@@ -14,6 +16,7 @@ html,body{
 .container{
     width:100%;
     height:100%;
+    padding: 0px;
     background-image: url('../../images/background.png');
 }
 .left{
@@ -27,6 +30,8 @@ html,body{
     height:100%;
     box-sizing: border-box;
     margin-left:0px;
+    margin-right: 0px;
+    padding: 0px;
 }
 .left>img{
     position:relative;

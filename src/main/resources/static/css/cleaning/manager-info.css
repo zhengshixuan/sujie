@@ -1,0 +1,106 @@
+
+.main{
+    position: relative;
+    width:100%;
+    height:100%;
+    padding:0px;
+    /* 每个页面通过改变main的颜色来控制边框的颜色不一样 */
+    background-color:#ccc;
+    box-sizing: border-box;
+}
+
+.main-content{
+    position:absolute;
+    top:50%;
+    left:50%;
+    height: 80%;
+    transform:translate(-50%,-50%)
+}
+
+
+.main-content div input{
+    width:251px;
+    height:41px;
+    outline:none;
+    border:1px solid #ccc;
+}
+.main-content div:nth-of-type(2) input{
+    width:581px;
+    height:41px;
+}
+.main-content  form div{
+    margin:10px 0 0;
+    font-size:24px;
+    color:#333333;
+    font-family:MicrosoftYaHei
+}
+.main-content{
+    width:1000px;
+}
+.main-content div:nth-of-type(4){
+    position:absolute;
+    top:106px;
+    left:490px;
+}
+.main-content div:nth-of-type(6){
+    position:absolute;
+    top:160px;
+    left:490px;
+}
+.main-content div:nth-of-type(8){
+    position:absolute;
+    top:213px;
+    left:490px;
+}
+.main-content div span:nth-of-type(1){
+    display:inline-block;
+    width:160px;
+    margin-left:30px;
+}
+.main-content div:nth-of-type(8) span{
+    display:inline-block;
+    width:80px;
+}
+/* .main-content div:nth-last-of-type(1){
+    text-align:center;
+} */
+.btn-box{
+    margin-top:30px;
+    position:relative;
+    text-align:center;
+}
+
+.btn-box button:nth-of-type(1){
+    width: 110px;
+    height:40px;
+    background-color: #5A993E;
+    font-size:20px;
+    color:#fff;
+    font-family: MicrosoftYaHei;
+    position:absolute;
+    top:0;
+    left:300px;
+}
+.btn-box button:nth-of-type(2){
+    background-color: #D2D2D2;
+    font-size:20px;
+    color:#333333;
+    font-family: MicrosoftYaHei;
+    width: 110px;
+    height:40px;
+    position:absolute;
+    top:0;
+    right:300px;
+}
+.main-content div:nth-of-type(10) input{
+    width: 20px;
+    height: 20px;
+}
+.main-content div:nth-of-type(11) input{
+    width: 20px;
+    height: 20px;
+}
+.active{
+    background-color:green
+}
+

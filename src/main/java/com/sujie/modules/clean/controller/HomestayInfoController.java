@@ -2,6 +2,7 @@ package com.sujie.modules.clean.controller;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class HomestayInfoController {
      */
     @PostMapping("/homestayInfo")
     public R save(@RequestBody HomestayInfoEntity homestayInfo){
-
+        homestayInfo.setHomestayId(UUID.randomUUID().toString().replace("-",""));
 		homestayInfoService.save(homestayInfo);
 
         return R.ok();

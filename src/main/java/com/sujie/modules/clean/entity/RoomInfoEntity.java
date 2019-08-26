@@ -16,7 +16,7 @@ import lombok.Data;
  * @date 2019-08-18 10:15:20
  */
 @Data
-@TableName("room_info")
+@TableName("homestay.room_info")
 public class RoomInfoEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

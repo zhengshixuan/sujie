@@ -1,13 +1,32 @@
 $(function () {
+    layui.use('upload', function(){
+        var upload = layui.upload;
+
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            ,url: '/upload/' //上传接口
+            ,done: function(res){
+                //上传完毕回调
+            }
+            ,error: function(){
+                //请求异常回调
+            }
+        });
+    });
+})
+
+$(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + '/homestayInfos',
+        url: baseURL + '/staffinfo/list',
         datatype: "json",
         colModel: [
             { label: '序号', name: 'id', width: 30, key: true },
             { label: '操作', name: 'id', sortable: false, width: 60 },
-            { label: '民宿品牌', name: 'homestayName', width: 100 },
-            { label: '名字', name: 'operatorsName', width: 80 },
-            { label: '电话', name: 'operatorsTelephone', width: 80 },
+            { label: '阿姨类别', name: 'staffType', width: 100 },
+            { label: '名字', name: 'staffName', width: 80 },
+            { label: '电话', name: 'telphone', width: 80 },
+            { label: '身份证', name: 'idNo', width: 80 },
             { label: '备注', name: 'comments', width: 80 }
         ],
         // viewrecords: true,
