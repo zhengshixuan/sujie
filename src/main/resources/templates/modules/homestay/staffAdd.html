@@ -11,7 +11,8 @@
     <link rel="stylesheet" th:href="@{/css/cleaning/clearwork-info.css}" href="../css/clearwork-info.css">
     <link rel="stylesheet" th:href="@{/css/cleaning/common.css}" href="../common/common.css">
 
-    <script th:src="@{/plugins/layui/layui.js}" src='../assets/layui-v2.5.4/layui/layui.all.js'></script>
+    <script th:src="@{/plugins/layui-v2.5.4/layui/layui.all.js}" src='../assets/layui-v2.5.4/layui/layui.all.js'></script>
+    <script th:src="@{/js/claerwork-info.js}" src='../js/claerwork-info.js'></script>
 </head>
 <body>
 <div class='container' id="rrapp">
@@ -26,36 +27,38 @@
                     <form action="">
                         <div>
                             <span>保洁姓名</span>
-                            <input type="text" name="title">
+                            <input type="text" name="staffName" v-model="staff.staffName">
                         </div>
                         <div>
                             <span>电话</span>
-                            <input type="text" name="title">
+                            <input type="text" name="telphone" v-model="staff.telphone">
                         </div>
                         <div>
                             <span> 入职时间</span>
-                            <input type="text" name="title">
+                            <input type="text" id="entryTime" name="" v-model="staff.entryTime">
                         </div>
                         <div>
                             <span>密码</span>
-                            <input type="text" name="title">
+                            <input type="text" name="password" v-model="staff.password">
                         </div>
                         <div>
                             <span>身份证</span>
-                            <input type="text" name="title">
+                            <input type="text" name="idNo" v-model="staff.idNo">
                         </div>
                         <div>
                             <span>地址</span>
-                            <input type="text" name="title">
+                            <input type="text" name="address" v-model="staff.address">
                         </div>
                         <div>
                             <span>阿姨类别</span>
-                            <input type="checkbox" name="title"  checked>
-                            <input type="checkbox" name="title" >
+                            <span>全职</span>
+                            <input type="radio" name="staff.staffType" v-model="staff.staffType" value="0" checked>
+                            <span>兼职</span>
+                            <input type="radio" name="staff.staffType" v-model="staff.staffType" value="1">
                         </div>
                     </form>
                     <div class='btn-box'>
-                        <button type="button" class="btn">保存</button>
+                        <button type="button" class="btn" @click="saveOrUpdate">保存</button>
                         <button type="button" class="btn">清空</button>
                     </div>
                 </div>
@@ -66,6 +69,6 @@
     </div>
 </div>
 
-<script th:src="@{/js/modules/cleaning/homestay.js}" ></script>
+<script th:src="@{/js/modules/cleaning/staff.js}" ></script>
 </body>
 </html>

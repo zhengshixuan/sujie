@@ -1,22 +1,4 @@
 $(function () {
-    layui.use('upload', function(){
-        var upload = layui.upload;
-
-        //执行实例
-        var uploadInst = upload.render({
-            elem: '#test1' //绑定元素
-            ,url: '/upload/' //上传接口
-            ,done: function(res){
-                //上传完毕回调
-            }
-            ,error: function(){
-                //请求异常回调
-            }
-        });
-    });
-})
-
-$(function () {
     $("#jqGrid").jqGrid({
         url: baseURL + '/staffinfo/list',
         datatype: "json",
@@ -63,11 +45,11 @@ var vm = new Vue({
     el:'#rrapp',
     data:{
         q:{
-            homestayName: null,
-            operatorsName:null
+            staffName: null,
+            staffType: null
         },
         title: null,
-        homestay: {}
+        staff: {}
     },
     methods: {
         query: function () {
@@ -76,31 +58,34 @@ var vm = new Vue({
         reload: function (event) {
             var page = $("#jqGrid").jqGrid('getGridParam','page');
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'homestayName': vm.q.homestayName,'operatorsName':vm.q.operatorsName},
+                postData:{'staffName': vm.q.staffName,'staffType':vm.q.staffType},
                 page:page
             }).trigger("reloadGrid");
         },
         clear: function () {
-            vm.q.homestayName = null;
-            vm.q.operatorsName = null;
+            vm.q.staffName = null;
+            vm.q.staffType = null;
         },
         saveOrUpdate:function () {
-            var data =  JSON.stringify(vm.homestay);
+            var data =  JSON.stringify(vm.staff);
             $.ajax({
                 type: "post",
-                url: "/homestayInfo",
+                url: "/staffinfo/save",
                 contentType: "application/json",
                 data: data,
                 success: function(r){
                     if(r.code === 0){
                         alert('操作成功', function(index){
-                            window.location.href="/modules/homestay/homestayList.html";
+                            window.location.href="/modules/homestay/staffList.html";
                         });
                     }else{
                         alert(r.msg);
                     }
                 }
             });
+        },
+        toAddStaff:function () {
+            window.location.href="/modules/homestay/staffAdd.html";
         }
     }
 });

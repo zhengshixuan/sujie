@@ -2,6 +2,7 @@ package com.sujie.modules.clean.controller;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class StaffInfoController {
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
+
         PageUtils page = staffInfoService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -53,6 +55,8 @@ public class StaffInfoController {
      */
     @PostMapping("/save")
     public R save(@RequestBody StaffInfoEntity staffInfo){
+
+        staffInfo.setStaffId(UUID.randomUUID().toString().replace("-",""));
 		staffInfoService.save(staffInfo);
 
         return R.ok();

@@ -1,5 +1,6 @@
 package com.sujie.modules.clean.service.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -18,9 +19,17 @@ public class StaffInfoServiceImpl extends ServiceImpl<StaffInfoDao, StaffInfoEnt
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
+        QueryWrapper<StaffInfoEntity> queryWrapper = new QueryWrapper<>();
+        String staffName = (String) params.get("staffName");
+        String staffType = (String) params.get("staffType");
+        if(StringUtils.isNotBlank(staffName)) {
+            queryWrapper.eq("staff_name", staffName);
+        }
+        if (StringUtils.isNotBlank(staffType)){
+            queryWrapper.eq("staff_type",staffType);
+        }
         IPage<StaffInfoEntity> page = this.page(
-                new Query<StaffInfoEntity>().getPage(params),
-                new QueryWrapper<StaffInfoEntity>()
+                new Query<StaffInfoEntity>().getPage(params),queryWrapper
         );
 
         return new PageUtils(page);
