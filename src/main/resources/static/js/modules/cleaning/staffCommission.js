@@ -29,6 +29,8 @@ var vm = new Vue({
                     }
                 }
             });
+        },goback:function () {
+            history.go(-1);
         }
     }
 });

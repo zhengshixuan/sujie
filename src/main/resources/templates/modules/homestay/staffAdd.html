@@ -22,7 +22,22 @@
                 <!-- 每一个页面就是main-box里面的内容不一样-->
                 <button type="button" class="layui-btn" id="test1">
                     <i class="layui-icon">&#xe67c;</i>
+
                 </button>
+                <div class="layui-upload-list" style="top: 20px;left: 50%;position: absolute;">
+                    <img class="layui-upload-img" id="demo1" style="width: 260px;height: 200px;">
+                    <p id="demoText"></p>
+                </div>
+
+                <!--<div class="layui-upload">-->
+                    <!--<button type="button" class="layui-btn" id="test1">上传图片</button>-->
+                    <!--<div class="layui-upload-list">-->
+                        <!--<img class="layui-upload-img" id="demo1">-->
+                        <!--<p id="demoText"></p>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+
                 <div class='main-content'>
                     <form action="">
                         <div>
@@ -59,7 +74,7 @@
                     </form>
                     <div class='btn-box'>
                         <button type="button" class="btn" @click="saveOrUpdate">保存</button>
-                        <button type="button" class="btn">清空</button>
+                        <button type="button" class="btn" @click="goback">返回</button>
                     </div>
                 </div>
 

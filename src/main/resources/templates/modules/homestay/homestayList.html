@@ -36,8 +36,7 @@
                                 <input type="email" class="form-control" id="exampleInputEmail2" v-model="q.operatorsName"  @keyup.enter="query">
                             </div>
                             <button type="button" class="btn btn btn-success" @click="query">搜索</button>
-                            <button type="button" class="btn" @click="clear">清空</button>
-                            <a th:href="@{/modules/homestay/homestayAdd.html}">新增</a>
+                            <button type="button" class="btn" @click="toAdd">新增</button>
                         </form>
 
                     </div>

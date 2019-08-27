@@ -52,6 +52,7 @@ public  class UploadUtils {
         }
         try {
             file.transferTo(dest);
+
         } catch (IllegalStateException e) {
             e.printStackTrace();
             return R.error("保存失败！");
@@ -59,7 +60,7 @@ public  class UploadUtils {
             e.printStackTrace();
             return R.error("保存失败！");
         }
-        return R.ok();
+        return R.ok().put("path",dest.getPath());
 
     }
 

@@ -14,7 +14,6 @@ import com.sujie.common.utils.PageUtils;
 import com.sujie.common.utils.R;
 
 
-
 /**
  * 民宿基本信息表
  *
@@ -31,7 +30,7 @@ public class HomestayInfoController {
      * 列表
      */
     @GetMapping("/homestayInfos")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = homestayInfoService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -42,8 +41,8 @@ public class HomestayInfoController {
      * 信息
      */
     @GetMapping("/homestayInfo/{id}")
-    public R info(@PathVariable("id") Integer id){
-		HomestayInfoEntity homestayInfo = homestayInfoService.getById(id);
+    public R info(@PathVariable("id") Integer id) {
+        HomestayInfoEntity homestayInfo = homestayInfoService.getById(id);
 
         return R.ok().put("homestayInfo", homestayInfo);
     }
@@ -52,25 +51,30 @@ public class HomestayInfoController {
      * 保存
      */
     @PostMapping("/homestayInfo")
-    public R save(@RequestBody HomestayInfoEntity homestayInfo){
-        homestayInfo.setHomestayId(UUID.randomUUID().toString().replace("-",""));
-		homestayInfoService.save(homestayInfo);
+    public R save(@RequestBody HomestayInfoEntity homestayInfo) {
+        try {
+            homestayInfo.setHomestayId(UUID.randomUUID().toString().replace("-", ""));
+            homestayInfoService.save(homestayInfo);
+            return R.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error("保存失败！");
+        }
 
-        return R.ok();
     }
 
     /**
      * 修改
      */
     @PutMapping("/homestayInfo")
-    public R update(@RequestBody HomestayInfoEntity homestayInfo){
-		homestayInfoService.updateById(homestayInfo);
+    public R update(@RequestBody HomestayInfoEntity homestayInfo) {
+        homestayInfoService.updateById(homestayInfo);
 
         return R.ok();
     }
 
     @DeleteMapping("/homestayInfo/{id}")
-    public R delete(@PathVariable("id") Integer id){
+    public R delete(@PathVariable("id") Integer id) {
         homestayInfoService.removeById(id);
         return R.ok();
     }

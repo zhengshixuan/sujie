@@ -18,7 +18,7 @@
     background-image: url('../../images/上传照片icon.png');
     position :relative;
     top:20px;
-    left:50%;
+    left:35%;
     transform:translateX(-50%)
 }
 /* .layui-form{

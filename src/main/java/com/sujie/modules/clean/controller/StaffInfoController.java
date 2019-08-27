@@ -50,6 +50,7 @@ public class StaffInfoController {
     @RequestMapping("/upload")
     public R upload(@RequestParam MultipartFile file){
         R r = UploadUtils.upload(file);
+
         return r;
     }
 
@@ -69,8 +70,13 @@ public class StaffInfoController {
     @PostMapping("/save")
     public R save(@RequestBody StaffInfoEntity staffInfo){
 
-        staffInfo.setStaffId(UUIDUtils.getUUIDHex());
-		staffInfoService.save(staffInfo);
+        try {
+            staffInfo.setStaffId(UUIDUtils.getUUIDHex());
+            staffInfoService.save(staffInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error("保存失败！");
+        }
 
         return R.ok();
     }
