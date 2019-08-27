@@ -1,9 +1,12 @@
 package com.sujie.modules.clean.controller;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
+import com.sujie.common.utils.UUIDUtils;
+import com.sujie.common.utils.UploadUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +15,7 @@ import com.sujie.modules.clean.entity.StaffInfoEntity;
 import com.sujie.modules.clean.service.StaffInfoService;
 import com.sujie.common.utils.PageUtils;
 import com.sujie.common.utils.R;
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -39,6 +42,16 @@ public class StaffInfoController {
         return R.ok().put("page", page);
     }
 
+    /**
+     * 上传图片
+     * @param file
+     * @return
+     */
+    @RequestMapping("/upload")
+    public R upload(@RequestParam MultipartFile file){
+        R r = UploadUtils.upload(file);
+        return r;
+    }
 
     /**
      * 信息
@@ -56,7 +69,7 @@ public class StaffInfoController {
     @PostMapping("/save")
     public R save(@RequestBody StaffInfoEntity staffInfo){
 
-        staffInfo.setStaffId(UUID.randomUUID().toString().replace("-",""));
+        staffInfo.setStaffId(UUIDUtils.getUUIDHex());
 		staffInfoService.save(staffInfo);
 
         return R.ok();

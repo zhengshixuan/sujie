@@ -1,7 +1,9 @@
 package com.sujie.common.utils;
 
 import com.sujie.common.exception.CommonException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +16,14 @@ import java.io.IOException;
 /**
  * 上传文件工具类
  */
+@Configuration
 public  class UploadUtils {
+
+    private static String staticLocation;
+    @Autowired
+    public void setLocation2(){
+        staticLocation=location;
+    }
 
     /**
      * 在配置文件中配置的文件保存路径
@@ -22,7 +31,7 @@ public  class UploadUtils {
     @Value("${img.location}")
     private String location;
 
-    public  R upload( MultipartFile file){
+    public static R upload( MultipartFile file){
 
 
         if (file.isEmpty()) {
@@ -33,7 +42,7 @@ public  class UploadUtils {
         // 获取文件的后缀名
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         // 文件上传后的路径
-        String filePath = location;
+        String filePath = staticLocation;
         // 解决中文问题，liunx下中文路径，图片显示问题
         // fileName = UUID.randomUUID() + suffixName;
         File dest = new File(filePath + fileName);
@@ -45,12 +54,13 @@ public  class UploadUtils {
             file.transferTo(dest);
         } catch (IllegalStateException e) {
             e.printStackTrace();
+            return R.error("保存失败！");
         } catch (IOException e) {
             e.printStackTrace();
+            return R.error("保存失败！");
         }
-
-
         return R.ok();
+
     }
 
 }

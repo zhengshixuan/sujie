@@ -1,6 +1,7 @@
 package com.sujie.modules.clean.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -35,11 +36,11 @@ public class DictRoomTypeController {
      * 列表
      */
     @RequestMapping("/list")
-    @RequiresPermissions("clean:dictroomtype:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = dictRoomTypeService.queryPage(params);
+        List<DictRoomTypeEntity> list = dictRoomTypeService.list();
+//        PageUtils page = dictRoomTypeService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return R.ok().put("list", list);
     }
 
 

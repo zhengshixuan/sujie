@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Map;
+
 /**
  * 系统页面视图
  *
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SysPageController {
 	
 	@RequestMapping("modules/{module}/{url}.html")
-	public String module(@PathVariable("module") String module, @PathVariable("url") String url){
+	public String module(@PathVariable("module") String module, @PathVariable("url") String url,Map<String,Object> map){
 		return "modules/" + module + "/" + url;
 	}
 

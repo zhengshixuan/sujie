@@ -16,7 +16,7 @@ import lombok.Data;
  * @date 2019-08-18 10:15:19
  */
 @Data
-@TableName("dict_room_type")
+@TableName("homestay.dict_room_type")
 public class DictRoomTypeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
