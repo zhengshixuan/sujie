@@ -58,9 +58,13 @@ public class StaffCommissionController {
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("clean:staffcommission:save")
     public R save(@RequestBody StaffCommissionEntity staffCommission){
-		staffCommissionService.save(staffCommission);
+        try {
+            staffCommissionService.save(staffCommission);
+        } catch (Exception e) {
+            e.printStackTrace();
+            R.error("保存失败！");
+        }
 
         return R.ok();
     }

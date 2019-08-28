@@ -66,7 +66,7 @@ public class HomestayInfoController {
     /**
      * 修改
      */
-    @PutMapping("/homestayInfo")
+    @PostMapping("/updateHomeStayInfo")
     public R update(@RequestBody HomestayInfoEntity homestayInfo) {
         homestayInfoService.updateById(homestayInfo);
 

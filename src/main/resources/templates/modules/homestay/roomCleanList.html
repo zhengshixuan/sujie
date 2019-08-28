@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>房间打扫记录</title>
+    <div th:replace="header"></div>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../assets/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" th:href="@{/css/cleaning/common.css}" href="../common/common.css">
+
+    <link rel="stylesheet" th:href="@{/css/cleaning/roomifo-worked.css}" href="../css/roomifo-worked.css">
+</head>
+<body>
+
+<div class='container'>
+    <div class='right'>
+        <div class="main">
+            <div class='main-box'>
+                <!-- 每个页面main-box的内容不一样  -->
+                <div class="main-content">
+                    <div class='main-header'>
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="exampleInputName2">品牌名</label>
+                                <input type="text" class="form-control" id="exampleInputName2"/>
+                                <div class="my-chang-img-box">
+                                    <img src="../images/选择icon.png" alt="" class="my-chang-img">
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail2">房间号</label>
+                                <input type="email" class="form-control" id="exampleInputEmail2">
+                                <div class="my-chang-img-box">
+                                    <img src="../images/选择icon.png" alt="" class="my-chang-img">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName2">地址</label>
+                                <input type="text" class="form-control" id="exampleInputName2">
+                                <div class="my-chang-img-box">
+                                    <img src="../images/选择icon.png" alt="" class="my-chang-img">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName2">时间</label>
+                                <input type="text" class="form-control" id="exampleInputName2">
+                                <div class="my-chang-img-box">
+                                    <img src="../images/选择icon.png" alt="" class="my-chang-img">
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn btn-success">搜索</button>
+
+                            <button type="button" class="btn" >清空</button>
+                        </form>
+
+                    </div>
+                    <div class='main-table'>
+                        <table cellpadding="10" cellspacing="10" class="table  table-striped table-hover" style="border-bottom: 1px solid #ccc "
+                               id="jqGrid">
+                        </table>
+                        <div id="jqGridPager"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/modules/cleaning/room.js}" ></script>
+
+</body>
+</html>

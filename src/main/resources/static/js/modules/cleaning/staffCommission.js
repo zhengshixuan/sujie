@@ -1,3 +1,7 @@
+$(function () {
+    var staffId = $("#staffId").val();
+    vm.staffCommission.staffId= staffId;
+});
 var vm = new Vue({
     el:'#rrapp',
     data:{
@@ -6,8 +10,13 @@ var vm = new Vue({
             staffType: null
         },
         title: null,
-        staffCommission: {},
-        roomType:{}
+        staffCommission: {
+            staffType:0,
+            roomType:0
+        },
+        roomType:{
+
+        }
     },
     mounted:function () {
         this.getRoomType();
@@ -15,6 +24,37 @@ var vm = new Vue({
     methods: {
         query: function () {
             vm.reload();
+        },
+
+        save:function () {
+            var data = JSON.stringify(vm.staffCommission);
+            var extraFee = vm.staffCommission.extraFee;
+            var commission = vm.staffCommission.commission;
+            if(!/^(([1-9]\d*)|\d)(\.\d{1,2})?$/.test(commission)){
+                alert("房间提成只能为数字!");
+                return;
+            }
+            if(!/^(([1-9]\d*)|\d)(\.\d{1,2})?$/.test(extraFee)){
+                alert("加床费用只能为数字!");
+                return;
+            }
+            $.ajax({
+                type: "post",
+                url: "/staffcommission/save",
+                contentType: "application/json",
+                data: data,
+                success: function (r) {
+                    if (r.code === 0) {
+                        alert('操作成功', function (index) {
+                            window.location.href = "/modules/homestay/staffList.html";
+                        });
+                    } else {
+                        alert(r.msg);
+                    }
+                },error:function () {
+                    alert("保存失败！");
+                }
+            });
         },
         getRoomType: function (event) {
             $.ajax({

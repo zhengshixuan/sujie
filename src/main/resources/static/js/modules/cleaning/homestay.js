@@ -4,7 +4,7 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: '序号', name: 'id', width: 30, key: true},
-            {label: '操作', name: 'id', sortable: false, width: 60},
+            {label: '操作', name: 'id', sortable: false, width: 60,formatter:edit},
             {label: '民宿品牌', name: 'homestayName', width: 100},
             {label: '名字', name: 'operatorsName', width: 80},
             {label: '电话', name: 'operatorsTelephone', width: 80},
@@ -40,6 +40,13 @@ $(function () {
     });
 });
 
+function edit(cellvalue, options, rowObject) {
+    return '<img src="/images/修改icon.png" onclick="toUpdateHomestay('+cellvalue+');"></img>';
+}
+function toUpdateHomestay(id) {
+    window.location.href = "/comm/toUpdateHomestay?homestayId=" + id;
+}
+
 var vm = new Vue({
     el: '#rrapp',
     data: {
@@ -53,7 +60,27 @@ var vm = new Vue({
             isReception:0
         }
     },
+    mounted:function () {
+        this.queryHomestay();
+    },
     methods: {
+        queryHomestay:function () {
+            var homestayId = $("#homestayId").val();
+            if(null!=homestayId&&""!=homestayId){
+                $.ajax({
+                    type: "get",
+                    url: "/homestayInfo/"+homestayId,
+                    contentType: "application/json",
+                    success: function (r) {
+                        if (r.code === 0) {
+                            vm.homestay=r.homestayInfo;
+                        } else {
+                            alert(r.msg);
+                        }
+                    }
+                });
+            }
+        },
         query: function () {
             vm.reload();
         },
@@ -126,10 +153,17 @@ var vm = new Vue({
                 alert("请输入正确的房间数！");
                 return;
             }
+            var homestayId = $("#homestayId").val();
+            var url ;
+            if(null!=homestayId&&""!=homestayId){
+                url="/updateHomeStayInfo";
+            }else {
+                url="/homestayInfo"
+            }
 
             $.ajax({
                 type: "post",
-                url: "/homestayInfo",
+                url: url,
                 contentType: "application/json",
                 data: data,
                 success: function (r) {

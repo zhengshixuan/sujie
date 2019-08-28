@@ -5,10 +5,11 @@ $(function () {
         colModel: [
             { label: '序号', name: 'id', width: 30, key: true },
             { label: '操作', name: 'id', sortable: false, width: 60 },
-            { label: '阿姨类别', name: 'staffType', width: 100 },
-            { label: '名字', name: 'staffName', width: 80 },
-            { label: '电话', name: 'telephone', width: 80 },
-            { label: '身份证', name: 'idNo', width: 80 },
+            { label: '房间号', name: 'roomId', width: 100 },
+            { label: '品牌名', name: 'homestayName', width: 80 },
+            { label: '地址', name: 'roomAddress', width: 80 },
+            { label: '房间户型', name: 'roomTypeName', width: 80 },
+            { label: '保洁费用', name: 'price', width: 80 },
             { label: '备注', name: 'comments', width: 80 }
         ],
         // viewrecords: true,

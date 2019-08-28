@@ -22,8 +22,6 @@ import com.sujie.modules.clean.service.OrderService;
 
 @Service("orderService")
 public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> implements OrderService {
-    @Autowired
-    private OrderDao orderDao;
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<OrderEntity> page = this.page(
@@ -36,7 +34,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Override
     public Map<String, Object> listPreOrder(Map<String,Object> params) {
-        Map<String, Object> maps = orderDao.listPreOrder(params);
+        Map<String, Object> maps = baseMapper.listPreOrder(params);
         return maps;
     }
 }

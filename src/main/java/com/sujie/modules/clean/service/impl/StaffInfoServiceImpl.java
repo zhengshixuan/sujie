@@ -23,10 +23,10 @@ public class StaffInfoServiceImpl extends ServiceImpl<StaffInfoDao, StaffInfoEnt
         String staffName = (String) params.get("staffName");
         String staffType = (String) params.get("staffType");
         if(StringUtils.isNotBlank(staffName)) {
-            queryWrapper.eq("staff_name", staffName);
+            queryWrapper.like("staff_name", staffName);
         }
         if (StringUtils.isNotBlank(staffType)){
-            queryWrapper.eq("staff_type",staffType);
+            queryWrapper.like("staff_type",staffType);
         }
         IPage<StaffInfoEntity> page = this.page(
                 new Query<StaffInfoEntity>().getPage(params),queryWrapper

@@ -16,32 +16,37 @@
                 <!-- 每一个页面就是main-box里面的内容不一样-->
                 <div class='main-content'>
                     <form action="">
+                        <!--<div>-->
+                            <!--<span>姓名</span>-->
+                            <!--<span th:text="${staff.staffName}"></span>-->
+                        <!--</div>-->
+                        <input type="hidden" id="staffId" th:value="${staff.staffId}" >
                         <div>
                             <span>阿姨类别</span>
-                            <input type="radio" name="" checked>
+                            <input type="radio" value="0" name="staffType" checked v-model="staffCommission.staffType">
                             <span>全职</span>
-                            <input type="radio" name="title">
+                            <input type="radio" value="1" name="staffType" v-model="staffCommission.staffType">
                             <span>兼职</span>
                         </div>
                         <div>
                             <span>房间户型</span>
                             <i></i>
-                            <select name="roomType" id="" form-control>
-                                <option value="\{\{room.itemCode\}\}" v-for="room in roomType">{{room.itemName}}</option>
+                            <select name="roomType" id="" form-control v-model="staffCommission.roomType">
+                                <option :value="room.itemCode" v-for="room in roomType">{{room.itemName}}</option>
                             </select>
                         </div>
                         <div>
                             <span>房间提成</span>
-                            <input type="text" name="title">
+                            <input type="text" name="commission" v-model="staffCommission.commission">
                         </div>
                         <div>
                             <span> 加床费用</span>
-                            <input type="text" name="title">
+                            <input type="text" name="extraFee" v-model="staffCommission.extraFee">
                         </div>
                     </form>
                     <div class='btn-box'>
                         <button type="button" class="btn" @click="goback">返回</button>
-                        <button type="button" class="btn" >保存</button>
+                        <button type="button" class="btn" @click="save">保存</button>
                     </div>
                 </div>
 

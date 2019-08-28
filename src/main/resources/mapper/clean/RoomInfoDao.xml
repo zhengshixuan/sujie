@@ -19,5 +19,20 @@
         <result property="comments" column="comments"/>
     </resultMap>
 
+    <select id="selectPageVo" resultType="com.sujie.modules.clean.vo.RoomInfoVO">
+        SELECT
+          t.id,
+          t.room_id,
+          a.homestay_name,
+          t.room_address ,
+          b.item_name roomTypeName,
+          t.price,
+          t.comments
+        FROM
+        homestay.room_info t
+        JOIN homestay.homestay_info a ON  t.homestay_id =  a.homestay_id
+        JOIN homestay.dict_room_type b ON b.item_code = t.room_type
+    </select>
+
 
 </mapper>

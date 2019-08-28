@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 
@@ -15,7 +16,7 @@ import lombok.Data;
  * @date 2019-08-18 10:15:19
  */
 @Data
-@TableName("staff_commission")
+@TableName("homestay.staff_commission")
 public class StaffCommissionEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -35,10 +36,14 @@ public class StaffCommissionEntity implements Serializable {
 	/**
 	 * 房间提成，房间成为一室、两室、三室等标准提成，如果在标准以外。另外加床另外加几元
 	 */
-	private String commission;
+	private BigDecimal commission;
 	/**
 	 * 备注
 	 */
 	private String comments;
+	/**
+	 * 加床费用
+	 */
+	private BigDecimal extraFee;
 
 }

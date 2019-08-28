@@ -1,6 +1,8 @@
 package com.sujie.modules.clean.controller;
 
+import com.sujie.modules.clean.entity.HomestayInfoEntity;
 import com.sujie.modules.clean.entity.StaffInfoEntity;
+import com.sujie.modules.clean.service.HomestayInfoService;
 import com.sujie.modules.clean.service.StaffInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,11 +16,23 @@ import java.util.Map;
 public class CommController {
     @Autowired
     private StaffInfoService staffInfoService;
+    @Autowired
+    private HomestayInfoService homestayInfoService;
+
     @RequestMapping("/toUpdateStaffCommission")
-    public String toUpdateStaffCommission(@RequestParam Map<String,Object> map){
-        StaffInfoEntity staff = staffInfoService.getById((String) map.get("staffId"));
-        map.put("staff",staff);
+    public String toUpdateStaffCommission(@RequestParam String staffId, Map<String, Object> map) {
+        StaffInfoEntity staff = staffInfoService.getById(staffId);
+        map.put("staff", staff);
         return "modules/homestay/staffCommission";
+    }
+
+    @RequestMapping("/toUpdateHomestay")
+    public String toUpdateHomestay(@RequestParam String homestayId, Map<String, Object> map) {
+
+//        HomestayInfoEntity homestayInfoEntity = homestayInfoService.getById(homestayId);
+//        map.put("homestay", homestayInfoEntity);
+        map.put("homestayId",homestayId);
+        return "modules/homestay/homestayUpdate";
     }
 
 }

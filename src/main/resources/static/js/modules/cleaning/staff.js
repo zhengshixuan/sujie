@@ -5,7 +5,7 @@ $(function () {
         colModel: [
             {label: '序号', name: 'id', width: 30, key: true},
             {label: '操作', name: 'id', sortable: false, width: 60, formatter: edit},
-            {label: '阿姨类别', name: 'staffType', width: 100},
+            {label: '阿姨类别', name: 'staffType', width: 100,formatter:staffType},
             {label: '名字', name: 'staffName', width: 80},
             {label: '电话', name: 'telphone', width: 80},
             {label: '身份证', name: 'idNo', width: 80},
@@ -40,9 +40,15 @@ $(function () {
         }
     });
 });
-
+function staffType(cellvalue, options, rowObject) {
+    if("0"==cellvalue){
+        return "全职";
+    }else if ("1"==cellvalue){
+        return "兼职";
+    }
+}
 function edit(cellvalue, options, rowObject) {
-    return '<img src="/images/修改icon.png" onclick="toUpdateStaff(1);"></img>';
+    return '<img src="/images/修改icon.png" onclick="toUpdateStaff('+cellvalue+');"></img>';
 }
 
 function toUpdateStaff(id) {

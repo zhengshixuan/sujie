@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新增民宿</title>
+    <!--引入通用css、js-->
+    <div th:replace="header"></div>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../assets/bootstrap-3.3.7-dist/css/bootstrap.css">
+
+    <link rel="stylesheet" th:href="@{/css/cleaning/common.css}" href="../common/common.css">
+    <link rel="stylesheet" th:href="@{/css/cleaning/manager-info.css}" href="../css/manager-info.css">
+</head>
+<body>
+<div class='container' id="rrapp">
+    <div class='right'>
+        <div class="main">
+            <div class='main-box'>
+                <!-- 每个页面main-box的内容不一样  -->
+                <input type="hidden" th:value="${homestayId}" id="homestayId">
+                <div class='main-content'>
+                    <form action="">
+                        <div>
+                            <span>名宿品牌</span>
+                            <input type="text" name="homestayName"  v-model="homestay.homestayName" >
+                        </div>
+                        <div>
+                            <span>名宿地址</span>
+                            <input type="text" name="homestayAddress" v-model="homestay.homestayAddress">
+                        </div>
+                        <div>
+                            <span> 经营者姓名</span>
+                            <input type="text" name="bossName" v-model="homestay.bossName">
+                        </div>
+                        <div>
+                            <span>经营者电话</span>
+                            <input type="text" name="bossTelephone" v-model="homestay.bossTelephone">
+                        </div>
+                        <div>
+                            <span>运营者姓名</span>
+                            <input type="text" name="operatorsName" v-model="homestay.operatorsName">
+                        </div>
+                        <div>
+                            <span>运营者电话</span>
+                            <input type="text" name="operatorsTelephone" v-model="homestay.operatorsTelephone">
+                        </div>
+                        <div>
+                            <span>登录手机号</span>
+                            <input type="text" name="operatorsTelephone" v-model="homestay.operatorsTelephone">
+                        </div>
+                        <div>
+                            <span>密码</span>
+                            <input type="password" name="password" v-model="homestay.password">
+                        </div>
+                        <div>
+                            <span>房间数量</span>
+                            <input type="text" name="roomsNumber" v-model="homestay.roomsNumber">
+                        </div>
+                        <div>
+                            <span>是否有前台</span>
+                            <input type="radio" name="isReception" value="0"  v-model="homestay.isReception">
+                            <span>是</span>
+                            <input type="radio" name="isReception" value="1"  v-model="homestay.isReception">
+                            <span>否</span>
+                        </div>
+                        <div>
+                            <span>是否办理会员</span>
+                            <input type="radio" name="isVip" value="0"   v-model="homestay.isVip">
+                            <span>是</span>
+                            <input type="radio" name="isVip" value="1"  v-model="homestay.isVip">
+                            <span>否</span>
+                        </div>
+                    </form>
+                    <div class='btn-box'>
+                        <button type="button" class="btn" @click="saveOrUpdate">保存</button>
+                        <button type="button" class="btn" @click="goback">返回</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/modules/cleaning/homestay.js}" ></script>
+</body>
+</html>
