@@ -4,7 +4,7 @@ $(function () {
         datatype: "json",
         colModel: [
             { label: '序号', name: 'id', width: 30, key: true },
-            { label: '操作', name: 'id', sortable: false, width: 60 },
+            { label: '操作', name: 'id', sortable: false, width: 30,formatter:edit     },
             { label: '房间号', name: 'roomId', width: 100 },
             { label: '品牌名', name: 'homestayName', width: 80 },
             { label: '地址', name: 'roomAddress', width: 80 },
@@ -16,7 +16,7 @@ $(function () {
         //间隔行样式
         // altRows:true,
         // altclass:"tr_success",
-        height: 385,
+        height: 400,
         rowNum: 10,
         rowList : [10,30,50],
         // rownumbers: true,
@@ -41,25 +41,72 @@ $(function () {
         }
     });
 });
-
+function edit(cellvalue, options, rowObject) {
+    return '<img src="/images/图层1.png" onclick="toUpdateHomestay('+cellvalue+');"></img>';
+}
+function toUpdateHomestay(id) {
+    window.location.href = "/comm/toUpdateRoom?roomId=" + id;
+}
 var vm = new Vue({
     el:'#rrapp',
     data:{
         q:{
             homestayName: null,
-            operatorsName:null
+            roomAddress:null,
+            roomId:null
+
         },
         title: null,
-        homestay: {}
+        homestays: {},
+        room:{
+            openMethod:0,
+            needWashingSheets:0,
+            roomType:0
+        },
+        roomTypes:{},
+        showList:true
+    },
+
+    mounted:function () {
+        this.listHomestay();
+        this.getRoomType();
     },
     methods: {
+        listHomestay:function () {
+            $.ajax({
+                type: "get",
+                url: "/listHomestayInfo",
+                contentType: "application/json",
+                success: function(r){
+                    if(r.code === 0){
+                        vm.homestays = r.list;
+                    }else{
+                        alert(r.msg);
+                    }
+                }
+            });
+        },
+        getRoomType: function (event) {
+            $.ajax({
+                type: "post",
+                url: "/dictroomtype/list",
+                contentType: "application/json",
+                success: function(r){
+                    if(r.code === 0){
+                        vm.roomTypes=r.list;
+                    }else{
+                        alert(r.msg);
+                    }
+                }
+            });
+        },
         query: function () {
             vm.reload();
         },
         reload: function (event) {
             var page = $("#jqGrid").jqGrid('getGridParam','page');
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'homestayName': vm.q.homestayName,'operatorsName':vm.q.operatorsName},
+                postData:{'homestayName': vm.q.homestayName,'roomId':vm.q.roomId,'roomAddress':vm.q.roomAddress},
                 page:page
             }).trigger("reloadGrid");
         },

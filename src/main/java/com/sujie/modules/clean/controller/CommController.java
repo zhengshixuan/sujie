@@ -34,5 +34,13 @@ public class CommController {
         map.put("homestayId",homestayId);
         return "modules/homestay/homestayUpdate";
     }
+    @RequestMapping("/toUpdateRoom")
+    public String toUpdateRoom(@RequestParam String roomId, Map<String, Object> map) {
+
+//        HomestayInfoEntity homestayInfoEntity = homestayInfoService.getById(homestayId);
+//        map.put("homestay", homestayInfoEntity);
+        map.put("homestayId",roomId);
+        return "modules/homestay/roomAdd";
+    }
 
 }

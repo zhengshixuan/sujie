@@ -77,7 +77,7 @@
     color: #fff;
 }
  .table-hover>tbody>tr:hover {
-    background-color: #9AB990!important;
+    /*background-color: #9AB990!important;*/
 }
 thead{
     height:80px;

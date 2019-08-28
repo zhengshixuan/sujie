@@ -1,9 +1,11 @@
 package com.sujie.modules.clean.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.sujie.modules.clean.entity.RoomInfoEntity;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +37,11 @@ public class HomestayInfoController {
 
         return R.ok().put("page", page);
     }
-
+    @GetMapping("/listHomestayInfo")
+    public R listAll(){
+        List<HomestayInfoEntity> list = homestayInfoService.list();
+        return R.ok().put("list",list);
+    }
 
     /**
      * 信息

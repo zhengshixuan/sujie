@@ -2,10 +2,13 @@
     position: relative;
     width:100%;
     height:100%;
-    padding:0 20px 20px 0;
+    padding:0 0 0 0;
     box-sizing: border-box;
     /* 每个页面通过改变main的颜色来控制边框的颜色不一样 */
     background-color:#ccc;
+}
+.my-postion {
+    width: 400px!important;
 }
 .content-top form div:nth-of-type(1){
     padding-top: 30px;
@@ -29,6 +32,13 @@
     outline:none;
     border:1px solid #ccc;
 }
+.content-top form div select{
+    width: 251px;
+    height:41px;
+    outline:none;
+    border:1px solid #ccc;
+}
+
 .content-top form div input[type=checkbox]{
     width:20px;
     height:20px
@@ -45,12 +55,14 @@
 .line{
     width:100%;
     height:20px;
-    background-image: url('../images/线段.png');
+    background-image: url('../../images/线段.png');
 }
 .photo-box{
     position:relative;
     padding-left:40px;
     box-sizing: border-box;
+    width: 100%;
+    height: 100%;
     /* display:flex; */
    
 }
@@ -64,7 +76,7 @@
 .fileup-box{
     width:260px;
     height:200px;
-    background-image: url('../images/上传照片icon.png');
+    background-image: url('../../images/上传照片icon.png');
 }
 .fileup-box input{
     width:260px;

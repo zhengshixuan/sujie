@@ -32,6 +32,7 @@
         homestay.room_info t
         JOIN homestay.homestay_info a ON  t.homestay_id =  a.homestay_id
         JOIN homestay.dict_room_type b ON b.item_code = t.room_type
+        WHERE  1==1
     </select>
 
 
