@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>预排单</title>
+    <!--引入通用css、js-->
+    <div th:replace="header"></div>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../assets/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" th:href="@{/css/cleaning/common.css}" href="../common/common.css">
+    <link rel="stylesheet" th:href="@{/css/cleaning/prepar-order.css}" href="../css/prepar-order.css">
+
+
+    <style>
+        .ui-th-ltr{
+
+            background-color: #2D6035!important;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body >
+<div class='container' id="rrapp">
+    <div class='right'>
+        <div class="main">
+            <div class='main-box'>
+                <!-- 每个页面main-box的内容不一样  -->
+                <div class='main-text' v-for="(prepareOrder,index) in preparOrders">
+                    <div class='content-top'>
+                        <div class='content-text '>
+                            <div>位置{{index+1}}：{{prepareOrder.homestayAddress}}</div>
+                            <div>保洁房间数量：{{prepareOrder.count}}间</div>
+                            <span>详情</span>
+                            <div class="fold">
+                                <input type="hidden":value="prepareOrder.homestayAddress"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-middle control clearfix " v-for="(praparOrderDetail,index) in preparOrdersDetail" >
+                        <div style="float: left" v-if="index%2==0">
+                            <div>A:名宿保洁：{{praparOrderDetail.homestayName}}</div>
+                            <div>房间数量：{{praparOrderDetail.count}}间</div>
+                        </div>
+                        <div  style="float: right"v-if="index%2!=0">
+                            <div>B:名宿保洁：{{praparOrderDetail.homestayName}}</div>
+                            <div>房间数量：{{praparOrderDetail.count}}间</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/modules/cleaning/preparOrder.js}" ></script>
+
+</body>
+</html>

@@ -17,6 +17,14 @@
     transform:translate(-50%,-50%)
 }
 
+.selecthome {
+    width: 200px;
+    height: 35px;
+    font-size: 18px;
+    border-radius: 5%;
+    outline: none;
+    background: url('../../images/选择icon.png') no-repeat right
+}
 
 .main-content div input{
     width:251px;

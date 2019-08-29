@@ -60,7 +60,7 @@ var vm = new Vue({
     data: {
         q: {
             staffName: null,
-            staffType: null
+            staffType: 0
         },
         title: null,
         staff: {

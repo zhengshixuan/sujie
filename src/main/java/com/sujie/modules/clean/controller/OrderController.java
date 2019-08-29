@@ -35,14 +35,20 @@ public class OrderController {
      */
     @GetMapping("/listPreOrder")
     public R listPreOrder(@RequestParam Map<String,Object> map){
-        Map<String, Object> maps = orderService.listPreOrder(map);
+        List<Map<String, Object>> list = orderService.listPreOrder(map);
 
-        return R.ok().put("order",maps);
+        return R.ok().put("preparOrders",list);
     }
 
-    public R listPreOrderDetail(@RequestParam Map<String,Object> map){
 
-        return R.ok();
+    /**获取详细预排单
+     * @param map
+     * @return
+     */
+    @RequestMapping("/listPreOrderDetail")
+    public R listPreOrderDetail(@RequestParam Map<String,Object> map){
+        List<Map<String, Object>> maps = orderService.listPreOrderDetail(map);
+        return R.ok().put("preparOrdersDetail",maps);
     }
 
 

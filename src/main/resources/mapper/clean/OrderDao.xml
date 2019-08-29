@@ -3,7 +3,7 @@
 
 <mapper namespace="com.sujie.modules.clean.dao.OrderDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.sujie.modules.clean.entity.OrderEntity" id="orderMap">
         <result property="id" column="id"/>
         <result property="orderId" column="order_id"/>
@@ -19,15 +19,12 @@
     </resultMap>
     <select id="listPreOrder" resultType="java.util.Map">
         SELECT
-        a.id id,
-        a.homestay_name homestayName,
-        a.province_name privinceName,
-        a.city_name cityName,
-        a.county_name countyName,
+        -- a.id id,
+        -- a.homestay_name homestayName,
         a.homestay_address homestayAddress,
         count( 1 ) count
         FROM
-        homestay.ORDER t
+        homestay.order t
         INNER JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
         WHERE
         1 = 1
@@ -35,12 +32,29 @@
             AND t.clean_status_code = 0
         </if>
         GROUP BY
-        a.id,
-        a.homestay_name,
-        a.province_name,
-        a.city_name,
-        a.county_name,
+        -- a.id,
+        -- a.homestay_name,
         a.homestay_address
+    </select>
+
+    <select id="listPreOrderDetail" resultType="java.util.Map">
+        SELECT
+            a.id id,
+            a.homestay_name homestayName,
+            a.homestay_address homestayAddress,
+            count( 1 ) count
+        FROM homestay.order t
+        INNER JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
+        WHERE
+            1 = 1
+            <if test="#{status}">
+                AND t.clean_status_code = 0
+            </if>
+            AND a.homestay_address = #{homestayAddress}
+            GROUP BY
+            a.id,
+            a.homestay_name,
+            a.homestay_address
     </select>
 
 

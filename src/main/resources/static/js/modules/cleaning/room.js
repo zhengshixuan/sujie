@@ -45,7 +45,20 @@ function edit(cellvalue, options, rowObject) {
     return '<img src="/images/图层1.png" onclick="toUpdateHomestay('+cellvalue+');"></img>';
 }
 function toUpdateHomestay(id) {
-    window.location.href = "/comm/toUpdateRoom?roomId=" + id;
+    $.ajax({
+        type: "get",
+        url: "/listHomestayInfo",
+        contentType: "application/json",
+        success: function(r){
+            if(r.code === 0){
+                vm.homestays = r.list;
+            }else{
+                alert(r.msg);
+            }
+        }
+    });
+
+        $('.ui.modal').modal('show');
 }
 var vm = new Vue({
     el:'#rrapp',
@@ -72,6 +85,9 @@ var vm = new Vue({
         this.getRoomType();
     },
     methods: {
+        toAdd:function () {
+            window.location.href="/modules/homestay/roomAdd.html";
+        },
         listHomestay:function () {
             $.ajax({
                 type: "get",

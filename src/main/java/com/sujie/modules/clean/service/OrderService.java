@@ -20,10 +20,16 @@ public interface OrderService extends IService<OrderEntity> {
 
     /**
      * 获取预排单总数
+     */
+  List<Map<String,Object>> listPreOrder(Map<String,Object> map);
+
+    /**
+     * 获取详细预排单
      * @param map
      * @return
      */
-  Map<String,Object> listPreOrder(Map<String,Object> map);
+    List<Map<String,Object>> listPreOrderDetail(Map<String,Object> map);
+
 
 }
 

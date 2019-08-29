@@ -15,6 +15,7 @@
             color: #fff;
         }
 
+
     </style>
 </head>
 <body >
@@ -32,8 +33,12 @@
                                 <input type="text" class="form-control" id="exampleInputName2" v-model="q.staffName" @keyup.enter="query">
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail2">阿姨类别</label>
-                                <input type="" class="form-control" id="exampleInputEmail2" v-model="q.staffType"  @keyup.enter="query">
+                                <span>阿姨类别</span>
+                                <i></i>
+                                <select name="" id="" form-control class="selecthome" style="top:50%;" v-model="q.staffType">
+                                    <option value="0">全职</option>
+                                    <option value="1">兼职</option>
+                                </select>
                             </div>
                             <button type="button" class="btn btn btn-success" @click="query">搜索</button>
                             <button type="button" class="btn" @click="toAddStaff">添加</button>

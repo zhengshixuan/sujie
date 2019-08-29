@@ -4,11 +4,11 @@
   position: relative;
   width:100%;
   height:100%;
-  padding:0;
-  /* æ¯ä¸ªé¡µé¢é€šè¿‡æ”¹å˜mainçš„é¢œè‰²æ¥æŽ§åˆ¶è¾¹æ¡†çš„é¢œè‰²ä¸ä¸€æ · */
+  padding:17px;
+  /* 每个页面通过改变main的颜色来控制边框的颜色不一样 */
   background-color:#ccc;
   box-sizing:border-box;
-  
+
 }
 .main-header{
   position: relative;
@@ -20,54 +20,56 @@
   height:80px;
 }
 .form-inline .btn:nth-of-type(2){
-  background-image: url('../../images/清空按钮.png');
+  background-image: url('../images/清空按钮.png');
 }
 .form-inline .form-group:nth-of-type(1){
   position: absolute;
-  left: 0px;
-  font-size:24px;
+  left:9px;
+  font-size:20px;
   color:#333333;
   font-family:MicrosoftYaHei;
 }
 .form-inline .form-group:nth-of-type(2){
   position: absolute;
-  left: 260px;
-  font-size:24px;
+  left:225px;
+  font-size:20px;
   color:#333333;
   font-family:MicrosoftYaHei;
-} 
+}
 .form-inline .form-group:nth-of-type(3){
   position: absolute;
-  left: 520px;
-  font-size:24px;
+  left:440px;
+  font-size:20px;
   color:#333333;
   font-family:MicrosoftYaHei;
-} 
+}
 .form-group label{
   display:inline;
 }
 .form-inline .form-group:nth-of-type(4){
   position: absolute;
-  left: 760px;
-  font-size:24px;
+  left:634px;
+  font-size:20px;
+
   color:#333333;
   font-family:MicrosoftYaHei;
-} 
+}
 .form-inline button:nth-of-type(1){
   position:absolute;
-  right: 100px;
+  right:100px;
   top:50%;
   transform:translateY(-50%);
   width:60px;
-  height:30px;
-} 
+  height:30px
+}
 .form-inline button:nth-of-type(2){
   position:absolute;
-  right: 30px;
+  right:30px;
   top:50%;
   transform:translateY(-50%);
   width:60px;
-  height:30px;
+  height:30px
+
 }
 
 .tr_success {
@@ -84,20 +86,25 @@ thead{
 tbody td i{
   width:25px;
   height:25px;
-  background-image: url('../../images/图层1.png');
+  background-image: url('../images/图层1.png');
   position:absolute;
   left:50%;
   top:50%;
   transform: translate(-50%,-50%);
   text-align:center;
 }
+label {
+  font-weight: 400 !important;
+}
 tbody td:nth-of-type(2){
   position:relative;
 }
 .pagination-total{
-  position:absolute;
-  left:50%;
-  bottom:40px;
+  position: absolute;
+  left: 50%;
+  bottom: 100px;
+  height: 68px;
+  transform: translate(-50%);
 }
 tbody tr td{
   text-align:center;
@@ -134,7 +141,7 @@ thead tr th{
   text-align:center;
   line-height:31px;
   color:#999999;
- 
+
 }
 .pagination li.active{
   background-color: #2D6035;
@@ -147,4 +154,12 @@ thead tr th{
   top: 0;
   left: 0;
   transform: translate(229px,-46px)
+}
+.main-table {
+  height: 500px;
+  overflow-y: auto;
+}
+.form-control{
+  font-size: 3px;
+  padding: 6px 3px;
 }

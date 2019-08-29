@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sujie.modules.clean.entity.OrderEntity;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,6 +17,9 @@ import java.util.Map;
 @Mapper
 public interface OrderDao extends BaseMapper<OrderEntity> {
 
-    Map<String,Object> listPreOrder(Map<String,Object> params);
-	
+    List<Map<String,Object>> listPreOrder(Map<String,Object> params);
+
+    List<Map<String,Object>> listPreOrderDetail(Map<String,Object> params);
+
+
 }

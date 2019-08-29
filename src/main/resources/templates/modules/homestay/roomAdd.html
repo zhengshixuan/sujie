@@ -6,13 +6,25 @@
     <!--引入通用css、js-->
     <div th:replace="header"></div>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../assets/bootstrap-3.3.7-dist/css/bootstrap.css">
-    <link rel="stylesheet" th:href="@{/css/cleaning/room-info.css}" href="../css/room-info.css">
+    <link rel="stylesheet" th:href="@{/plugins/layui-v2.5.4/layui/css/layui.css}" href="../assets/layui-v2.5.4/layui/css/layui.css">
     <link rel="stylesheet" th:href="@{/css/cleaning/common.css}" href="../common/common.css">
+    <link rel="stylesheet" th:href="@{/css/cleaning/room-info.css}" href="../css/room-info.css">
+
+    <script th:src="@{/plugins/layui-v2.5.4/layui/layui.all.js}" src='../assets/layui-v2.5.4/layui/layui.all.js'></script>
+    <script th:src="@{/js/room-info.js}" src='../js/room-info.js'></script>
     <style>
         .ui-th-ltr{
 
             background-color: #2D6035!important;
             color: #fff;
+        }
+        html,body{
+            width:100%;;
+            height:210%;
+            padding-left: 0px;
+            padding-right: 0px;
+            background-color: #2D6035;
+            /*background-image: url('../../images/background.png');*/
         }
 
     </style>
@@ -74,47 +86,137 @@
 
                         </form>
                     </div>
+
                     <div class='line'>房间摆设</div>
 
                     <div class='photo-box'>
+
                         <div class="allphoto">
-                            <div>1.床上区域一张照片</div>
+                            <div class="roomdecoration">1.床上区域(一张照片)</div>
                             <!-- 此处是用div模拟的上传 -->
-                            <div class='fileup-box'>
+                            <!-- <div class='fileup-box'>
                                 <input id="file" type="file" value=''>
-                            </div>
-                            <span>文字说明</span>
+
+                            </div> -->
+                            <button type="button" class="layui-btn" id="test1">
+                                <i class="layui-icon">&#xe67c;</i>
+                            </button>
+                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
                         </div>
                         <div class="allphoto">
-                            <div>1.床上区域一张照片</div>
-                            <div class='fileup-box'>
-                                <input id="file" type="file" value=''>
-                            </div>
-                            <span>文字说明</span>
+                            <div  class="roomdecoration">2.沙发区域(一张照片)</div>
+                            <button type="button" class="layui-btn" id="test1">
+                                <i class="layui-icon">&#xe67c;</i>
+                            </button>
+                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
                         </div>
                         <div class="allphoto">
-                            <div>1.床上区域一张照片</div>
-                            <div class='fileup-box'>
-                                <input id="file" type="file" value=''>
-                            </div>
-                            <span>文字说明</span>
+                            <div  class="roomdecoration">3.厨房区域(一张照片)</div>
+                            <button type="button" class="layui-btn" id="test1">
+                                <i class="layui-icon">&#xe67c;</i>
+                            </button>
+                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
                         </div>
                         <div class="allphoto">
-                            <div>1.床上区域一张照片</div>
-                            <div class='fileup-box'>
-                                <input id="file" type="file" value=''>
-                            </div>
-                            <span>文字说明</span>
+                            <div  class="roomdecoration">4.阳台区域(一张照片)</div>
+                            <button type="button" class="layui-btn" id="test1">
+                                <i class="layui-icon">&#xe67c;</i>
+                            </button>
+                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
                         </div>
                         <div class="allphoto">
-                            <div>1.床上区域一张照片</div>
-                            <div class='fileup-box'>
-                                <input id="file" type="file" value=''>
-                            </div>
-                            <span>文字说明</span>
+                            <div  class="roomdecoration">5.卫生间区域(三张照片分别为洗漱台,马桶,卫生间地面)</div>
+                            <button type="button" class="layui-btn" id="test1">
+                                <i class="layui-icon">&#xe67c;</i>
+                            </button>
+                            <button type="button" class="layui-btn" id="test1">
+                                <i class="layui-icon">&#xe67c;</i>
+                            </button>
+                            <button type="button" class="layui-btn" id="test1">
+                                <i class="layui-icon">&#xe67c;</i>
+                            </button>
+                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
                         </div>
 
                     </div>
+
+
+                    <div class='line'>日用品位置</div>
+
+                    <div class='photo-box'>
+
+                        <div class="allphoto flex-box">
+                            <div class="flex-left">
+                                <div>1.牙膏,牙刷(一张照片)</div>
+                                <button type="button" class="layui-btn" id="test1">
+                                    <i class="layui-icon">&#xe67c;</i>
+                                </button>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                            </div>
+                            <div class="flex-right">
+                                <div>2.洗发水,沐浴露(一张照片)</div>
+                                <button type="button" class="layui-btn" id="test1">
+                                    <i class="layui-icon">&#xe67c;</i>
+                                </button>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="allphoto flex-box">
+                            <div class="flex-left">
+                                <div>3.梳子(一张照片)</div>
+                                <button type="button" class="layui-btn" id="test1">
+                                    <i class="layui-icon">&#xe67c;</i>
+                                </button>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                            </div>
+                            <div class="flex-right">
+                                <div>4.厕所用纸(一张照片)</div>
+                                <button type="button" class="layui-btn" id="test1">
+                                    <i class="layui-icon">&#xe67c;</i>
+                                </button>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="allphoto flex-box">
+                            <div class="flex-left">
+                                <div>5.客厅用纸(一张照片)</div>
+                                <button type="button" class="layui-btn" id="test1">
+                                    <i class="layui-icon">&#xe67c;</i>
+                                </button>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                            </div>
+                            <div class="flex-right">
+                                <div>6.床单被套(一张照片)</div>
+                                <button type="button" class="layui-btn" id="test1">
+                                    <i class="layui-icon">&#xe67c;</i>
+                                </button>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="allphoto flex-box">
+                            <div class="flex-left">
+                                <div>7.厨具(一张照片)</div>
+                                <button type="button" class="layui-btn" id="test1">
+                                    <i class="layui-icon">&#xe67c;</i>
+                                </button>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                            </div>
+                            <div class="flex-right">
+                                <div>8.垃圾袋(一张照片)</div>
+                                <button type="button" class="layui-btn" id="test1">
+                                    <i class="layui-icon">&#xe67c;</i>
+                                </button>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
                 </div>
             </div>
         </div>

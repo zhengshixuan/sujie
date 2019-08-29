@@ -33,8 +33,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
     @Override
-    public Map<String, Object> listPreOrder(Map<String,Object> params) {
-        Map<String, Object> maps = baseMapper.listPreOrder(params);
+    public List<Map<String, Object>> listPreOrder(Map<String,Object> params) {
+        List<Map<String, Object>> maps = baseMapper.listPreOrder(params);
+        return maps;
+    }
+
+    @Override
+    public List<Map<String, Object>> listPreOrderDetail(Map<String, Object> map) {
+        List<Map<String, Object>> maps = baseMapper.listPreOrderDetail(map);
         return maps;
     }
 }

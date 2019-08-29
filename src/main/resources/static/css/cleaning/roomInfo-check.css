@@ -8,7 +8,7 @@
     /* 每个页面通过改变main的颜色来控制边框的颜色不一样 */
     background-color:#ccc;
     box-sizing:border-box;
-    
+
 }
 .main-header{
     position: relative;
@@ -16,52 +16,57 @@
     height:80px;
     line-height:80px;
 }
-.form-inline{
-    height:80px;
+label {
+    font-weight: 400 !important;
 }
+.form-inline{
+
+    height:60px;
+}
+
 .form-inline .btn:nth-of-type(2){
     background-image: url('../../images/清空按钮.png');
 }
 .form-inline .form-group:nth-of-type(1){
     position: absolute;
-    left:50px;
-    font-size:24px;
+    left:20px;
+    font-size:20px;
     color:#333333;
     font-family:MicrosoftYaHei;
 }
- .form-inline .form-group:nth-of-type(2){
+.form-inline .form-group:nth-of-type(2){
     position: absolute;
-    left:340px; 
-    font-size:24px;
+    left:209px;
+    font-size:20px;
     color:#333333;
     font-family:MicrosoftYaHei;
-} 
+}
 .form-inline .form-group:nth-of-type(3){
     position: absolute;
-    left:628px;
-    font-size:24px;
+    left:405px;
+    font-size:20px;
     color:#333333;
     font-family:MicrosoftYaHei;
-} 
+}
 .form-group label{
     display:inline;
 }
 .form-inline .form-group:nth-of-type(4){
     position: absolute;
-    left:900px;
-    font-size:24px;
- 
+    left:600px;
+    font-size:20px;
+
     color:#333333;
     font-family:MicrosoftYaHei;
-} 
- .form-inline button:nth-of-type(1){
+}
+.form-inline button:nth-of-type(1){
     position:absolute;
     right:100px;
     top:50%;
     transform:translateY(-50%);
     width:60px;
     height:30px
-} 
+}
 .form-inline button:nth-of-type(2){
     position:absolute;
     right:30px;
@@ -71,13 +76,13 @@
     height:30px
 
 }
- 
+
 .tr_success {
     background-color: #2D6035!important;
     color: #fff;
 }
- .table-hover>tbody>tr:hover {
-    /*background-color: #9AB990!important;*/
+.table-hover>tbody>tr:hover {
+    background-color: #9AB990!important;
 }
 thead{
     height:80px;
@@ -86,7 +91,7 @@ thead{
 tbody td i{
     width:25px;
     height:25px;
-    background-image: url('../images/图层1.png');
+    background-image: url('../../images/图层1.png');
     position:absolute;
     left:50%;
     top:50%;
@@ -96,10 +101,12 @@ tbody td i{
 tbody td:nth-of-type(2){
     position:relative;
 }
-.pagination-total{
-    position:absolute;
-    left:50%;
-    bottom:40px;
+.pagination-total {
+    position: absolute;
+    left: 50%;
+    bottom: 100px;
+    height: 68px;
+    transform: translate(-50%);
 }
 tbody tr td{
     text-align:center;
@@ -136,8 +143,16 @@ thead tr th{
     text-align:center;
     line-height:31px;
     color:#999999;
-   
+
 }
 .pagination li.active{
     background-color: #2D6035;
+}
+
+.main-table {
+    height: 500px;
+    overflow-y: auto;
+}
+.form-inline .form-control {
+    width: 100px !important;
 }
