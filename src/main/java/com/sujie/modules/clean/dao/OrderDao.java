@@ -17,6 +17,8 @@ import java.util.Map;
 @Mapper
 public interface OrderDao extends BaseMapper<OrderEntity> {
 
+    Integer getPreparOrderCount(Map<String,Object> params);
+
     List<Map<String,Object>> listPreOrder(Map<String,Object> params);
 
     List<Map<String,Object>> listPreOrderDetail(Map<String,Object> params);

@@ -28,9 +28,7 @@
         INNER JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
         WHERE
         1 = 1
-        <if test="#{status}">
             AND t.clean_status_code = 0
-        </if>
         GROUP BY
         -- a.id,
         -- a.homestay_name,
@@ -39,22 +37,31 @@
 
     <select id="listPreOrderDetail" resultType="java.util.Map">
         SELECT
-            a.id id,
-            a.homestay_name homestayName,
-            a.homestay_address homestayAddress,
-            count( 1 ) count
+        a.id id,
+        a.homestay_name homestayName,
+        a.homestay_address homestayAddress,
+        count( 1 ) count
         FROM homestay.order t
         INNER JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
         WHERE
-            1 = 1
-            <if test="#{status}">
-                AND t.clean_status_code = 0
-            </if>
-            AND a.homestay_address = #{homestayAddress}
-            GROUP BY
-            a.id,
-            a.homestay_name,
-            a.homestay_address
+        1 = 1
+            AND t.clean_status_code = 0
+        AND a.homestay_address = #{homestayAddress}
+        GROUP BY
+        a.id,
+        a.homestay_name,
+        a.homestay_address
+    </select>
+    <select id="getPreparOrderCount" resultType="java.lang.Integer">
+        SELECT
+        count( 1 ) total
+        FROM
+        homestay.order t
+        INNER JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
+        WHERE
+        1 = 1
+            AND t.clean_status_code = 0
+
     </select>
 
 

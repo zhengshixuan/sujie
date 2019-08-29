@@ -1,8 +1,6 @@
 package com.sujie.modules.clean.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +33,17 @@ public class OrderController {
      */
     @GetMapping("/listPreOrder")
     public R listPreOrder(@RequestParam Map<String,Object> map){
+        Integer total = orderService.getPreorderCount(map);
         List<Map<String, Object>> list = orderService.listPreOrder(map);
-
-        return R.ok().put("preparOrders",list);
+//        List<List<Map<String, Object>> > list2 = new LinkedList<>();
+        if (list != null) {
+            for(Map<String,Object> preOrderMap:list){
+                List<Map<String, Object>> maps = orderService.listPreOrderDetail(preOrderMap);
+//                list2.add(maps);
+                preOrderMap.put("detail",maps);
+            }
+        }
+        return R.ok().put("preparOrders",list).put("total",total);
     }
 
 

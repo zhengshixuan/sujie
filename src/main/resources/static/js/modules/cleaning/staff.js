@@ -99,7 +99,7 @@ var vm = new Vue({
 
         },
         saveOrUpdate: function () {
-
+            var url="";
             var staffName = vm.staff.staffName;
             var telphone = vm.staff.telphone;
             var password = vm.staff.password;

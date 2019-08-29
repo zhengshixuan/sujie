@@ -39,6 +39,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
     @Override
+    public Integer getPreorderCount(Map<String, Object> map) {
+        Integer preparOrderCount = baseMapper.getPreparOrderCount(map);
+        return preparOrderCount;
+    }
+
+    @Override
     public List<Map<String, Object>> listPreOrderDetail(Map<String, Object> map) {
         List<Map<String, Object>> maps = baseMapper.listPreOrderDetail(map);
         return maps;

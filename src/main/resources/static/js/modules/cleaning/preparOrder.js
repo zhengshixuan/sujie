@@ -18,13 +18,13 @@ $(function () {
 
             $(this).parents('.content-top').siblings().show();
             $(this).parents('.content-top').siblings().removeClass("control")
-
+            // var address = $(this).find("input").val();
+            // vm.getPreparOrderDetail(address);
         } else {
             $(this).parents('.content-top').siblings().hide();
             $(this).parents('.content-top').siblings().addClass("control")
         }
-        var address = $(this).find("input").val();
-        vm.getPreparOrderDetail(address);
+
 
     })
 
@@ -35,7 +35,8 @@ var vm = new Vue({
     data: {
         title: null,
         preparOrders: {},
-        preparOrdersDetail:{}
+        // preparOrdersDetail:{},
+        total:0
     },
     mounted: function () {
         this.getPreparOrder();
@@ -49,6 +50,7 @@ var vm = new Vue({
                 success: function (r) {
                     if (r.code === 0) {
                         vm.preparOrders = r.preparOrders;
+                        vm.total = r.total;
                     } else {
                         alert(r.msg);
                     }

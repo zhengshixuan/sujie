@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加阿姨信息</title>
+    <!--引入通用css、js-->
+    <div th:replace="header"></div>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../assets/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" href="../assets/layui-v2.5.4/layui/css/layui.css">
+    <link rel="stylesheet" th:href="@{/css/cleaning/clearwork-info.css}" href="../css/clearwork-info.css">
+    <link rel="stylesheet" th:href="@{/css/cleaning/common.css}" href="../common/common.css">
+
+    <script th:src="@{/plugins/layui-v2.5.4/layui/layui.all.js}" src='../assets/layui-v2.5.4/layui/layui.all.js'></script>
+    <script th:src="@{/js/claerwork-info.js}" src='../js/claerwork-info.js'></script>
+</head>
+<body>
+<div class='container' id="rrapp">
+    <div class='right'>
+        <div class="main">
+            <div class='main-box'>
+                <!-- 每一个页面就是main-box里面的内容不一样-->
+                <button type="button" class="layui-btn" id="test1">
+                    <i class="layui-icon">&#xe67c;</i>
+
+                </button>
+                <div class="layui-upload-list" style="top: 20px;left: 50%;position: absolute;">
+                    <img class="layui-upload-img" id="demo1" style="width: 260px;height: 200px;">
+                    <p id="demoText"></p>
+                </div>
+
+                <!--<div class="layui-upload">-->
+                    <!--<button type="button" class="layui-btn" id="test1">上传图片</button>-->
+                    <!--<div class="layui-upload-list">-->
+                        <!--<img class="layui-upload-img" id="demo1">-->
+                        <!--<p id="demoText"></p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <input type="hidden" th:value="${staffId}" id="staffId">
+
+                <div class='main-content'>
+                    <form action="">
+                        <div>
+                            <span>保洁姓名</span>
+                            <input type="text" name="staffName" v-model="staff.staffName">
+                        </div>
+                        <div>
+                            <span>电话</span>
+                            <input type="text" name="telphone" v-model="staff.telphone">
+                        </div>
+                        <div>
+                            <span> 入职时间</span>
+                            <input type="text" id="entryTime" name="" v-model="staff.entryTime">
+                        </div>
+                        <div>
+                            <span>密码</span>
+                            <input type="text" name="password" v-model="staff.password">
+                        </div>
+                        <div>
+                            <span>身份证</span>
+                            <input type="text" name="idNo" v-model="staff.idNo">
+                        </div>
+                        <div>
+                            <span>地址</span>
+                            <input type="text" name="address" v-model="staff.address">
+                        </div>
+                        <div>
+                            <span>阿姨类别</span>
+                            <input type="radio" name="staff.staffType" v-model="staff.staffType" value="0" checked>
+                            <span>全职</span>
+                            <input type="radio" name="staff.staffType" v-model="staff.staffType" value="1">
+                            <span>兼职</span>
+                        </div>
+                    </form>
+                    <div class='btn-box'>
+                        <button type="button" class="btn" @click="saveOrUpdate">保存</button>
+                        <button type="button" class="btn" @click="goback">返回</button>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/modules/cleaning/staff.js}" ></script>
+</body>
+</html>

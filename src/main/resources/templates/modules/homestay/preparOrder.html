@@ -36,17 +36,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="content-middle control clearfix " v-for="(praparOrderDetail,index) in preparOrdersDetail" >
-                        <div style="float: left" v-if="index%2==0">
-                            <div>A:名宿保洁：{{praparOrderDetail.homestayName}}</div>
-                            <div>房间数量：{{praparOrderDetail.count}}间</div>
+                    <!--<div v-bind="cc==1"></div>-->
+                    <div class="content-middle control clearfix "   v-for="(detail,index2) in prepareOrder.detail"  >
+                        <div style="float: left" >
+                            <div>{{index2+1}}:名宿保洁：{{detail.homestayName}}</div>
+                            <div>房间数量：{{detail.count}}间</div>
                         </div>
-                        <div  style="float: right"v-if="index%2!=0">
-                            <div>B:名宿保洁：{{praparOrderDetail.homestayName}}</div>
-                            <div>房间数量：{{praparOrderDetail.count}}间</div>
-                        </div>
+
                     </div>
+
                 </div>
+                <div class="roomsum">房间总数量:{{total}}</div>
 
             </div>
         </div>

@@ -10,6 +10,7 @@ $(function () {
             , before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
+                    $('#test1').css("background-image",url(result))
                     $('#demo1').attr('src', result); //图片链接（base64）
                 });
             }
