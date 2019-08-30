@@ -64,6 +64,7 @@ var vm = new Vue({
                 success: function(r){
                     if(r.code === 0){
                             vm.roomType=r.list;
+
                     }else{
                         alert(r.msg);
                     }

@@ -11,18 +11,22 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * 上传文件工具类
  */
 @Configuration
-public  class UploadUtils {
+public class ImageUtils {
 
     private static String staticLocation;
+
     @Autowired
-    public void setLocation2(){
-        staticLocation=location;
+    public void setLocation2() {
+        staticLocation = location;
     }
 
     /**
@@ -31,7 +35,13 @@ public  class UploadUtils {
     @Value("${img.location}")
     private String location;
 
-    public static R upload( MultipartFile file){
+    /**
+     * 将文件保存在本地
+     *
+     * @param file
+     * @return
+     */
+    public static R upload(MultipartFile file) {
 
 
         if (file.isEmpty()) {
@@ -44,7 +54,7 @@ public  class UploadUtils {
         // 文件上传后的路径
         String filePath = staticLocation;
         // 解决中文问题，liunx下中文路径，图片显示问题
-        // fileName = UUID.randomUUID() + suffixName;
+        fileName = UUIDUtils.getUUIDHex() + suffixName;
         File dest = new File(filePath + fileName);
         // 检测是否存在目录
         if (!dest.getParentFile().exists()) {
@@ -60,7 +70,27 @@ public  class UploadUtils {
             e.printStackTrace();
             return R.error("保存失败！");
         }
-        return R.ok().put("path",dest.getPath());
+        return R.ok().put("path", dest.getPath());
+
+    }
+
+    /**
+     * 获取文件流
+     *
+     * @param adress
+     * @return
+     */
+    public static FileInputStream getFileInputStream(String adress) {
+        FileInputStream is = null;
+        File filePic = new File(adress);
+        try {
+            is = new FileInputStream(filePic);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        return is;
 
     }
 

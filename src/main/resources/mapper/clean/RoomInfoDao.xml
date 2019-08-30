@@ -19,7 +19,7 @@
         <result property="comments" column="comments"/>
     </resultMap>
 
-    <select id="selectPageVo" parameterType="Map" resultType="com.sujie.modules.clean.vo.RoomInfoVO">
+    <select id="selectPageVo"  resultType="com.sujie.modules.clean.vo.RoomInfoVO">
         SELECT
           t.id,
           t.room_id,

@@ -8,10 +8,19 @@
     <link rel="stylesheet" th:href="@{/css/cleaning/common.css}" href="../common/common.css">
 
     <link rel="stylesheet" th:href="@{/css/cleaning/roomifo-worked.css}" href="../css/roomifo-worked.css">
+    <style>
+        .ui-th-ltr{
+
+            background-color: #2D6035!important;
+            color: #fff;
+        }
+
+    </style>
+
 </head>
 <body>
 
-<div class='container'>
+<div class='container' id="rrapp">
     <div class='right'>
         <div class="main">
             <div class='main-box'>
@@ -65,7 +74,7 @@
         </div>
     </div>
 </div>
-<script th:src="@{/js/modules/cleaning/room.js}" ></script>
+<script th:src="@{/js/modules/cleaning/roomCleanList.js}" ></script>
 
 </body>
 </html>

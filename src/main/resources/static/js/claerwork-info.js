@@ -10,7 +10,7 @@ $(function () {
             , before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
-                    $('#test1').css("background-image",url(result))
+                    // $('#test1').css("background-image",url(result))
                     $('#demo1').attr('src', result); //图片链接（base64）
                 });
             }
@@ -18,8 +18,12 @@ $(function () {
                 //如果上传失败
                 if (res.code > 0) {
                     return layer.msg('上传失败');
+                    $('#test1').show();
                 }else if (res.code==0){
                     vm.staff.photo=res.path;
+                    $('#test1').hide();
+                    $('#picId').show();
+                    // $('#test1').css("background-image",'url('+res.path+')').css("background-size","100% 100%");
                     return layer.msg('上传成功');
                 }
                 //上传成功

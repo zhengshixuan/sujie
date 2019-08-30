@@ -19,6 +19,13 @@ public class CommController {
     @Autowired
     private HomestayInfoService homestayInfoService;
 
+    @RequestMapping("/toUpdateStaff")
+    public String toUpdateStaff(@RequestParam String staffId, Map<String, Object> map) {
+//        StaffInfoEntity staff = staffInfoService.getById(staffId);
+//        map.put("staff", staff);
+        map.put("staffId",staffId);
+        return "modules/homestay/staffAdd";
+    }
     @RequestMapping("/toUpdateStaffCommission")
     public String toUpdateStaffCommission(@RequestParam String staffId, Map<String, Object> map) {
         StaffInfoEntity staff = staffInfoService.getById(staffId);
@@ -34,6 +41,7 @@ public class CommController {
         map.put("homestayId",homestayId);
         return "modules/homestay/homestayUpdate";
     }
+
     @RequestMapping("/toUpdateRoom")
     public String toUpdateRoom(@RequestParam String roomId, Map<String, Object> map) {
 

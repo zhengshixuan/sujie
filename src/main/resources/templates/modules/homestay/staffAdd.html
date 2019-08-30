@@ -7,7 +7,7 @@
     <!--引入通用css、js-->
     <div th:replace="header"></div>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../assets/bootstrap-3.3.7-dist/css/bootstrap.css">
-    <link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" href="../assets/layui-v2.5.4/layui/css/layui.css">
+    <link rel="stylesheet" th:href="@{/plugins/layui-v2.5.4/layui/css/layui.css}" href="../assets/layui-v2.5.4/layui/css/layui.css">
     <link rel="stylesheet" th:href="@{/css/cleaning/clearwork-info.css}" href="../css/clearwork-info.css">
     <link rel="stylesheet" th:href="@{/css/cleaning/common.css}" href="../common/common.css">
 
@@ -15,6 +15,7 @@
     <script th:src="@{/js/claerwork-info.js}" src='../js/claerwork-info.js'></script>
 </head>
 <body>
+<input type="hidden" id="staffId" th:value="${staffId}" >
 <div class='container' id="rrapp">
     <div class='right'>
         <div class="main">
@@ -24,19 +25,10 @@
                     <i class="layui-icon">&#xe67c;</i>
 
                 </button>
-                <div class="layui-upload-list" style="top: 20px;left: 50%;position: absolute;">
+                <div id="picId" class="layui-upload-list" style="top: 20px;left: 40%;position: absolute;display: none;">
                     <img class="layui-upload-img" id="demo1" style="width: 260px;height: 200px;">
                     <p id="demoText"></p>
                 </div>
-
-                <!--<div class="layui-upload">-->
-                    <!--<button type="button" class="layui-btn" id="test1">上传图片</button>-->
-                    <!--<div class="layui-upload-list">-->
-                        <!--<img class="layui-upload-img" id="demo1">-->
-                        <!--<p id="demoText"></p>-->
-                    <!--</div>-->
-                <!--</div>-->
-
 
                 <div class='main-content'>
                     <form action="">
