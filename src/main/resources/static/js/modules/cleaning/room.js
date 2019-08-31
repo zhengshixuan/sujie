@@ -7,7 +7,7 @@ $(function () {
             { label: '操作', name: 'id', sortable: false, width: 30,formatter:edit     },
             { label: '房间号', name: 'roomId', width: 100 },
             { label: '品牌名', name: 'homestayName', width: 80 },
-            { label: '地址', name: 'roomAddress', width: 80 },
+            { label: '地址', name: 'homestayAddress', width: 80 },
             { label: '房间户型', name: 'roomTypeName', width: 80 },
             { label: '保洁费用', name: 'price', width: 80 },
             { label: '备注', name: 'comments', width: 80 }
@@ -65,7 +65,7 @@ var vm = new Vue({
     data:{
         q:{
             homestayName: null,
-            roomAddress:null,
+            homestayAddress:null,
             roomId:null
 
         },
@@ -79,7 +79,6 @@ var vm = new Vue({
         roomTypes:{},
         showList:true
     },
-
     mounted:function () {
         this.listHomestay();
         this.getRoomType();
@@ -122,7 +121,7 @@ var vm = new Vue({
         reload: function (event) {
             var page = $("#jqGrid").jqGrid('getGridParam','page');
             $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'homestayName': vm.q.homestayName,'roomId':vm.q.roomId,'roomAddress':vm.q.roomAddress},
+                postData:{'homestayName': vm.q.homestayName,'roomId':vm.q.roomId,'homestayAddress':vm.q.homestayAddress},
                 page:page
             }).trigger("reloadGrid");
         },

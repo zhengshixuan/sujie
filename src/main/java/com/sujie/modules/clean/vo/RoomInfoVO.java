@@ -11,4 +11,6 @@ public class RoomInfoVO  extends RoomInfoEntity{
     private String roomTypeName;
 
     private String homestayName;
+
+    private String homestayAddress;
 }

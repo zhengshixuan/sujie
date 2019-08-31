@@ -1,11 +1,13 @@
 package com.sujie.modules.clean.controller;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import com.sujie.modules.clean.entity.RoomInfoEntity;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -74,6 +76,13 @@ public class HomestayInfoController {
      */
     @PostMapping("/updateHomeStayInfo")
     public R update(@RequestBody HomestayInfoEntity homestayInfo) {
+        HomestayInfoEntity oldHomestayInfo = homestayInfoService.getById(homestayInfo.getId());
+        if(null!=oldHomestayInfo){
+            BigDecimal balance = oldHomestayInfo.getBalance();
+            balance = homestayInfo.getBalance().add(balance);
+            homestayInfo.setBalance(balance);
+        }
+
         homestayInfoService.updateById(homestayInfo);
 
         return R.ok();

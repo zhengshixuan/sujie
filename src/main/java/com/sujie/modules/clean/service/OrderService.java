@@ -16,26 +16,44 @@ import java.util.Map;
  */
 public interface OrderService extends IService<OrderEntity> {
 
+    /**
+     * 查询已经完成保洁的记录
+     *
+     * @param params
+     * @return
+     */
+    PageUtils listRoomCleanRecord(Map<String, Object> params);
+
+
+    /**
+     * 查询待保洁的订单
+     * @param params
+     * @return
+     */
+    PageUtils listPrepareCleanOrder(Map<String, Object> params);
+
     PageUtils queryPage(Map<String, Object> params);
 
     /**
      * 获取预排单总数
      */
-  List<Map<String,Object>> listPreOrder(Map<String,Object> map);
+    List<Map<String, Object>> listPreOrder(Map<String, Object> map);
 
     /**
      * 查询待保洁的总数据
+     *
      * @param map
      * @return
      */
-  Integer getPreorderCount(Map<String,Object> map);
+    Integer getPreorderCount(Map<String, Object> map);
 
     /**
      * 获取详细预排单
+     *
      * @param map
      * @return
      */
-    List<Map<String,Object>> listPreOrderDetail(Map<String,Object> map);
+    List<Map<String, Object>> listPreOrderDetail(Map<String, Object> map);
 
 
 }

@@ -8,6 +8,7 @@ $(function () {
             {label: '民宿品牌', name: 'homestayName', width: 100},
             {label: '名字', name: 'operatorsName', width: 80},
             {label: '电话', name: 'operatorsTelephone', width: 80},
+            {label: '余额', name: 'balance', width: 80},
             {label: '备注', name: 'comments', width: 80}
         ],
         // viewrecords: true,

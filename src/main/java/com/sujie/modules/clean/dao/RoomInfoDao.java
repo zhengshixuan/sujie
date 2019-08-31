@@ -21,7 +21,7 @@ import java.util.Map;
 @Mapper
 public interface RoomInfoDao extends BaseMapper<RoomInfoEntity> {
 
-    IPage<RoomInfoVO> selectPageVo(IPage<RoomInfoVO> page,  Map<String,Object> map);
+    IPage<RoomInfoVO> selectPageVo(IPage<RoomInfoVO> page,@Param("params")  Map<String,Object> params);
 
 
 }

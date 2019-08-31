@@ -68,6 +68,26 @@ public class OrderController {
         return R.ok().put("page", page);
     }
 
+    /**
+     * 查询已完成的记录
+     * @return
+     */
+    @RequestMapping("/listRoomCleanRecord")
+    public R listRoomCleanRecord(@RequestParam Map<String,Object> params){
+        PageUtils page = orderService.listRoomCleanRecord(params);
+        return R.ok().put("page",page);
+    }
+
+    /**
+     * 查询待保洁的订单
+     * @return
+     */
+    @RequestMapping("/listPrepareCleanOrder")
+    public R listPrepareCleanOrder(@RequestParam Map<String, Object> params){
+
+        return R.ok();
+    }
+
 
     /**
      * 信息

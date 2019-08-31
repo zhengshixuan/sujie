@@ -24,7 +24,7 @@
           t.id,
           t.room_id,
           a.homestay_name,
-          t.room_address ,
+          a.homestay_address ,
           b.item_name roomTypeName,
           t.price,
           t.comments
@@ -33,6 +33,15 @@
         JOIN homestay.homestay_info a ON  t.homestay_id =  a.homestay_id
         JOIN homestay.dict_room_type b ON b.item_code = t.room_type
         WHERE  1=1
+        <if test="params.homestayName!=null and params.homestayName!=''">
+            AND a.homestay_name like CONCAT('%',#{params.homestayName},'%')
+        </if>
+        <if test="params.roomId!=null and params.roomId!='' ">
+            And t.room_id like CONCAT('%',#{params.roomId},'%')
+        </if>
+        <if test="params.homestayAddress!=null and params.homestayAddress!='' ">
+            AND a.homestay_address like CONCAT('%',#{params.homestayAddress},'%')
+        </if>
     </select>
 
 

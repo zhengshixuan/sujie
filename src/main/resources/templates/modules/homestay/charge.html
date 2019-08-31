@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>会员充值</title>
+    <!--引入通用css、js-->
+    <div th:replace="header"></div>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../assets/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" th:href="@{/css/cleaning/common.css}" href="../common/common.css">
+    <link rel="stylesheet" th:href="@{/css/cleaning/member-charge.css}" href="../css/member-charge.css">
+
+</head>
+<body >
+<div class='container' id="rrapp">
+    <div class='right'>
+        <div class="main">
+            <div class='main-box'>
+                <!-- 每一个页面就是main-box里面的内容不一样-->
+                <div class='main-content'>
+                    <form action="">
+                        <div class="row-box clearfix">
+                            <span>品牌名</span>
+                            <select name="" id="" form-control class="my-select selectname" v-model="homestay.id">
+                                <option  v-for="homestay in homestays" :value="homestay.id">{{homestay.homestayName}}</option>
+                            </select>
+                        </div>
+                        <!--<div class="row-box clearfix">-->
+                            <!--<span>地址</span>-->
+                            <!--<select name="" id="" form-control class="my-select selectaddress">-->
+                                <!--<option value="111">111</option>-->
+                                <!--<option value="1122221">1122221</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                        <div class="row-box clearfix">
+                            <span>充值金额</span>
+                            <input type="text" name="title" v-model="homestay.balance" style="float: right;width: 350px;">
+                            <!--<select name="" id="" form-control class="my-select selectmoney">-->
+                                <!--<option value="111">111</option>-->
+                                <!--<option value="1122221">1122221</option>-->
+                            <!--</select>-->
+                        </div>
+                        <!--<div class="row-box clearfix">-->
+                            <!--<span>打扫次数</span>-->
+                            <!--<select name="" id="" form-control class="my-select selectnum">-->
+                                <!--<option value="111">111</option>-->
+                                <!--<option value="1122221">1122221</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    </form>
+                    <div class='btn-box'>
+                        <!--<button type="button" class="btn my-clear" >清空</button>-->
+                        <button type="button" class="btn my-set" @click="save">保存</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/modules/cleaning/charge.js}" ></script>
+</body>
+</html>

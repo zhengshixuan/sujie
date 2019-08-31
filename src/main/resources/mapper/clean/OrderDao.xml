@@ -63,6 +63,40 @@
             AND t.clean_status_code = 0
 
     </select>
+    <select id="listRoomCleanRecord" resultType="com.sujie.modules.clean.vo.OrderVO">
+        SELECT
+            t.id ,
+            c.actual_clean_date ,
+            a.homestay_name,
+            a.homestay_address ,
+            b.room_id,
+            d.item_name roomType,
+            c.staff_cost,
+            e.staff_name,
+            d.comments
+        FROM homestay.order t
+        JOIN homestay.homestay_info a ON t.homestay_id = a.id
+        JOIN homestay.room_info b on t.room_id= b.id
+        JOIN homestay.order_record c on t.order_id = c.order_id
+        JOIN homestay.dict_room_type d on b.room_type = d.item_code
+        JOIN homestay.staff_info e on c.staff_id = e.staff_id
+        WHERE t.clean_status_code = 3
+
+        <if test="params.homestayName!=null and params.homestayName!=''">
+            AND a.homestay_name like CONCAT('%',#{params.homestayName},'%')
+        </if>
+        <if test="params.roomId!=null and params.roomId!='' ">
+            And b.room_id like CONCAT('%',#{params.roomId},'%')
+        </if>
+        <if test="params.homestayAddress!=null and params.homestayAddress!='' ">
+            AND a.homestay_address like CONCAT('%',#{params.homestayAddress},'%')
+        </if>
+        <if test="params.actualCleanDate!=null and params.actualCleanDate!='' ">
+            AND DATE_FORMAT(c.actual_clean_date,'%Y-%m-%d') = #{params.actualCleanDate}
+
+        </if>
+
+    </select>
 
 
 </mapper>

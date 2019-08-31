@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>派单</title>
+    <!--引入通用css、js-->
+    <div th:replace="header"></div>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../assets/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" th:href="@{/css/cleaning/common.css}" href="../common/common.css">
+    <link rel="stylesheet" th:href="@{/css/normalize.css}" href="../common/normalize.css">
+    <link rel="stylesheet" th:href="@{/css/cleaning/select/select-send-order.css}" href="../css/select/select-send-order.css">
+    <link rel="stylesheet" th:href="@{/css/cleaning/send-orders.css}" href="../css/send-orders.css">
+
+    <script th:src="@{/js/tabheadfixed.js}" src="../js/tabheadfixed.js"></script>
+    <script th:src="@{/js/select-js.js/fSelect.js}" src="../js/select-js.js/fSelect.js"></script>
+    <script th:src="@{/js/send-orders.js}" src="../js/send-orders.js"></script>
+
+
+    <style>
+        .ui-th-ltr{
+            background-color: #2D6035!important;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body >
+<div class='container'>
+    <div class='right'>
+        <div class="main">
+            <div class='main-box'>
+                <!-- 每个页面main-box的内容不一样  -->
+                <div class="main-content">
+                    <div class='main-header'>
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="exampleInputName2">姓名</label>
+                                <input type="text" class="form-control" id="exampleInputName2" />
+                            </div>
+                            <div class="form-group">
+                                <span>阿姨类别</span>
+                                <i></i>
+                                <select name="" id="" form-control class="selecthome">
+                                    <option value="全职">全职</option>
+                                    <option value="兼职">兼职</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn btn-success  searched">搜索</button>
+                            <button type="button" class="btn cleared">清空</button>
+                        </form>
+
+                    </div>
+                    <div class='main-table' id='table-cont'>
+                        <table cellpadding="10" cellspacing="10" class="table  table-striped table-hover " style="border-bottom: 1px solid ">
+                            <thead>
+                            <tr class="tr_success">
+                                <th>序号</th>
+                                <th>房间号</th>
+                                <th>地址</th>
+                                <th>品牌名</th>
+                                <th>保洁时间</th>
+                                <th>老板保洁费用</th>
+                                <th>优先打扫</th>
+                                <th>阿姨选择</th>
+                                <th>保洁阿姨费用</th>
+                                <th>保洁状态</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        $('.demo').fSelect();
+    });
+</script>
+
+</body>
+</html>
