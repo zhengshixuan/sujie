@@ -67,6 +67,6 @@ public class OrderVO extends OrderEntity {
     /**
      * 订单状态
      */
-    private Integer status;
+    private String statusName;
 
 }

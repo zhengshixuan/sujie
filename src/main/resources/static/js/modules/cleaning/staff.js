@@ -80,8 +80,10 @@ var vm = new Vue({
     },
     mounted: function () {
         this.getStaffInfo();
+
     },
     methods: {
+
         query: function () {
             vm.reload();
         },

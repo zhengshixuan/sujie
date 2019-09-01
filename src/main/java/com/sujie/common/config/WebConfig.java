@@ -17,16 +17,18 @@ import javax.servlet.MultipartConfigElement;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-    }
-
     /**
      * 在配置文件中配置的文件保存路径
      */
     @Value("${img.location}")
     private String location;
+    @Value("${img.locationMapping}")
+    private String locationMapping;
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/"+locationMapping+"/**").addResourceLocations("file:/"+location);
+    }
 
     @Bean
     public MultipartConfigElement multipartConfigElement(){

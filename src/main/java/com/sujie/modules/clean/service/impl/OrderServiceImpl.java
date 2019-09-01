@@ -26,14 +26,19 @@ import com.sujie.modules.clean.service.OrderService;
 public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> implements OrderService {
     @Override
     public PageUtils listRoomCleanRecord(Map<String, Object> params) {
+
+        params.put("cleanStatusCode",3);
         IPage<OrderVO> page = new Query<OrderVO>().getPage(params);
-        IPage<OrderVO> orderVOIPage = baseMapper.listRoomCleanRecord(page, params);
+        IPage<OrderVO> orderVOIPage = baseMapper.listOrderVO(page, params);
         return new PageUtils(orderVOIPage);
     }
 
     @Override
     public PageUtils listPrepareCleanOrder(Map<String, Object> params) {
-        return null;
+        params.put("cleanStatusCode",1);
+        IPage<OrderVO> page = new Query<OrderVO>().getPage(params);
+        IPage<OrderVO> orderVOIPage = baseMapper.listOrderVO(page, params);
+        return new PageUtils(orderVOIPage);
     }
 
     @Override

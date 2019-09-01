@@ -23,18 +23,22 @@ import java.util.UUID;
 public class ImageUtils {
 
     private static String staticLocation;
+    private static String staticLocationMapping;
 
     @Autowired
     public void setLocation2() {
         staticLocation = location;
+        staticLocationMapping = locationMapping;
     }
+
 
     /**
      * 在配置文件中配置的文件保存路径
      */
     @Value("${img.location}")
     private String location;
-
+    @Value("${img.locationMapping}")
+    private  String locationMapping;
     /**
      * 将文件保存在本地
      *
@@ -70,7 +74,7 @@ public class ImageUtils {
             e.printStackTrace();
             return R.error("保存失败！");
         }
-        return R.ok().put("path", dest.getPath());
+        return R.ok().put("path",dest.getPath().replace(staticLocation,"/"+staticLocationMapping+"/"));
 
     }
 

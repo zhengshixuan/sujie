@@ -19,7 +19,10 @@ spring:
   thymeleaf:
     cache: false
 img:
+#  图片存储路径
   location: c:\upload\
+#  映射路径
+  locationMapping: path
 #  redis:
 #    database: 0
 #    host: localhost

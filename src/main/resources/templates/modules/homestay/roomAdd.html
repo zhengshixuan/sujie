@@ -6,21 +6,23 @@
     <!--引入通用css、js-->
     <div th:replace="header"></div>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../assets/bootstrap-3.3.7-dist/css/bootstrap.css">
-    <link rel="stylesheet" th:href="@{/plugins/layui-v2.5.4/layui/css/layui.css}" href="../assets/layui-v2.5.4/layui/css/layui.css">
+    <link rel="stylesheet" th:href="@{/plugins/layui-v2.5.4/layui/css/layui.css}"
+          href="../assets/layui-v2.5.4/layui/css/layui.css">
     <link rel="stylesheet" th:href="@{/css/cleaning/common.css}" href="../common/common.css">
     <link rel="stylesheet" th:href="@{/css/cleaning/room-info.css}" href="../css/room-info.css">
 
-    <script th:src="@{/plugins/layui-v2.5.4/layui/layui.all.js}" src='../assets/layui-v2.5.4/layui/layui.all.js'></script>
-    <script th:src="@{/js/room-info.js}" src='../js/room-info.js'></script>
+    <script th:src="@{/plugins/layui-v2.5.4/layui/layui.all.js}"
+            src='../assets/layui-v2.5.4/layui/layui.all.js'></script>
     <style>
-        .ui-th-ltr{
+        .ui-th-ltr {
 
-            background-color: #2D6035!important;
+            background-color: #2D6035 !important;
             color: #fff;
         }
-        html,body{
-            width:100%;;
-            height:210%;
+
+        html, body {
+            width: 100%;;
+            height: 210%;
             padding-left: 0px;
             padding-right: 0px;
             background-color: #2D6035;
@@ -29,19 +31,22 @@
 
     </style>
 </head>
-<body >
+<body>
 <div class='container' id="rrapp">
+    <input type="hidden" id="id" th:value="${id}"/>
     <div class='right'>
         <div class="main">
             <div class='main-box'>
                 <!-- 每个页面main-box的内容不一样  -->
-                <div class='main-text' >
+                <div class='main-text'>
                     <div class='content-top'>
                         <form action="">
                             <div>
                                 <span>名宿品牌</span>
-                                <select name="" id="" form-control class="my-postion" v-model="room.homestayId">
-                                    <option value="111" v-for="homestay in homestays" :value="homestay.homestayId">{{homestay.homestayName}}</option>
+                                <select name="" form-control class="my-postion" v-model="room.homestayId">
+                                    <option value="111" v-for="homestay in homestays" :value="homestay.homestayId">
+                                        {{homestay.homestayName}}
+                                    </option>
                                 </select>
                             </div>
                             <div>
@@ -55,19 +60,21 @@
                             <div>
                                 <span>保洁密码</span>
                                 <input type="possword" name="title" v-model="room.roomPassword">
-                                <input type="checkbox" >
+                                <input type="checkbox">
                                 <span>永久</span>
                             </div>
                             <div>
                                 <span>房间户型</span>
-                                <select name="" id="" form-control class="my-postion" v-model="room.roomType">
-                                    <option value="111" v-for="roomType in roomTypes" :value="roomType.itemCode">{{roomType.itemName}}</option>
+                                <select name="" form-control class="my-postion" v-model="room.roomType">
+                                    <option value="111" v-for="roomType in roomTypes" :value="roomType.itemCode">
+                                        {{roomType.itemName}}
+                                    </option>
                                 </select>
                             </div>
-                            <div >
+                            <div>
                                 <span>房间开门方式</span>
                                 <!--<input type="text" name="title" v-model="room.openMethod">-->
-                                <select name="" id="" form-control class="my-postion" v-model="room.openMethod">
+                                <select name="" form-control class="my-postion" v-model="room.openMethod">
                                     <option value="0">密码锁</option>
                                     <option value="1">密码盒子</option>
                                 </select>
@@ -78,9 +85,11 @@
                             </div>
                             <div>
                                 <span>洗床单</span>
-                                <input type="radio" name="title" value="0" checked style="width:15px;height: 15px;" v-model="room.needWashingSheets">
+                                <input type="radio" name="title" value="0" checked style="width:15px;height: 15px;"
+                                       v-model="room.needWashingSheets">
                                 <span>是</span>
-                                <input type="radio" name="title" value="1" style="width:15px;height: 15px;" v-model="room.needWashingSheets">
+                                <input type="radio" name="title" value="1" style="width:15px;height: 15px;"
+                                       v-model="room.needWashingSheets">
                                 <span>否</span>
                             </div>
 
@@ -98,44 +107,63 @@
                                 <input id="file" type="file" value=''>
 
                             </div> -->
-                            <button type="button" class="layui-btn" id="test1">
+                            <button type="button" class="layui-btn" id="test1" value="1">
                                 <i class="layui-icon">&#xe67c;</i>
+                                <input type="hidden" v-model="room.imageType[0]"/>
+                                <input type="hidden" v-model="room.path[0]"/>
                             </button>
-                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"
+                                      v-model="room.imageDes[0]"></textarea>
                         </div>
                         <div class="allphoto">
-                            <div  class="roomdecoration">2.沙发区域(一张照片)</div>
-                            <button type="button" class="layui-btn" id="test1">
+                            <div class="roomdecoration">2.沙发区域(一张照片)</div>
+                            <button type="button" class="layui-btn" value="2">
                                 <i class="layui-icon">&#xe67c;</i>
+                                <input type="hidden" v-model="room.imageType[1]"/>
+                                <input type="hidden" v-model="room.path[1]"/>
                             </button>
-                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"
+                                      v-model="room.imageDes[1]"></textarea>
                         </div>
                         <div class="allphoto">
-                            <div  class="roomdecoration">3.厨房区域(一张照片)</div>
-                            <button type="button" class="layui-btn" id="test1">
+                            <div class="roomdecoration">3.厨房区域(一张照片)</div>
+                            <button type="button" class="layui-btn" value="3">
                                 <i class="layui-icon">&#xe67c;</i>
+                                <input type="hidden" v-model="room.imageType[2]"/>
+                                <input type="hidden" v-model="room.path[2]"/>
                             </button>
-                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"
+                                      v-model="room.imageDes[2]"></textarea>
                         </div>
                         <div class="allphoto">
-                            <div  class="roomdecoration">4.阳台区域(一张照片)</div>
-                            <button type="button" class="layui-btn" id="test1">
+                            <div class="roomdecoration">4.阳台区域(一张照片)</div>
+                            <button type="button" class="layui-btn" value="4">
                                 <i class="layui-icon">&#xe67c;</i>
+                                <input type="hidden" v-model="room.imageType[3]"/>
+                                <input type="hidden" v-model="room.path[3]"/>
                             </button>
-                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"
+                                      v-model="room.imageDes[3]"></textarea>
                         </div>
                         <div class="allphoto">
-                            <div  class="roomdecoration">5.卫生间区域(三张照片分别为洗漱台,马桶,卫生间地面)</div>
-                            <button type="button" class="layui-btn" id="test1">
+                            <div class="roomdecoration">5.卫生间区域(三张照片分别为洗漱台,马桶,卫生间地面)</div>
+                            <button type="button" class="layui-btn" value="5">
                                 <i class="layui-icon">&#xe67c;</i>
+                                <input type="hidden" v-model="room.imageType[4]"/>
+                                <input type="hidden" v-model="room.path[4]"/>
                             </button>
-                            <button type="button" class="layui-btn" id="test1">
+                            <button type="button" class="layui-btn" value="6">
                                 <i class="layui-icon">&#xe67c;</i>
+                                <input type="hidden" v-model="room.imageType[5]"/>
+                                <input type="hidden" v-model="room.path[5]"/>
                             </button>
-                            <button type="button" class="layui-btn" id="test1">
+                            <button type="button" class="layui-btn" value="7">
                                 <i class="layui-icon">&#xe67c;</i>
+                                <input type="hidden" v-model="room.imageType[6]"/>
+                                <input type="hidden" v-model="room.path[6]"/>
                             </button>
-                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                            <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"
+                                      v-model="room.imageDes[4]"></textarea>
                         </div>
 
                     </div>
@@ -148,80 +176,105 @@
                         <div class="allphoto flex-box">
                             <div class="flex-left">
                                 <div>1.牙膏,牙刷(一张照片)</div>
-                                <button type="button" class="layui-btn" id="test1">
+                                <button type="button" class="layui-btn" value="8">
                                     <i class="layui-icon">&#xe67c;</i>
+                                    <input type="hidden" v-model="room.imageType[7]"/>
+                                    <input type="hidden" v-model="room.path[7]"/>
                                 </button>
-                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"
+                                          v-model="room.imageDes[7]"></textarea>
                             </div>
                             <div class="flex-right">
                                 <div>2.洗发水,沐浴露(一张照片)</div>
-                                <button type="button" class="layui-btn" id="test1">
+                                <button type="button" class="layui-btn" value="9">
                                     <i class="layui-icon">&#xe67c;</i>
+                                    <input type="hidden" v-model="room.imageType[8]"/>
+                                    <input type="hidden" v-model="room.path[8]"/>
                                 </button>
-                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"
+                                          v-model="room.imageDes[8]"></textarea>
                             </div>
 
                         </div>
                         <div class="allphoto flex-box">
                             <div class="flex-left">
                                 <div>3.梳子(一张照片)</div>
-                                <button type="button" class="layui-btn" id="test1">
+                                <button type="button" class="layui-btn" value="10">
                                     <i class="layui-icon">&#xe67c;</i>
+                                    <input type="hidden" v-model="room.imageType[9]"/>
+                                    <input type="hidden" v-model="room.path[9]"/>
                                 </button>
-                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"
+                                          v-model="room.imageDes[9]"></textarea>
                             </div>
                             <div class="flex-right">
                                 <div>4.厕所用纸(一张照片)</div>
-                                <button type="button" class="layui-btn" id="test1">
+                                <button type="button" class="layui-btn" value="11">
                                     <i class="layui-icon">&#xe67c;</i>
+                                    <input type="hidden" v-model="room.imageType[10]"/>
+                                    <input type="hidden" v-model="room.path[10]"/>
                                 </button>
-                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"
+                                          v-model="room.imageDes[10]"></textarea>
                             </div>
 
                         </div>
                         <div class="allphoto flex-box">
                             <div class="flex-left">
                                 <div>5.客厅用纸(一张照片)</div>
-                                <button type="button" class="layui-btn" id="test1">
+                                <button type="button" class="layui-btn" value="12">
                                     <i class="layui-icon">&#xe67c;</i>
+                                    <input type="hidden" v-model="room.imageType[11]"/>
+                                    <input type="hidden" v-model="room.path[11]"/>
                                 </button>
-                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"
+                                          v-model="room.imageDes[11]"></textarea>
                             </div>
                             <div class="flex-right">
                                 <div>6.床单被套(一张照片)</div>
-                                <button type="button" class="layui-btn" id="test1">
+                                <button type="button" class="layui-btn" value="13">
                                     <i class="layui-icon">&#xe67c;</i>
+                                    <input type="hidden" v-model="room.imageType[12]"/>
+                                    <input type="hidden" v-model="room.path[12]"/>
                                 </button>
-                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"
+                                          v-model="room.imageDes[12]"></textarea>
                             </div>
-
                         </div>
                         <div class="allphoto flex-box">
                             <div class="flex-left">
                                 <div>7.厨具(一张照片)</div>
-                                <button type="button" class="layui-btn" id="test1">
+                                <button type="button" class="layui-btn" value="14">
                                     <i class="layui-icon">&#xe67c;</i>
+                                    <input type="hidden" v-model="room.imageType[13]"/>
+                                    <input type="hidden" v-model="room.path[13]"/>
                                 </button>
-                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"
+                                          v-model="room.imageDes[13]"></textarea>
                             </div>
                             <div class="flex-right">
                                 <div>8.垃圾袋(一张照片)</div>
-                                <button type="button" class="layui-btn" id="test1">
+                                <button type="button" class="layui-btn" value="15">
                                     <i class="layui-icon">&#xe67c;</i>
+                                    <input type="hidden" v-model="room.imageType[14]"/>
+                                    <input type="hidden" v-model="room.path[14]"/>
                                 </button>
-                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"></textarea>
+                                <textarea name="" class="txt" cols="30" rows="10" placeholder="文字说明"
+                                          v-model="room.imageDes[14]"></textarea>
                             </div>
-
                         </div>
-
                     </div>
-
-
+                    <div class='btn-box'>
+                        <button type="button" class="btn" @click="saveOrUpdate">保存</button>
+                        <button type="button" class="btn" @click="goback">返回</button>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script th:src="@{/js/modules/cleaning/room.js}" ></script>
+<script th:src="@{/js/modules/cleaning/room.js}"></script>
+<script th:src="@{/js/modules/cleaning/roomAdd.js}"></script>
 </body>
 </html>

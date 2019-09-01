@@ -63,24 +63,34 @@
             AND t.clean_status_code = 0
 
     </select>
-    <select id="listRoomCleanRecord" resultType="com.sujie.modules.clean.vo.OrderVO">
+    <select id="listOrderVO" resultType="com.sujie.modules.clean.vo.OrderVO">
         SELECT
-            t.id ,
-            c.actual_clean_date ,
-            a.homestay_name,
-            a.homestay_address ,
-            b.room_id,
-            d.item_name roomType,
-            c.staff_cost,
-            e.staff_name,
-            d.comments
-        FROM homestay.order t
+        t.id,
+        c.actual_clean_date,
+        a.homestay_name,
+        a.homestay_address,
+        b.room_id,
+        d.item_name roomType,
+        c.staff_cost,
+        e.staff_name,
+        d.comments ,
+        c.is_first,
+        c.boss_cost,
+        t.pre_clean_date,
+        f.item_name
+        FROM
+        homestay.ORDER t
         JOIN homestay.homestay_info a ON t.homestay_id = a.id
-        JOIN homestay.room_info b on t.room_id= b.id
-        JOIN homestay.order_record c on t.order_id = c.order_id
-        JOIN homestay.dict_room_type d on b.room_type = d.item_code
-        JOIN homestay.staff_info e on c.staff_id = e.staff_id
-        WHERE t.clean_status_code = 3
+        JOIN homestay.room_info b ON t.room_id = b.id
+        JOIN homestay.order_record c ON t.order_id = c.order_id
+        JOIN homestay.dict_room_type d ON b.room_type = d.item_code
+        JOIN homestay.staff_info e ON c.staff_id = e.staff_id
+        JOIN homestay.dict_order_status f ON c.status = f.item_code
+        WHERE
+        1 = 1
+        <if test="params.cleanStatusCode!=null and params.cleanStatusCode !='' ">
+            AND t.clean_status_code = #{params.cleanStatusCode}
+        </if>
 
         <if test="params.homestayName!=null and params.homestayName!=''">
             AND a.homestay_name like CONCAT('%',#{params.homestayName},'%')
@@ -93,10 +103,8 @@
         </if>
         <if test="params.actualCleanDate!=null and params.actualCleanDate!='' ">
             AND DATE_FORMAT(c.actual_clean_date,'%Y-%m-%d') = #{params.actualCleanDate}
-
         </if>
 
     </select>
-
 
 </mapper>

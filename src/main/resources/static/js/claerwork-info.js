@@ -18,12 +18,10 @@ $(function () {
                 //如果上传失败
                 if (res.code > 0) {
                     return layer.msg('上传失败');
-                    $('#test1').show();
                 }else if (res.code==0){
-                    vm.staff.photo=res.path;
-                    $('#test1').hide();
-                    $('#picId').show();
                     // $('#test1').css("background-image",'url('+res.path+')').css("background-size","100% 100%");
+                    $('#test1').css("background-image",'url('+res.path+')').css("background-size","100% 100%");
+                    vm.staff.photo=res.path;
                     return layer.msg('上传成功');
                 }
                 //上传成功

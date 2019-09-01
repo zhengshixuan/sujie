@@ -1,5 +1,6 @@
 package com.sujie.modules.clean.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -7,6 +8,7 @@ import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
+import org.aspectj.apache.bcel.classfile.Module;
 
 /**
  * 房间信息
@@ -54,10 +56,6 @@ public class RoomInfoEntity implements Serializable {
 	 */
 	private String roomDecoration;
 	/**
-	 * 房间内特殊信息显示(关联特殊信息详细表room_clain_info)
-	 */
-	private String roomClainId;
-	/**
 	 * 是否需要洗床单0需要，1不需要
 	 */
 	private Integer needWashingSheets;
@@ -69,5 +67,22 @@ public class RoomInfoEntity implements Serializable {
 	 * 备注：找到房间的说明(一个房门里面两个房间或多个的情况)
 	 */
 	private String comments;
+
+    /**
+     * 图片路径
+     */
+    @TableField(exist = false)
+    private String[] path;
+
+    /**
+     * 图片类别
+     */
+    @TableField(exist = false)
+    private Integer[] imageType;
+    /**
+     * 图片描述
+     */
+    @TableField(exist = false)
+    private String[] imageDes;
 
 }

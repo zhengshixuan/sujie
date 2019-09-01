@@ -21,7 +21,7 @@ import java.util.Map;
 @Mapper
 public interface OrderDao extends BaseMapper<OrderEntity> {
 
-    IPage<OrderVO> listRoomCleanRecord(IPage<OrderVO> page, @Param("params") Map<String,Object> params);
+    IPage<OrderVO> listOrderVO(IPage<OrderVO> page, @Param("params") Map<String,Object> params);
 
     Integer getPreparOrderCount(Map<String,Object> params);
 

@@ -84,8 +84,8 @@ public class OrderController {
      */
     @RequestMapping("/listPrepareCleanOrder")
     public R listPrepareCleanOrder(@RequestParam Map<String, Object> params){
-
-        return R.ok();
+        PageUtils page = orderService.listPrepareCleanOrder(params);
+        return R.ok().put("page",page);
     }
 
 
