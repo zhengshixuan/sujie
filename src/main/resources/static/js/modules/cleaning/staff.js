@@ -117,7 +117,7 @@ var vm = new Vue({
         saveOrUpdate: function () {
 
             var staffId = $("#staffId").val();
-            var url = staffId==null?'/staffinfo/save':'/staffinfo/update';
+            var url = staffId==""?'/staffinfo/save':'/staffinfo/update';
             var staffName = vm.staff.staffName;
             var telphone = vm.staff.telphone;
             var password = vm.staff.password;
@@ -184,8 +184,8 @@ var vm = new Vue({
                             vm.staff = r.staffInfo;
                             // $('#demo1').attr('src', '/staffinfo/getStaffPhoto?id=' + vm.staff.id); //图片链接（base64）
                             // $('#picId').show();
-                            var url='/staffinfo/getStaffPhoto?id=' + vm.staff.id;
-                            $('#test1').css("background-image",'url(/staffinfo/getStaffPhoto?id=' + vm.staff.id+')').css("background-size","100% 100%");
+                            // var url='/staffinfo/getStaffPhoto?id=' + vm.staff.id;
+                            $('#test1').css("background-image",'url('+r.staffInfo.photo+')').css("background-size","100% 100%");
                         } else {
                             alert(r.msg);
                         }

@@ -79,7 +79,7 @@
         t.pre_clean_date,
         f.item_name
         FROM
-        homestay.ORDER t
+        homestay.order t
         JOIN homestay.homestay_info a ON t.homestay_id = a.id
         JOIN homestay.room_info b ON t.room_id = b.id
         JOIN homestay.order_record c ON t.order_id = c.order_id

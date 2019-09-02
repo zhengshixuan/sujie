@@ -160,8 +160,14 @@ var vm = new Vue({
             vm.q.operatorsName = null;
         },
         saveOrUpdate: function () {
+            var id = $("#id").val();
+            if(null!=id&&""!=id){
+                var url = "/roominfo/update";
+            }else{
+                var url = "/roominfo/save";
+            }
             var data = JSON.stringify(vm.room);
-            var url = "/roominfo/save";
+
             $.ajax({
                 type: "post",
                 url: url,
@@ -170,7 +176,7 @@ var vm = new Vue({
                 success: function (r) {
                     if (r.code === 0) {
                         alert('操作成功', function (index) {
-                            window.location.href = "/modules/homestay/staffList.html";
+                            window.location.href = "/modules/homestay/roomList.html";
                         });
                     } else {
                         alert(r.msg);
