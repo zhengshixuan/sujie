@@ -83,4 +83,9 @@ public class StaffInfoEntity implements Serializable {
 	 */
 	private String address;
 
+	/**
+	 * md5加密密码
+	 */
+	private String password;
+
 }

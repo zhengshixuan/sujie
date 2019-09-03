@@ -4,11 +4,13 @@ import java.awt.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Map;
 
-import com.sujie.common.utils.UUIDUtils;
-import com.sujie.common.utils.ImageUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sujie.common.utils.*;
 import com.sun.deploy.net.HttpResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.sujie.modules.clean.entity.StaffInfoEntity;
 import com.sujie.modules.clean.service.StaffInfoService;
-import com.sujie.common.utils.PageUtils;
-import com.sujie.common.utils.R;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -35,6 +35,33 @@ import javax.servlet.http.HttpServletResponse;
 public class StaffInfoController {
     @Autowired
     private StaffInfoService staffInfoService;
+
+//    @RequestMapping("/login")
+//    public R login(@RequestParam("cleanerPhone") String cleanerPhone, @RequestParam("pwd") String pwd) {
+//        QueryWrapper<StaffInfoEntity> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq("telphone", cleanerPhone);
+//        if (StringUtils.isBlank(cleanerPhone)) {
+//            return R.error(0, "手机号不能为空");
+//        }
+//        if (StringUtils.isBlank(pwd)) {
+//            return R.error(0, "密码不能为空");
+//        }
+//        // 查询详细
+//
+//        StaffInfoEntity staffInfoEntity = staffInfoService.getOne(queryWrapper);
+//
+//        if (staffInfoEntity == null) {
+//            return R.error(0, "手机号不存在");
+//        } else {
+//            String pwdMD5 = MD5Utils.getMD5(pwd);
+//            String password = staffInfoEntity.getPassword();
+//            if (pwdMD5.equalsIgnoreCase(password)) {
+//                return R.appOK();
+//            } else {
+//                return R.error(0, "密码错误");
+//            }
+//        }
+//    }
 
     /**
      * 列表
@@ -76,7 +103,7 @@ public class StaffInfoController {
 
         if (StringUtils.isNotBlank(id)) {
             StaffInfoEntity staffInfo = staffInfoService.getById(id);
-            String photoPath=staffInfo.getPhoto();
+            String photoPath = staffInfo.getPhoto();
             response.setContentType("image/jpeg");
             FileInputStream is = ImageUtils.getFileInputStream(photoPath);
 

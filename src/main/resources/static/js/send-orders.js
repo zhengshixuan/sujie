@@ -14,8 +14,6 @@ $('.cleared').on('click',function(){
    $('#exampleInputName2').val('')
    $('.selecthome').val('')
 
-
-
 })
 
 })

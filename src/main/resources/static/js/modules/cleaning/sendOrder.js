@@ -10,7 +10,7 @@ $(function () {
             {label: '保洁时间', name: 'preCleanDate', width: 80},
             {label: '保洁老板费用', name: 'bossCost', width: 80},
             {label: '优先打扫', name: 'isFirst', width: 80,formatter:isFirst},
-            {label: '阿姨选择', name: '', width: 80},
+            {label: '阿姨选择', name: '', width: 80,formatter:staffList},
             {label: '保洁阿姨费用', name: 'staffCost', width: 80},
             {label: '保洁状态', name: 'statusName', width: 80}
         ],
@@ -42,13 +42,13 @@ $(function () {
             $("#jqGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "hidden"});
         }
     });
+    $('.demo').fSelect();
 });
 
 function staffList(value,options,rowObject) {
     var select= '<select class="demo" multiple="multiple">'+
         '<option value="cp">李阿姨</option>'+
-        '<option value="cp">张阿姨</option>'+
-        '</select>'
+        '</select>';
     return select;
 }
 
