@@ -20,6 +20,11 @@ import java.util.Map;
  */
 @Mapper
 public interface OrderDao extends BaseMapper<OrderEntity> {
+
+    /**
+     * 查询房间详细信息
+     */
+    Map<String,Object> findRoomInfoDetail(Map<String,Object> params);
     /**
      * 查询今日保洁单
      * @param params

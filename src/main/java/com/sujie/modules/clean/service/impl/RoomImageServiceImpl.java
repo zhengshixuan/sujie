@@ -33,4 +33,12 @@ public class RoomImageServiceImpl extends ServiceImpl<RoomImageDao, RoomImageEnt
         return roomImageEntities;
     }
 
+    @Override
+    public List<RoomImageEntity> listRoomImage(Map<String, Object> params) {
+
+
+
+        return null;
+    }
+
 }

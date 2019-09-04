@@ -3,7 +3,7 @@
 
 <mapper namespace="com.sujie.modules.clean.dao.RoomInfoDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.sujie.modules.clean.entity.RoomInfoEntity" id="roomInfoMap">
         <result property="id" column="id"/>
         <result property="homestayId" column="homestay_id"/>
@@ -13,26 +13,25 @@
         <result property="roomPassword" column="room_password"/>
         <result property="roomType" column="room_type"/>
         <result property="roomDecoration" column="room_decoration"/>
-        <result property="roomClainId" column="room_clain_id"/>
         <result property="needWashingSheets" column="need_washing_sheets"/>
         <result property="price" column="price"/>
         <result property="comments" column="comments"/>
     </resultMap>
 
-    <select id="selectPageVo"  resultType="com.sujie.modules.clean.vo.RoomInfoVO">
+    <select id="selectPageVo" resultType="com.sujie.modules.clean.vo.RoomInfoVO">
         SELECT
-          t.id,
-          t.room_id,
-          a.homestay_name,
-          a.homestay_address ,
-          b.item_name roomTypeName,
-          t.price,
-          t.comments
+        t.id,
+        t.room_id,
+        a.homestay_name,
+        a.homestay_address ,
+        b.item_name roomTypeName,
+        t.price,
+        t.comments
         FROM
         homestay.room_info t
-        JOIN homestay.homestay_info a ON  t.homestay_id =  a.homestay_id
+        JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
         JOIN homestay.dict_room_type b ON b.item_code = t.room_type
-        WHERE  1=1
+        WHERE 1=1
         <if test="params.homestayName!=null and params.homestayName!=''">
             AND a.homestay_name like CONCAT('%',#{params.homestayName},'%')
         </if>
@@ -43,6 +42,5 @@
             AND a.homestay_address like CONCAT('%',#{params.homestayAddress},'%')
         </if>
     </select>
-
 
 </mapper>

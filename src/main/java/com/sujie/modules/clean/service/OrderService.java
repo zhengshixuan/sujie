@@ -18,6 +18,14 @@ public interface OrderService extends IService<OrderEntity> {
 
 
     /**
+     * 查询订单详细和房间详细
+     * @param params
+     * @return
+     */
+    Map<String,Object> findOrderDetail(Map<String,Object> params);
+
+
+    /**
      *
      * @param params
      * @return

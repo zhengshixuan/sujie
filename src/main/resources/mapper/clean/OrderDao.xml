@@ -146,5 +146,26 @@
         AND DATE_FORMAT(a.actual_clean_date ,'%Y-%m-%d') &lt;= #{DateEnd}
         AND d.telphone=#{cleanerPhone}
     </select>
+    <select id="findRoomInfoDetail" resultType="java.util.Map">
+        SELECT
+            t.room_id roomNo,
+            b.item_name roomType,
+            a.homestay_name homeStayBreand,
+            a.homestay_id homestayId,
+            a.homestay_address address,
+            t.room_password cleanPwd,
+            c.clean_type_name cleanType,
+            e.is_extra_bed extraBed
+        FROM
+            homestay.room_info t
+            JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
+            JOIN homestay.dict_room_type b ON t.room_type = b.item_code
+            JOIN homestay.ORDER d ON d.homestay_id = t.homestay_id
+            AND d.room_id = t.room_id
+            JOIN homestay.order_record e ON e.order_id = d.order_id
+            JOIN homestay.dict_clean_type c ON c.clean_type_code = d.clean_type
+
+
+    </select>
 
 </mapper>

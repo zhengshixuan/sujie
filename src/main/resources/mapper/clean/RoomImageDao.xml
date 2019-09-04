@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="io.renren.modules.generator.dao.RoomImageDao">
+<mapper namespace="com.sujie.modules.clean.dao.RoomImageDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.sujie.modules.clean.entity.RoomImageEntity" id="roomImageMap">
@@ -13,5 +13,15 @@
         <result property="comments" column="comments"/>
     </resultMap>
 
+    <select id="listRoomImage" resultType="com.sujie.modules.clean.entity.RoomImageEntity">
+        SELECT
+        t.pic_path ,
+        t.comments,
+        t.imte_name picTypeName
+        FROM homestay.room_image t
+        JOIN homestay.dict_pic_type a on t.pic_type_code= a.item_code
+        WHERE t.homestay_id=#{homestayId}
+        AND t.room_id =#{roomId}
 
+    </select>
 </mapper>

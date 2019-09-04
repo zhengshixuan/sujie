@@ -19,5 +19,12 @@ public interface RoomImageService extends IService<RoomImageEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     List<RoomImageEntity> listByHomestayIdAndRoomId(Map<String, Object> params);
+
+    /**
+     * 查询图片信息带图片类型
+     * @param params
+     * @return
+     */
+    List<RoomImageEntity> listRoomImage(Map<String, Object> params);
 }
 

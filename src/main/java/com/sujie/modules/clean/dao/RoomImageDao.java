@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sujie.modules.clean.entity.RoomImageEntity;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 房间图片信息表
  * 
@@ -13,5 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface RoomImageDao extends BaseMapper<RoomImageEntity> {
-	
+
+    List<RoomImageEntity> listRoomImage(Map<String, Object> params);
+
 }

@@ -24,6 +24,14 @@ import com.sujie.modules.clean.service.OrderService;
 
 @Service("orderService")
 public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> implements OrderService {
+
+    @Override
+    public Map<String, Object> findOrderDetail(Map<String, Object> params) {
+
+
+        return null;
+    }
+
     @Override
     public List<Map<String, Object>> listTodayOrder(Map<String, Object> params) {
 

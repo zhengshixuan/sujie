@@ -17,6 +17,7 @@ public interface RoomInfoService extends IService<RoomInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
 
-    
+
+
 }
 

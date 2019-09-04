@@ -3,8 +3,11 @@ package com.sujie.modules.clean.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sujie.common.utils.MD5Utils;
 import com.sujie.common.utils.R;
+import com.sujie.modules.clean.entity.RoomImageEntity;
 import com.sujie.modules.clean.entity.StaffInfoEntity;
 import com.sujie.modules.clean.service.OrderService;
+import com.sujie.modules.clean.service.RoomImageService;
+import com.sujie.modules.clean.service.RoomInfoService;
 import com.sujie.modules.clean.service.StaffInfoService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +32,10 @@ public class App {
     private StaffInfoService staffInfoService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private RoomInfoService roomInfoService;
+    @Autowired
+    private RoomImageService roomImageService;
 
     @GetMapping()
     public R getTodayPreOrder(@RequestBody Map<String, Object> params) {
@@ -130,10 +138,19 @@ public class App {
         if(StringUtils.isBlank(address)){
             return R.error(0,"民宿地址不能为空");
         }
-
-
-
-        return null;
+        Map<String, Object> orderDetail = orderService.findOrderDetail(params);
+        Map<String,Object> roomImageParamsMap = new HashMap<>();
+        roomImageParamsMap.put("homestay_id",orderDetail.get("homestayId"));
+        roomImageParamsMap.put("room_id",orderDetail.get("roomId"));
+        List<RoomImageEntity> roomImageEntities = roomImageService.listByHomestayIdAndRoomId(roomImageParamsMap);
+        orderDetail.put("image",roomImageEntities);
+//        if(roomImageEntities!=null&&roomImageEntities.size()>0){
+//            Map<String,Object> imageMap = new HashMap<>();
+//            for (RoomImageEntity roomImageEntity : roomImageEntities) {
+//
+//            }
+//        }
+        return R.appOK().put("orderDetail",orderDetail);
     }
 
     @RequestMapping("/listRoomCleanRecordApp")

@@ -3,6 +3,7 @@ package com.sujie.modules.clean.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sujie.common.utils.Query;
 import com.sujie.modules.clean.entity.RoomClainInfoEntity;
+import com.sujie.modules.clean.service.RoomImageService;
 import com.sujie.modules.clean.vo.RoomInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,8 @@ import com.sujie.modules.clean.service.RoomInfoService;
 
 @Service("roomInfoService")
 public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoDao, RoomInfoEntity> implements RoomInfoService {
-
+    @Autowired
+    private RoomImageService roomImageService;
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
 
@@ -31,5 +33,7 @@ public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoDao, RoomInfoEntity
         IPage<RoomInfoVO> roomInfoVOIPage = baseMapper.selectPageVo(page, params);
         return new PageUtils(roomInfoVOIPage);
     }
+
+
 
 }
