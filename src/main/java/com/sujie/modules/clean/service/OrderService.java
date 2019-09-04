@@ -16,6 +16,14 @@ import java.util.Map;
  */
 public interface OrderService extends IService<OrderEntity> {
 
+
+    /**
+     *
+     * @param params
+     * @return
+     */
+    List<Map<String,Object>> listTodayOrder(Map<String,Object> params);
+
     /**
      * 查询已经完成保洁的记录
      *
@@ -24,6 +32,12 @@ public interface OrderService extends IService<OrderEntity> {
      */
     PageUtils listRoomCleanRecord(Map<String, Object> params);
 
+    /**
+     * app端查询自己的保洁记录
+     * @param params 入参
+     * @return
+     */
+    List<Map<String,Object>> listRoomCleanRecordApp(Map<String, Object> params);
 
     /**
      * 查询待保洁的订单

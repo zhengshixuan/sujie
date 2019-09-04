@@ -20,15 +20,36 @@ import java.util.Map;
  */
 @Mapper
 public interface OrderDao extends BaseMapper<OrderEntity> {
+    /**
+     * 查询今日保洁单
+     * @param params
+     * @return
+     */
+    List<Map<String,Object>> listTodayOrder(Map<String, Object> params);
 
+    List<Map<String,Object>> listRoomCleanRecordApp(Map<String, Object> params);
+    /**
+     * @param page
+     * @param params
+     * @return
+     */
     IPage<OrderVO> listOrderVO(IPage<OrderVO> page, @Param("params") Map<String,Object> params);
 
+    /**
+     * 查询预排单总数
+     * @param params
+     * @return
+     */
     Integer getPreparOrderCount(Map<String,Object> params);
 
+    /**
+     * 查询预排单详细
+     * @param params
+     * @return
+     */
     List<Map<String,Object>> listPreOrder(Map<String,Object> params);
 
     /**
-     * 查询已经保洁完成的订单
      * @param params
      * @return
      */
