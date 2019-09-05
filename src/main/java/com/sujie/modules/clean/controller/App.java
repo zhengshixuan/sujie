@@ -1,6 +1,7 @@
 package com.sujie.modules.clean.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sujie.common.utils.ImageUtils;
 import com.sujie.common.utils.MD5Utils;
 import com.sujie.common.utils.R;
 import com.sujie.modules.clean.entity.RoomImageEntity;
@@ -12,6 +13,7 @@ import com.sujie.modules.clean.service.StaffInfoService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -37,29 +39,12 @@ public class App {
     @Autowired
     private RoomImageService roomImageService;
 
-    @GetMapping()
-    public R getTodayPreOrder(@RequestBody Map<String, Object> params) {
-        return null;
-    }
-
-    @GetMapping("/getTodayOrder")
-    public R getTodayOrder(@RequestBody Map<String, Object> params) {
-        String cleanerPhone = (String) params.get("cleanerPhone");
-        String address = (String) params.get("address");
-        if (StringUtils.isBlank(cleanerPhone)) {
-            return R.error(0, "保洁阿姨手机号码不能为空");
-        }
-        if (StringUtils.isBlank(address)) {
-            return R.error(0, "保洁阿姨指定地址不能为空");
-
-        }
-
-        List<Map<String, Object>> list = orderService.listTodayOrder(params);
-
-
-        return R.ok().put("list", list);
-    }
-
+    /**
+     * 1.登录
+     * @param cleanerPhone
+     * @param pwd
+     * @return
+     */
     @RequestMapping("/login")
     public R login(@RequestParam("cleanerPhone") String cleanerPhone, @RequestParam("pwd") String pwd) {
         if (StringUtils.isBlank(cleanerPhone)) {
@@ -86,6 +71,57 @@ public class App {
             }
         }
     }
+
+    /**
+     * 获取今日预排单
+     * @param params
+     * @return
+     */
+    @GetMapping()
+    public R getTodayPreOrder(@RequestBody Map<String, Object> params) {
+        String cleanerPhone = (String) params.get("cleanerPhone");
+        if(StringUtils.isBlank(cleanerPhone)){
+            return R.error(0,"保洁阿姨手机号码");
+        }else{
+            
+
+        }
+
+        return null;
+    }
+
+
+    /**
+     * 上传图片
+     *
+     * @param file
+     * @return
+     */
+    @RequestMapping("/upload")
+    public R upload(@RequestParam MultipartFile file) {
+        R r = ImageUtils.upload(file);
+        return r;
+    }
+
+    @GetMapping("/getTodayOrder")
+    public R getTodayOrder(@RequestBody Map<String, Object> params) {
+        String cleanerPhone = (String) params.get("cleanerPhone");
+        String address = (String) params.get("address");
+        if (StringUtils.isBlank(cleanerPhone)) {
+            return R.error(0, "保洁阿姨手机号码不能为空");
+        }
+        if (StringUtils.isBlank(address)) {
+            return R.error(0, "保洁阿姨指定地址不能为空");
+
+        }
+
+        List<Map<String, Object>> list = orderService.listTodayOrder(params);
+
+
+        return R.ok().put("list", list);
+    }
+
+
 
     @RequestMapping("/updatePassword")
     public R updatePassword(@RequestBody Map<String, Object> params) {
