@@ -23,7 +23,7 @@ public class DictDailyNessitiesEntity implements Serializable {
 	 * 
 	 */
 	@TableId
-	private String id;
+	private Integer id;
 	/**
 	 * 日用品代码
 	 */

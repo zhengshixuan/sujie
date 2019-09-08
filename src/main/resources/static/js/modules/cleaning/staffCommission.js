@@ -25,8 +25,9 @@ var vm = new Vue({
         query: function () {
             vm.reload();
         },
-
         save:function () {
+            var id = $("#id").val();
+            vm.staffCommission.id = id;
             var data = JSON.stringify(vm.staffCommission);
             var extraFee = vm.staffCommission.extraFee;
             var commission = vm.staffCommission.commission;

@@ -15,9 +15,12 @@
 
     <select id="listRoomImage" resultType="com.sujie.modules.clean.entity.RoomImageEntity">
         SELECT
+        t.id,
+        t.pic_type_code,
+        t.homestay_id,
         t.pic_path ,
         t.comments,
-        t.imte_name picTypeName
+        a.item_name picTypeName
         FROM homestay.room_image t
         JOIN homestay.dict_pic_type a on t.pic_type_code= a.item_code
         WHERE t.homestay_id=#{homestayId}

@@ -22,6 +22,15 @@ import java.util.Map;
 public interface OrderDao extends BaseMapper<OrderEntity> {
 
     /**
+     * 更新订单状态
+     * @param params
+     * @return
+     */
+    int updateCleanStatusCode(Map<String,Object> params);
+
+
+    Integer getPreOrderCount(Map<String,Object> params);
+    /**
      * 查询房间详细信息
      */
     Map<String,Object> findRoomInfoDetail(Map<String,Object> params);
@@ -55,6 +64,7 @@ public interface OrderDao extends BaseMapper<OrderEntity> {
     List<Map<String,Object>> listPreOrder(Map<String,Object> params);
 
     /**
+     * 查询预排单详细
      * @param params
      * @return
      */

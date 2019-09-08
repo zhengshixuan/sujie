@@ -17,5 +17,12 @@ public interface StaffInfoService extends IService<StaffInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
 
+    /**
+     * 查询地区信息和本地区阿姨总数
+     * @param params
+     * @return
+     */
+    Map<String,Object> listStaffInfoByTelphone(Map<String,Object> params);
+
 }
 

@@ -15,7 +15,7 @@ import lombok.Data;
  * @date 2019-08-18 10:15:19
  */
 @Data
-@TableName("staff_work_place")
+@TableName("homestay.staff_work_place")
 public class StaffWorkPlaceEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -23,35 +23,11 @@ public class StaffWorkPlaceEntity implements Serializable {
 	 * 
 	 */
 	@TableId
-	private String id;
+	private Integer id;
 	/**
 	 * 关联staff_info中staff_id
 	 */
 	private String staffId;
-	/**
-	 * 省代码
-	 */
-	private String provinceCode;
-	/**
-	 * 省名称
-	 */
-	private String provinceName;
-	/**
-	 * 市代码
-	 */
-	private String cityCode;
-	/**
-	 * 市名称
-	 */
-	private String cityName;
-	/**
-	 * 区代码
-	 */
-	private String countyCode;
-	/**
-	 * 区名称
-	 */
-	private String countyName;
 	/**
 	 * 详细地址
 	 */

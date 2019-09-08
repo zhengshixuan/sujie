@@ -29,7 +29,7 @@ public class RoomImageServiceImpl extends ServiceImpl<RoomImageDao, RoomImageEnt
 
     @Override
     public List<RoomImageEntity> listByHomestayIdAndRoomId(Map<String, Object> params) {
-        List<RoomImageEntity> roomImageEntities = baseMapper.selectByMap(params);
+        List<RoomImageEntity> roomImageEntities = baseMapper.listRoomImage(params);
         return roomImageEntities;
     }
 

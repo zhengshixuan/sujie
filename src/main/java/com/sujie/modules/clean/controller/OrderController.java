@@ -2,6 +2,8 @@ package com.sujie.modules.clean.controller;
 
 import java.util.*;
 
+import com.sujie.modules.clean.entity.OrderRecordEntity;
+import com.sujie.modules.clean.service.OrderRecordService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,38 +25,61 @@ import org.thymeleaf.expression.Maps;
 @RestController
 @RequestMapping("/order")
 public class OrderController {
+
+
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private OrderRecordService orderRecordService;
+
+    /**
+     * 派送订单给阿姨
+     * @param params
+     * @return
+     */
+    @RequestMapping("sendOrder")
+    public R sendOrder(@RequestBody Map<String, Object> params) {
+        String id = (String) params.get("id");
+        String staffId = (String) params.get("staffId");
+//        OrderEntity orderEntity = orderService.getById(id);
+        OrderRecordEntity orderRecordEntity = orderRecordService.getById(id);
+        orderRecordEntity.setStatus(1);
+        orderRecordEntity.setStaffId(staffId);
+        orderRecordService.saveOrUpdate(orderRecordEntity);
+        return R.ok();
+    }
 
     /**
      * 获取各地区各机构待保洁总数
+     *
      * @param map
      * @return
      */
+
     @GetMapping("/listPreOrder")
-    public R listPreOrder(@RequestParam Map<String,Object> map){
+    public R listPreOrder(@RequestParam Map<String, Object> map) {
         Integer total = orderService.getPreorderCount(map);
         List<Map<String, Object>> list = orderService.listPreOrder(map);
-//        List<List<Map<String, Object>> > list2 = new LinkedList<>();
         if (list != null) {
-            for(Map<String,Object> preOrderMap:list){
+            for (Map<String, Object> preOrderMap : list) {
                 List<Map<String, Object>> maps = orderService.listPreOrderDetail(preOrderMap);
-//                list2.add(maps);
-                preOrderMap.put("detail",maps);
+                preOrderMap.put("detail", maps);
             }
         }
-        return R.ok().put("preparOrders",list).put("total",total);
+        return R.ok().put("preparOrders", list).put("total", total);
     }
 
 
-    /**获取详细预排单
+    /**
+     * 获取详细预排单
+     *
      * @param map
      * @return
      */
     @RequestMapping("/listPreOrderDetail")
-    public R listPreOrderDetail(@RequestParam Map<String,Object> map){
+    public R listPreOrderDetail(@RequestParam Map<String, Object> map) {
         List<Map<String, Object>> maps = orderService.listPreOrderDetail(map);
-        return R.ok().put("preparOrdersDetail",maps);
+        return R.ok().put("preparOrdersDetail", maps);
     }
 
 
@@ -62,7 +87,7 @@ public class OrderController {
      * 列表
      */
     @GetMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = orderService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -70,22 +95,24 @@ public class OrderController {
 
     /**
      * 查询已完成的记录
+     *
      * @return
      */
     @RequestMapping("/listRoomCleanRecord")
-    public R listRoomCleanRecord(@RequestParam Map<String,Object> params){
+    public R listRoomCleanRecord(@RequestParam Map<String, Object> params) {
         PageUtils page = orderService.listRoomCleanRecord(params);
-        return R.ok().put("page",page);
+        return R.ok().put("page", page);
     }
 
     /**
      * 查询待保洁的订单
+     *
      * @return
      */
     @RequestMapping("/listPrepareCleanOrder")
-    public R listPrepareCleanOrder(@RequestParam Map<String, Object> params){
+    public R listPrepareCleanOrder(@RequestParam Map<String, Object> params) {
         PageUtils page = orderService.listPrepareCleanOrder(params);
-        return R.ok().put("page",page);
+        return R.ok().put("page", page);
     }
 
 
@@ -94,8 +121,8 @@ public class OrderController {
      */
     @RequestMapping("/info/{id}")
     @RequiresPermissions("clean:order:info")
-    public R info(@PathVariable("id") Integer id){
-		OrderEntity order = orderService.getById(id);
+    public R info(@PathVariable("id") Integer id) {
+        OrderEntity order = orderService.getById(id);
 
         return R.ok().put("order", order);
     }
@@ -105,8 +132,8 @@ public class OrderController {
      */
     @RequestMapping("/save")
     @RequiresPermissions("clean:order:save")
-    public R save(@RequestBody OrderEntity order){
-		orderService.save(order);
+    public R save(@RequestBody OrderEntity order) {
+        orderService.save(order);
 
         return R.ok();
     }
@@ -116,8 +143,8 @@ public class OrderController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("clean:order:update")
-    public R update(@RequestBody OrderEntity order){
-		orderService.updateById(order);
+    public R update(@RequestBody OrderEntity order) {
+        orderService.updateById(order);
 
         return R.ok();
     }
@@ -127,8 +154,8 @@ public class OrderController {
      */
     @RequestMapping("/delete")
     @RequiresPermissions("clean:order:delete")
-    public R delete(@RequestBody Integer[] ids){
-		orderService.removeByIds(Arrays.asList(ids));
+    public R delete(@RequestBody Integer[] ids) {
+        orderService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }

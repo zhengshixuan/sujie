@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sujie.modules.clean.entity.HomestayInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 民宿基本信息表
  * 
@@ -13,5 +15,10 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface HomestayInfoDao extends BaseMapper<HomestayInfoEntity> {
+    /**
+     * 查询所有的地址
+     * @return
+     */
+    List<String> getAllWorkPlace();
 	
 }

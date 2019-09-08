@@ -3,7 +3,10 @@ package com.sujie.modules.clean.service.impl;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -20,11 +23,11 @@ public class HomestayInfoServiceImpl extends ServiceImpl<HomestayInfoDao, Homest
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         QueryWrapper<HomestayInfoEntity> queryWrapper = new QueryWrapper<HomestayInfoEntity>();
-        if(StringUtils.isNotBlank((String) params.get("homestayName"))){
-            queryWrapper.like("homestay_name",params.get("homestayName"));
+        if (StringUtils.isNotBlank((String) params.get("homestayName"))) {
+            queryWrapper.like("homestay_name", params.get("homestayName"));
         }
-        if(StringUtils.isNotBlank((String) params.get("operatorsName"))){
-            queryWrapper.like("operators_name",params.get("operatorsName"));
+        if (StringUtils.isNotBlank((String) params.get("operatorsName"))) {
+            queryWrapper.like("operators_name", params.get("operatorsName"));
         }
 
 
@@ -34,6 +37,12 @@ public class HomestayInfoServiceImpl extends ServiceImpl<HomestayInfoDao, Homest
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<String> getAllWorkPalce() {
+        List<String> allWorkPlace = baseMapper.getAllWorkPlace();
+        return allWorkPlace;
     }
 
 }

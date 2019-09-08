@@ -21,26 +21,31 @@
                             <!--<span th:text="${staff.staffName}"></span>-->
                         <!--</div>-->
                         <input type="hidden" id="staffId" th:value="${staff.staffId}" >
+                        <input type="hidden" id="id"  th:value="${staff.id}"/>
                         <div>
-                            <span>阿姨类别</span>
-                            <input type="radio" value="0" name="staffType" checked v-model="staffCommission.staffType">
-                            <span>全职</span>
-                            <input type="radio" value="1" name="staffType" v-model="staffCommission.staffType">
-                            <span>兼职</span>
+                            <span>阿姨类别:</span>
+                            <span>张阿姨</span>
                         </div>
+                        <!--<div>-->
+                            <!--<span>阿姨类别</span>-->
+                            <!--<input type="radio" value="0" name="staffType" checked v-model="staffCommission.staffType">-->
+                            <!--<span>全职</span>-->
+                            <!--<input type="radio" value="1" name="staffType" v-model="staffCommission.staffType">-->
+                            <!--<span>兼职</span>-->
+                        <!--</div>-->
                         <div>
-                            <span>房间户型</span>
+                            <span>房间户型:</span>
                             <i></i>
                             <select name="roomType" id="" form-control v-model="staffCommission.roomType">
                                 <option :value="room.itemCode" v-for="room in roomType">{{room.itemName}}</option>
                             </select>
                         </div>
                         <div>
-                            <span>房间提成</span>
+                            <span>房间提成:</span>
                             <input type="text" name="commission" v-model="staffCommission.commission">
                         </div>
                         <div>
-                            <span> 加床费用</span>
+                            <span>加床费用:</span>
                             <input type="text" name="extraFee" v-model="staffCommission.extraFee">
                         </div>
                     </form>

@@ -58,7 +58,8 @@ var vm = new Vue({
         title: null,
         homestay: {
             isVip:0,
-            isReception:0
+            isReception:0,
+            password:666666
         }
     },
     mounted:function () {

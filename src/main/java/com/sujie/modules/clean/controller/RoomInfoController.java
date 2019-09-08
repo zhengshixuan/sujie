@@ -106,10 +106,10 @@ public class RoomInfoController {
             String[] path = new String[15];
             String[] imageDes = new String[15];
             if (null != roomImageEntities && roomImageEntities.size() > 0) {
-                for (int i=0;i< roomImageEntities.size();i++) {
+                for (int i = 0; i < roomImageEntities.size(); i++) {
                     RoomImageEntity imageEntity = roomImageEntities.get(i);
-                    imageType[imageEntity.getPicTypeCode()]= imageEntity.getPicTypeCode();
-                    path[imageEntity.getPicTypeCode()]=imageEntity.getPicPath();
+                    imageType[imageEntity.getPicTypeCode()] = imageEntity.getPicTypeCode();
+                    path[imageEntity.getPicTypeCode()] = imageEntity.getPicPath();
                     imageDes[imageEntity.getPicTypeCode()] = imageEntity.getComments();
                 }
             }

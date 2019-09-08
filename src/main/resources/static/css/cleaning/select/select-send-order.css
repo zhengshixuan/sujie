@@ -129,3 +129,7 @@
 .hidden {
   display: none;
 }
+
+.ui-jqgrid .ui-jqgrid-btable tbody tr.jqgrow td {
+  overflow: visible;
+}

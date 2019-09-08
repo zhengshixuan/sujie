@@ -17,7 +17,7 @@ import lombok.Data;
  * @date 2019-08-18 10:15:19
  */
 @Data
-@TableName("order_record")
+@TableName("homestay.order_record")
 public class OrderRecordEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

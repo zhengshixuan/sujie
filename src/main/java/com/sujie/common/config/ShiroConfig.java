@@ -72,7 +72,7 @@ public class ShiroConfig {
         filterMap.put("/test/test", "anon");
         filterMap.put("/app/**","anon");
         filterMap.put("/path/**","anon");
-        filterMap.put("/**", "authc");
+        filterMap.put("/**", "anon");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
 
         return shiroFilter;

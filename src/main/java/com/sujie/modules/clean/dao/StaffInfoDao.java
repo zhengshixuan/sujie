@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sujie.modules.clean.entity.StaffInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 保洁阿姨信息
  * 
@@ -13,5 +16,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface StaffInfoDao extends BaseMapper<StaffInfoEntity> {
+    Map<String,Object> listStaffInfoByTelphone(Map<String,Object> params);
+
+
 	
 }

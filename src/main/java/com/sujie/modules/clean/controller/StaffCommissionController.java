@@ -1,8 +1,11 @@
 package com.sujie.modules.clean.controller;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,12 +63,22 @@ public class StaffCommissionController {
     @RequestMapping("/save")
     public R save(@RequestBody StaffCommissionEntity staffCommission){
         try {
-            staffCommissionService.save(staffCommission);
+            QueryWrapper<StaffCommissionEntity> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("staff_id", staffCommission.getStaffId()).eq("room_type", staffCommission.getRoomType());
+            StaffCommissionEntity staffCommissionEntity = staffCommissionService.getOne(queryWrapper);
+            if(null!=staffCommission){
+                staffCommission.setId(staffCommissionEntity.getId());
+            }
+            boolean b = staffCommissionService.saveOrUpdate(staffCommission);
+            if(b){
+                return R.ok();
+            }else{
+                R.error("保存失败！");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            R.error("保存失败！");
+            return   R.error("保存失败！");
         }
-
         return R.ok();
     }
 

@@ -35,4 +35,10 @@ public class StaffInfoServiceImpl extends ServiceImpl<StaffInfoDao, StaffInfoEnt
         return new PageUtils(page);
     }
 
+    @Override
+    public Map<String, Object> listStaffInfoByTelphone(Map<String, Object> params) {
+        Map<String, Object> map = baseMapper.listStaffInfoByTelphone(params);
+        return map;
+    }
+
 }

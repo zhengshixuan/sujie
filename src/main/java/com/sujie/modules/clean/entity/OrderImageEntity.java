@@ -15,7 +15,7 @@ import lombok.Data;
  * @date 2019-08-18 10:15:19
  */
 @Data
-@TableName("order_image")
+@TableName("homestay.order_image")
 public class OrderImageEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -29,8 +29,12 @@ public class OrderImageEntity implements Serializable {
 	 */
 	private String orderId;
 	/**
+	 * 图片类型id,关联dict_pic_type的item_code
+	 */
+	private Integer picTypeCode;
+	/**
 	 * 照片
 	 */
-	private String photo;
+	private String path;
 
 }

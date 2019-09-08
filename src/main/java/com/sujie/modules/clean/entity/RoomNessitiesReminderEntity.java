@@ -23,7 +23,7 @@ public class RoomNessitiesReminderEntity implements Serializable {
 	 * 
 	 */
 	@TableId
-	private String id;
+	private Integer id;
 	/**
 	 * 民宿id
 	 */

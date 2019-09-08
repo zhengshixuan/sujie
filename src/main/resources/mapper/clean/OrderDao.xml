@@ -17,18 +17,26 @@
         <result property="cleanStatusCode" column="clean_status_code"/>
         <result property="createDate" column="create_date"/>
     </resultMap>
+    <update id="updateCleanStatusCode">
+        UPDATE
+        homestay.order t
+        set t.clean_status_code = #{cleanStatusCode}
+        WHERE t.order_id = #{orderId}
+
+    </update>
     <select id="listPreOrder" resultType="java.util.Map">
         SELECT
-        -- a.id id,
-        -- a.homestay_name homestayName,
+            -- a.id id,
+            -- a.homestay_name homestayName,
             a.homestay_address homestayAddress,
             count( 1 ) count
         FROM
-        homestay.order t
+            homestay.order t
         INNER JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
-        WHERE
-        1 = 1
-            AND t.clean_status_code = 0
+        WHERE 1 = 1
+        AND t.clean_status_code = 1
+
+
         GROUP BY
         -- a.id,
         -- a.homestay_name,
@@ -45,7 +53,7 @@
         INNER JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
         WHERE
         1 = 1
-            AND t.clean_status_code = 0
+            AND t.clean_status_code = 1
         AND a.homestay_address = #{homestayAddress}
         GROUP BY
             a.id,
@@ -60,30 +68,30 @@
         INNER JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
         WHERE
         1 = 1
-            AND t.clean_status_code = 0
+            AND t.clean_status_code = 1
 
     </select>
     <select id="listOrderVO" resultType="com.sujie.modules.clean.vo.OrderVO">
         SELECT
-            t.id,
-            c.actual_clean_date,
-            a.homestay_name,
-            a.homestay_address,
-            b.room_id,
-            d.item_name roomType,
-            c.staff_cost,
-            <if test="params.cleanStatusCode==3">
-                e.staff_name,
-            </if>
-            d.comments ,
-            c.is_first,
-            c.boss_cost,
-            t.pre_clean_date,
-            f.item_name
+        t.id,
+        c.actual_clean_date,
+        a.homestay_name,
+        a.homestay_address,
+        b.room_id,
+        d.item_name roomType,
+        c.staff_cost,
+        <if test="params.cleanStatusCode==3">
+            e.staff_name,
+        </if>
+        d.comments ,
+        c.is_first,
+        c.boss_cost,
+        t.pre_clean_date,
+        f.item_name statusName
         FROM
         homestay.order t
-        JOIN homestay.homestay_info a ON t.homestay_id = a.id
-        JOIN homestay.room_info b ON t.room_id = b.id
+        JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
+        JOIN homestay.room_info b ON t.room_id = b.room_id
         JOIN homestay.order_record c ON t.order_id = c.order_id
         JOIN homestay.dict_room_type d ON b.room_type = d.item_code
         <if test="params.cleanStatusCode==3">
@@ -111,23 +119,27 @@
 
     </select>
     <select id="listTodayOrder" resultType="java.util.Map">
-       SELECT
-            c.room_id roomNum,
-            b.operators_telephone operatorPhone,
-            b.homestay_address address,
-            g.clean_type_name cleanType,
-            if(a.is_extra_bed=0,'是','否') extraBed,
-            e.commission PercentMoney
+        SELECT
+        c.room_id roomNum,
+        b.operators_telephone operatorPhone,
+        b.homestay_address address,
+        g.clean_type_name cleanType,
+        if(a.is_extra_bed=0,'是','否') extraBed,
+        e.commission PercentMoney,
+        b.homestay_name homeStayBrand
         FROM homestay.order t
         JOIN homestay.order_record a ON t.order_id = a.order_id
-        JOIN homestay.homestay_info b ON t.homestay_id = b.id
-        JOIN homestay.room_info c ON t.room_id = c.id
-        JOIN  homestay.staff_info d on a.staff_id = d.staff_id
-		JOIN homestay.staff_commission e ON e.staff_id = d.staff_id
+        JOIN homestay.homestay_info b ON t.homestay_id = b.homestay_id
+        JOIN homestay.room_info c ON t.room_id = c.room_id
+        JOIN homestay.staff_info d on a.staff_id = d.staff_id
+        JOIN homestay.staff_commission e ON e.staff_id = d.staff_id
         JOIN homestay.dict_room_type f ON c.room_type = f.item_code
         JOIN homestay.dict_clean_type g ON t.clean_type = g.clean_type_code
         WHERE b.homestay_address = #{address}
         AND d.telphone = #{cleanerPhone}
+        <if test="currentDate!=null and currentDate != '' ">
+            AND DATE_FORMAT(t.create_date,'%Y-%m-%d') = #{currentDate}
+        </if>
     </select>
     <select id="listRoomCleanRecordApp" resultType="java.util.Map">
          SELECT
@@ -139,10 +151,13 @@
             a.staff_cost PercentMoney
             FROM homestay.order t
         JOIN homestay.order_record a ON t.order_id = a.order_id
-        JOIN homestay.homestay_info b ON t.homestay_id = b.id
-        JOIN homestay.room_info c ON t.room_id = c.id
+        JOIN homestay.homestay_info b ON t.homestay_id = b.homestay_id
+        JOIN homestay.room_info c ON t.room_id = c.room_id
+
+        JOIN homestay.staff_info d on d.staff_id = a.staff_id
         JOIN homestay.dict_clean_type g ON t.clean_type = g.clean_type_code
-        WHERE  DATE_FORMAT(a.actual_clean_date ,'%Y-%m-%d') &gt;= #{DateBegin}
+        WHERE
+        DATE_FORMAT(a.actual_clean_date ,'%Y-%m-%d') &gt;= #{DateBegin}
         AND DATE_FORMAT(a.actual_clean_date ,'%Y-%m-%d') &lt;= #{DateEnd}
         AND d.telphone=#{cleanerPhone}
     </select>
@@ -155,7 +170,7 @@
             a.homestay_address address,
             t.room_password cleanPwd,
             c.clean_type_name cleanType,
-            e.is_extra_bed extraBed
+            if(e.is_extra_bed=0,'是','否') extraBed
         FROM
             homestay.room_info t
             JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
@@ -165,6 +180,24 @@
             JOIN homestay.order_record e ON e.order_id = d.order_id
             JOIN homestay.dict_clean_type c ON c.clean_type_code = d.clean_type
 
+
+    </select>
+    <select id="getPreOrderCount" resultType="java.lang.Integer">
+        SELECT
+        count(1) count
+        FROM
+        homestay.order t
+        INNER JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
+        WHERE 1 = 1
+        AND t.clean_status_code = 1
+        <if test="currentDate!=null and currentDate != '' ">
+            AND DATE_FORMAT(t.create_date,'%Y-%m-%d') = #{currentDate}
+        </if>
+        <if test="address!=null and address != '' ">
+            AND a.homestay_address = #{address}
+        </if>
+        GROUP BY
+        a.homestay_address
 
     </select>
 

@@ -2,12 +2,17 @@ package com.sujie.modules.clean.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.mysql.fabric.xmlrpc.base.Params;
+import com.sujie.modules.clean.dao.OrderRecordDao;
+import com.sujie.modules.clean.service.OrderRecordService;
+import com.sujie.modules.clean.service.StaffInfoService;
 import com.sujie.modules.clean.vo.OrderVO;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,18 +29,48 @@ import com.sujie.modules.clean.service.OrderService;
 
 @Service("orderService")
 public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> implements OrderService {
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd");
+    @Autowired
+    private StaffInfoService staffInfoService;
+    @Autowired
+    private OrderRecordDao orderRecordDao;
+
+    @Override
+    public boolean updateOrder(Map<String, Object> params) {
+        params.put("status",3);
+        params.put("cleanStatusCode",3);
+        orderRecordDao.updateRecordStatus(params);
+        baseMapper.updateCleanStatusCode(params);
+        return true;
+    }
+
+    @Override
+    public Map<String, Object> getTodayPreOrder(Map<String, Object> params) {
+        Map<String, Object> map = staffInfoService.listStaffInfoByTelphone(params);
+        if (StringUtils.isNotBlank((String) map.get("address"))) {
+            params.put("address", map.get("address"));
+        }
+        params.put("currentDate", SDF.format(new Date()));
+        Integer preOrderCount = baseMapper.getPreOrderCount(params);//预派单数（总数）
+//        params.put("cleanStatusCode", 1);
+        Integer preOrderRemaininggCount = baseMapper.getPreOrderCount(params);//剩下的保洁单
+        map.put("preDispatch", preOrderCount);
+        map.put("restDsipatch", preOrderRemaininggCount);
+        return map;
+    }
 
     @Override
     public Map<String, Object> findOrderDetail(Map<String, Object> params) {
+        Map<String, Object> roomInfoDetail = baseMapper.findRoomInfoDetail(params);
 
-
-        return null;
+        return roomInfoDetail;
     }
 
     @Override
     public List<Map<String, Object>> listTodayOrder(Map<String, Object> params) {
-
-        return null;
+        params.put("currentDate", SDF.format(new Date()));
+        List<Map<String, Object>> todayOrderS = baseMapper.listTodayOrder(params);
+        return todayOrderS;
     }
 
     @Override

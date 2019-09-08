@@ -16,6 +16,15 @@ import java.util.Map;
  */
 public interface OrderService extends IService<OrderEntity> {
 
+    boolean updateOrder(Map<String,Object> params);
+
+    /**
+     * 查询今日预排单
+     * @param params
+     * @return
+     */
+    Map<String,Object> getTodayPreOrder(Map<String,Object> params);
+
 
     /**
      * 查询订单详细和房间详细

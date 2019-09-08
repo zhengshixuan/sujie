@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.sujie.common.utils.MD5Utils;
 import com.sujie.modules.clean.entity.RoomInfoEntity;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -39,10 +40,11 @@ public class HomestayInfoController {
 
         return R.ok().put("page", page);
     }
+
     @GetMapping("/listHomestayInfo")
-    public R listAll(){
+    public R listAll() {
         List<HomestayInfoEntity> list = homestayInfoService.list();
-        return R.ok().put("list",list);
+        return R.ok().put("list", list);
     }
 
     /**
@@ -62,6 +64,7 @@ public class HomestayInfoController {
     public R save(@RequestBody HomestayInfoEntity homestayInfo) {
         try {
             homestayInfo.setHomestayId(UUID.randomUUID().toString().replace("-", ""));
+            homestayInfo.setPassword(MD5Utils.getMD5(homestayInfo.getPassword()));
             homestayInfoService.save(homestayInfo);
             return R.ok();
         } catch (Exception e) {
@@ -71,13 +74,19 @@ public class HomestayInfoController {
 
     }
 
+    @RequestMapping("/getAllWorkPlace")
+    public R getAllWorkPlace() {
+        List<String> allWorkPalce = homestayInfoService.getAllWorkPalce();
+        return R.ok().put("places", allWorkPalce);
+    }
+
     /**
      * 修改
      */
     @PostMapping("/updateHomeStayInfo")
     public R update(@RequestBody HomestayInfoEntity homestayInfo) {
         HomestayInfoEntity oldHomestayInfo = homestayInfoService.getById(homestayInfo.getId());
-        if(null!=oldHomestayInfo){
+        if (null != oldHomestayInfo) {
             BigDecimal balance = oldHomestayInfo.getBalance();
             balance = homestayInfo.getBalance().add(balance);
             homestayInfo.setBalance(balance);

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.sujie.common.utils.PageUtils;
 import com.sujie.modules.clean.entity.HomestayInfoEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +17,11 @@ import java.util.Map;
 public interface HomestayInfoService extends IService<HomestayInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    /**
+     * 查询所有的工作地址
+     * @return
+     */
+    List<String> getAllWorkPalce();
 }
 

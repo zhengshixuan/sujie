@@ -55,30 +55,6 @@ public class StaffInfoEntity implements Serializable {
 	 */
 	private String photo;
 	/**
-	 * 省代码
-	 */
-	private String provinceCode;
-	/**
-	 * 省名称
-	 */
-	private String provinceName;
-	/**
-	 * 市代码
-	 */
-	private String cityCode;
-	/**
-	 * 市名称
-	 */
-	private String cityName;
-	/**
-	 * 区代码
-	 */
-	private String countyCode;
-	/**
-	 * 区名称
-	 */
-	private String countyName;
-	/**
 	 * 详细地址
 	 */
 	private String address;

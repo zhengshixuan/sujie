@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sujie.modules.clean.entity.OrderRecordEntity;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Map;
+
 /**
  * 订单保洁信息表
  * 
@@ -13,5 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface OrderRecordDao extends BaseMapper<OrderRecordEntity> {
+
+    int updateRecordStatus(Map<String,Object> params);
 	
 }

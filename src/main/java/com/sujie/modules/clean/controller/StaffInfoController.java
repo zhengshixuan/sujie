@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -64,6 +65,16 @@ public class StaffInfoController {
 //    }
 
     /**
+     * 查询所有阿姨信息
+     * @return
+     */
+    @RequestMapping("/listAllStaff")
+    public R listAllStaff(){
+        List<Map<String, Object>> maps = staffInfoService.listMaps();
+        return R.ok().put("list",maps);
+    }
+
+    /**
      * 列表
      */
     @RequestMapping("/list")
@@ -112,7 +123,7 @@ public class StaffInfoController {
                 try {
                     i = is.available();
                     byte data[] = new byte[i];
-                    is.read(data); // 读数据
+                    is.read(data); //
                     is.close();
                     response.setContentType("image/jpeg");  // 设置返回的文件类型
                     OutputStream toClient = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
@@ -135,6 +146,7 @@ public class StaffInfoController {
 
         try {
             staffInfo.setStaffId(UUIDUtils.getUUIDHex());
+            staffInfo.setPassword(MD5Utils.getMD5(staffInfo.getPassword()));
             staffInfoService.save(staffInfo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -149,6 +161,7 @@ public class StaffInfoController {
      */
     @RequestMapping("/update")
     public R update(@RequestBody StaffInfoEntity staffInfo) {
+        staffInfo.setPassword(MD5Utils.getMD5(staffInfo.getPassword()));
         staffInfoService.updateById(staffInfo);
 
         return R.ok();

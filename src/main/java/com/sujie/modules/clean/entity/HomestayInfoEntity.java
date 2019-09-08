@@ -50,30 +50,6 @@ public class HomestayInfoEntity implements Serializable {
 	 */
 	private String operatorsTelephone;
 	/**
-	 * 省代码
-	 */
-	private Integer provinceCode;
-	/**
-	 * 省名称
-	 */
-	private String provinceName;
-	/**
-	 * 市代码
-	 */
-	private Integer cityCode;
-	/**
-	 * 市名称
-	 */
-	private String cityName;
-	/**
-	 * 乡镇代码
-	 */
-	private Integer countyCode;
-	/**
-	 * 乡镇名称
-	 */
-	private String countyName;
-	/**
 	 * 详细地址
 	 */
 	private String homestayAddress;
@@ -93,5 +69,9 @@ public class HomestayInfoEntity implements Serializable {
 	 * 账户余额，默认为0
 	 */
 	private BigDecimal balance;
+	/**
+	 * 运营者登录密码
+	 */
+	private String password;
 
 }

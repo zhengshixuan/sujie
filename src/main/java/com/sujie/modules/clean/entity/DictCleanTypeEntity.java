@@ -23,7 +23,7 @@ public class DictCleanTypeEntity implements Serializable {
 	 * 
 	 */
 	@TableId
-	private String id;
+	private Integer id;
 	/**
 	 * 清洁类型字典
 	 */

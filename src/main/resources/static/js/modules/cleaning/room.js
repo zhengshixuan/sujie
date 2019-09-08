@@ -166,6 +166,11 @@ var vm = new Vue({
             }else{
                 var url = "/roominfo/save";
             }
+            if(vm.room.isPermanent==true){
+                vm.room.isPermanent=0;
+            }else{
+                vm.room.isPermanent=1;
+            }
             var data = JSON.stringify(vm.room);
 
             $.ajax({

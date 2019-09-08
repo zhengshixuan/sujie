@@ -3,7 +3,7 @@
 
 <mapper namespace="com.sujie.modules.clean.dao.StaffInfoDao">
 
-	<!-- 可根据自己的需求，是否要使用 -->
+    <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.sujie.modules.clean.entity.StaffInfoEntity" id="staffInfoMap">
         <result property="id" column="id"/>
         <result property="staffId" column="staff_id"/>
@@ -13,14 +13,18 @@
         <result property="idNo" column="id_no"/>
         <result property="entryTime" column="entry_time"/>
         <result property="photo" column="photo"/>
-        <result property="provinceCode" column="province_code"/>
-        <result property="provinceName" column="province_name"/>
-        <result property="cityCode" column="city_code"/>
-        <result property="cityName" column="city_name"/>
-        <result property="countyCode" column="county_code"/>
-        <result property="countyName" column="county_name"/>
         <result property="address" column="address"/>
     </resultMap>
+    <select id="listStaffInfoByTelphone" resultType="java.util.Map">
+      SELECT
+        a.address address ,
+        count(1) count
+        FROM homestay.staff_info t
+        JOIN homestay.staff_work_place a on t.staff_id = a.staff_id
+        WHERE t.telphone = #{cleanerPhone}
+        group by a.address
+    </select>
+
 
 
 </mapper>

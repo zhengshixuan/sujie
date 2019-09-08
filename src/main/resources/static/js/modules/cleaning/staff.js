@@ -42,6 +42,10 @@ $(function () {
 
 });
 
+function toAddStaffWorkPosition(id){
+    window.location.href = "/comm/toAddStaffWorkPosition?id=" + id;
+}
+
 function staffType(cellvalue, options, rowObject) {
     if ("0" == cellvalue) {
         return "全职";
@@ -52,7 +56,8 @@ function staffType(cellvalue, options, rowObject) {
 
 function edit(cellvalue, options, rowObject) {
     var img = '<img src="/images/修改icon.png" alt="提成" title="提成" onclick="toUpdateCommission(' + cellvalue + ');"></img>&nbsp;' +
-        '<img src="/images/图层1.png" alt="修改" title="修改" onclick="toUpdateStaff(' + cellvalue + ');"></img>';
+        '<img src="/images/图层1.png" alt="修改" title="修改" onclick="toUpdateStaff(' + cellvalue + ');"></img>'+
+        '<img src="/images/图层1.png" alt="工作位置" title="工作位置" onclick="toAddStaffWorkPosition(' + cellvalue + ');"></img>';
     return img;
 }
 
@@ -75,7 +80,8 @@ var vm = new Vue({
         },
         title: null,
         staff: {
-            staffType: 0
+            staffType: 0,
+            password:666666
         }
     },
     mounted: function () {

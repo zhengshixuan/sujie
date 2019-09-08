@@ -6,10 +6,7 @@ import com.sujie.common.utils.MD5Utils;
 import com.sujie.common.utils.R;
 import com.sujie.modules.clean.entity.RoomImageEntity;
 import com.sujie.modules.clean.entity.StaffInfoEntity;
-import com.sujie.modules.clean.service.OrderService;
-import com.sujie.modules.clean.service.RoomImageService;
-import com.sujie.modules.clean.service.RoomInfoService;
-import com.sujie.modules.clean.service.StaffInfoService;
+import com.sujie.modules.clean.service.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,15 +36,18 @@ public class App {
     private RoomInfoService roomInfoService;
     @Autowired
     private RoomImageService roomImageService;
+    @Autowired
+    private OrderImageService orderImageService;
 
     /**
      * 1.登录
-     * @param cleanerPhone
-     * @param pwd
+     * @param params
      * @return
      */
     @RequestMapping("/login")
-    public R login(@RequestParam("cleanerPhone") String cleanerPhone, @RequestParam("pwd") String pwd) {
+    public R login(@RequestBody Map<String,Object> params) {
+        String cleanerPhone = (String) params.get("cleanerPhone");
+        String pwd = (String) params.get("pwd");
         if (StringUtils.isBlank(cleanerPhone)) {
             return R.error(0, "手机号不能为空");
         }
@@ -73,37 +74,30 @@ public class App {
     }
 
     /**
-     * 获取今日预排单
+     * 2.获取今日预排单
+     *
      * @param params
      * @return
      */
-    @GetMapping()
+    @RequestMapping("/getTodayPreOrder")
     public R getTodayPreOrder(@RequestBody Map<String, Object> params) {
         String cleanerPhone = (String) params.get("cleanerPhone");
-        if(StringUtils.isBlank(cleanerPhone)){
-            return R.error(0,"保洁阿姨手机号码");
-        }else{
-            
-
+        if (StringUtils.isBlank(cleanerPhone)) {
+            return R.error(0, "保洁阿姨手机号码");
+        } else {
+            Map<String, Object> map = orderService.getTodayPreOrder(params);
+            return R.appOK().put("list", map);
         }
-
-        return null;
     }
 
 
     /**
-     * 上传图片
+     * 2.今日保洁单：
      *
-     * @param file
+     * @param params
      * @return
      */
-    @RequestMapping("/upload")
-    public R upload(@RequestParam MultipartFile file) {
-        R r = ImageUtils.upload(file);
-        return r;
-    }
-
-    @GetMapping("/getTodayOrder")
+    @PostMapping("/getTodayOrder")
     public R getTodayOrder(@RequestBody Map<String, Object> params) {
         String cleanerPhone = (String) params.get("cleanerPhone");
         String address = (String) params.get("address");
@@ -121,8 +115,83 @@ public class App {
         return R.ok().put("list", list);
     }
 
+    /**
+     * 3.详情页面：
+     * 4.已完成
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping("/getRoomInfoDetail")
+    public R getRoomInfoDetail(@RequestBody Map<String, Object> params) {
+        String roomNo = (String) params.get("roomNo");
+        String homeStayBreand = (String) params.get("homeStayBreand");
+        String address = (String) params.get("address");
+        if (StringUtils.isBlank(roomNo)) {
+            return R.error(0, "房间号不能为空");
+        }
+        if (StringUtils.isBlank(homeStayBreand)) {
+            return R.error(0, "民宿品牌不能为空");
+        }
+        if (StringUtils.isBlank(address)) {
+            return R.error(0, "民宿地址不能为空");
+        }
+        Map<String, Object> orderDetail = orderService.findOrderDetail(params);
+
+        Map<String, Object> roomImageParamsMap = new HashMap<>();
+        roomImageParamsMap.put("homestayId", orderDetail.get("homestayId"));
+        roomImageParamsMap.put("roomId", roomNo);
+        List<RoomImageEntity> roomImageEntities = roomImageService.listByHomestayIdAndRoomId(roomImageParamsMap);
+        orderDetail.put("image", roomImageEntities);
+//        if(roomImageEntities!=null&&roomImageEntities.size()>0){
+//            Map<String,Object> imageMap = new HashMap<>();
+//            for (RoomImageEntity roomImageEntity : roomImageEntities) {
+//
+//            }
+//        }
+        return R.appOK().put("orderDetail", orderDetail);
+    }
 
 
+    /**
+     * 4.提交完成带回数据
+     * @param params
+     * @return
+     */
+    @RequestMapping("/saveFinishCleaning")
+    public R saveFinishCleaning(@RequestBody Map<String, Object> params) {
+        String orderId = (String) params.get("orderId");
+        String roomNo = (String) params.get("roomNo");
+        String brand = (String) params.get("brand");
+        String address = (String) params.get("address");
+        if(StringUtils.isBlank(orderId)){
+            return R.error(0, "订单id不能为空");
+        }
+        if (StringUtils.isBlank(roomNo)) {
+            return R.error(0, "房间号不能为空");
+        }
+        if (StringUtils.isBlank(brand)) {
+            return R.error(0, "民宿品牌不能为空");
+        }
+        if (StringUtils.isBlank(address)) {
+            return R.error(0, "民宿地址不能为空");
+        }
+        ArrayList imageList = (ArrayList) params.get("image");
+        orderService.updateOrder(params);
+        if(imageList!=null&&imageList.size()>0){
+            orderImageService.saveBatch(imageList);
+        }
+
+        return R.appOK().put("image",imageList);
+    }
+
+
+    /**
+     * 5.	信息修改
+     *
+     * @param params
+     * @return
+     */
     @RequestMapping("/updatePassword")
     public R updatePassword(@RequestBody Map<String, Object> params) {
         String cleanerPhone = (String) params.get("cleanerPhone");
@@ -160,35 +229,14 @@ public class App {
             }
         }
     }
-    @RequestMapping("/getRoomInfoDetail")
-    public  R getRoomInfoDetail(@RequestBody Map<String,Object> params){
-        String roomNo = (String) params.get("roomNo");
-        String homeStayBreand = (String) params.get("homeStayBreand");
-        String address = (String) params.get("address");
-        if(StringUtils.isBlank(roomNo)){
-            return R.error(0,"房间号不能为空");
-        }
-        if(StringUtils.isBlank(homeStayBreand)){
-            return R.error(0,"民宿品牌不能为空");
-        }
-        if(StringUtils.isBlank(address)){
-            return R.error(0,"民宿地址不能为空");
-        }
-        Map<String, Object> orderDetail = orderService.findOrderDetail(params);
-        Map<String,Object> roomImageParamsMap = new HashMap<>();
-        roomImageParamsMap.put("homestay_id",orderDetail.get("homestayId"));
-        roomImageParamsMap.put("room_id",orderDetail.get("roomId"));
-        List<RoomImageEntity> roomImageEntities = roomImageService.listByHomestayIdAndRoomId(roomImageParamsMap);
-        orderDetail.put("image",roomImageEntities);
-//        if(roomImageEntities!=null&&roomImageEntities.size()>0){
-//            Map<String,Object> imageMap = new HashMap<>();
-//            for (RoomImageEntity roomImageEntity : roomImageEntities) {
-//
-//            }
-//        }
-        return R.appOK().put("orderDetail",orderDetail);
-    }
 
+
+    /**
+     * 6.	打扫记录
+     *
+     * @param params
+     * @return
+     */
     @RequestMapping("/listRoomCleanRecordApp")
     public R listRoomCleanRecordApp(@RequestBody Map<String, Object> params) {
         String cleanerPhone = (String) params.get("cleanerPhone");
@@ -207,5 +255,17 @@ public class App {
         return R.appOK().put("list", list);
     }
 
+
+    /**
+     * 上传图片
+     *
+     * @param file
+     * @return
+     */
+    @RequestMapping("/upload")
+    public R upload(@RequestParam MultipartFile file) {
+        R r = ImageUtils.upload(file);
+        return r;
+    }
 
 }

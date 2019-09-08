@@ -47,6 +47,10 @@ public class RoomInfoEntity implements Serializable {
 	 * 保洁密码(主要是针对保洁密码长期不变的客户)
 	 */
 	private String roomPassword;
+    /**
+     * 是否永久有效
+     */
+    private Integer isPermanent;
 	/**
 	 * 房间户型(一室、二室、三室等)
 	 */

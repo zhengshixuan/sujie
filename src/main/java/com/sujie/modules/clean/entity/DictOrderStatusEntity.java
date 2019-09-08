@@ -23,7 +23,7 @@ public class DictOrderStatusEntity implements Serializable {
 	 * 
 	 */
 	@TableId
-	private String id;
+	private Integer id;
 	/**
 	 * 订单状态代码
 	 */

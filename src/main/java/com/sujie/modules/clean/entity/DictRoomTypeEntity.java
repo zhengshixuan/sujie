@@ -24,7 +24,7 @@ public class DictRoomTypeEntity implements Serializable {
 	 * 
 	 */
 	@TableId
-	private String id;
+	private Integer id;
 	/**
 	 * 房间代码
 	 */

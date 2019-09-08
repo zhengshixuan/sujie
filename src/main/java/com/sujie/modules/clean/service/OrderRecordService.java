@@ -16,5 +16,7 @@ import java.util.Map;
 public interface OrderRecordService extends IService<OrderRecordEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+
 }
 
