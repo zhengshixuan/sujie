@@ -16,6 +16,17 @@ import java.util.Map;
  */
 public interface OrderService extends IService<OrderEntity> {
 
+    /**
+     * 通过民宿id和房间id查询历史订单号
+     * @param params
+     * @return
+     */
+    List<Map<String,Object>> getOrdersByHomestayIdAndRoomId(Map<String,Object> params);
+    /**
+     * 更新订单信息
+     * @param params
+     * @return
+     */
     boolean updateOrder(Map<String,Object> params);
 
     /**

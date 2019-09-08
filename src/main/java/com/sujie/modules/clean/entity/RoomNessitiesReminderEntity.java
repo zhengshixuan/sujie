@@ -33,6 +33,10 @@ public class RoomNessitiesReminderEntity implements Serializable {
 	 */
 	private String roomId;
 	/**
+	 * 订单id
+	 */
+	private String orderId;
+	/**
 	 * 不足物品代码，关联dict_daily_nessities表
 	 */
 	private Integer nessistiesId;

@@ -42,5 +42,23 @@
             AND a.homestay_address like CONCAT('%',#{params.homestayAddress},'%')
         </if>
     </select>
+    <select id="getRoomInfoByHomestayIdANdRoomId" resultType="java.util.Map">
+      SELECT
+        t.room_id roomId,
+        b.item_name roomTypeName,
+        a.homestay_name homestayName,
+        a.homestay_address homestayAddress,
+        t.room_password roomPassword,
+        t.price price
+    FROM
+        homestay.room_info t
+        JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
+        JOIN homestay.dict_room_type b ON b.item_code = t.room_type
+--         JOIN homestay.dict_clean_type c ON
+    WHERE
+        t.homestay_id =#{homestayId}
+        AND t.room_id = #{roomId}
+
+    </select>
 
 </mapper>

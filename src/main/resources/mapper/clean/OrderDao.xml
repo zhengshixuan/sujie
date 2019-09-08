@@ -76,6 +76,7 @@
         t.id,
         c.actual_clean_date,
         a.homestay_name,
+        a.homestay_id,
         a.homestay_address,
         b.room_id,
         d.item_name roomType,
@@ -199,6 +200,20 @@
         GROUP BY
         a.homestay_address
 
+    </select>
+    <select id="getOrdersByHomestayIdAndRoomId" resultType="java.util.Map">
+        SELECT
+            t.order_id orderId,
+            t.homestay_id homestayId,
+            t.room_id roomId
+        FROM
+            homestay.order t
+        WHERE
+            t.homestay_id = #{homestayId}
+            AND t.room_id = #{roomId}
+            AND t.clean_status_code = 3
+        ORDER BY
+	        t.create_date DESC
     </select>
 
 </mapper>

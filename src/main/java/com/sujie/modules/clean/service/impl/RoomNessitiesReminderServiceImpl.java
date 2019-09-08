@@ -1,7 +1,10 @@
 package com.sujie.modules.clean.service.impl;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -24,6 +27,12 @@ public class RoomNessitiesReminderServiceImpl extends ServiceImpl<RoomNessitiesR
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<Map<String, Object>> getRoomNessitiesByOrderId(Map<String, Object> params) {
+        List<Map<String, Object>> list = baseMapper.getRoomNessitiesByOrderId(params);
+        return list;
     }
 
 }

@@ -1,0 +1,89 @@
+body{
+  height: 100%;
+}
+.right{
+    height: 100%;
+}
+.main{
+  position: relative;
+  width:100%;
+  height:300%;
+  /* padding:0 20px 20px 0; */
+  padding: 0;
+  box-sizing: border-box;
+  /* 每个页面通过改变main的颜色来控制边框的颜色不一样 */
+  background-color:#ccc;
+}
+
+.main-content {
+  width: 100%;
+
+}
+.main-content ul {
+width: 100%;
+}
+.main-content ul li input{
+margin: 10px;
+}
+
+.main-content ul li {
+  width: 100%;
+  padding-left: 30px;
+ font-size: 16px;
+
+}
+.main-content ul li:nth-of-type(odd){
+  height: 40px;
+  line-height: 40px;
+ background: url('../../images/线段.png')
+
+
+}
+.main-content .small li:nth-of-type(even){
+  /* height: 50px;
+  line-height: 50px; */
+  padding: 15px 30px 15px
+}
+.main-content .lage li:nth-of-type(even){
+  /* height: 150px;
+  line-height: 150px; */
+  padding: 30px
+}
+ .img-box {
+
+
+   width: 130px;
+   height: 100px;
+ text-align: center;
+
+ 
+}
+.img-box img {
+  width: 100%;
+
+}
+
+
+.more-img-box {
+display: flex;
+} 
+.more-img-box div {
+  width: 130px;
+  height: 100px;
+  margin-right: 15px;
+}
+.more-img-box div img {
+width: 100%;
+}
+ul li span {
+  display: block;
+height: 30px;
+line-height: 60px
+}
+.tix {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed #ccc;
+ height: 40px;
+ line-height: 40px;
+}

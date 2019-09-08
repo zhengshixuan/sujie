@@ -7,8 +7,20 @@
     <resultMap type="com.sujie.modules.clean.entity.OrderImageEntity" id="orderImageMap">
         <result property="id" column="id"/>
         <result property="orderId" column="order_id"/>
-        <result property="photo" column="photo"/>
     </resultMap>
+    <select id="findOrderImageByOrderId" resultType="java.util.Map">
+        SELECT
+            a.item_code,
+            a.item_name,
+            t.path,
+            t.comments
+        FROM
+            homestay.order_image t
+            JOIN homestay.dict_pic_type a ON t.pic_type_code = a.item_code
+        WHERE
+            t.order_id = #{orderId}
+
+    </select>
 
 
 </mapper>

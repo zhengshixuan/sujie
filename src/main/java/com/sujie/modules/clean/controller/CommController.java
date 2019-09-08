@@ -23,9 +23,10 @@ public class CommController {
     public String toUpdateStaff(@RequestParam String staffId, Map<String, Object> map) {
 //        StaffInfoEntity staff = staffInfoService.getById(staffId);
 //        map.put("staff", staff);
-        map.put("staffId",staffId);
+        map.put("staffId", staffId);
         return "modules/homestay/staffAdd";
     }
+
     @RequestMapping("/toUpdateStaffCommission")
     public String toUpdateStaffCommission(@RequestParam String staffId, Map<String, Object> map) {
         StaffInfoEntity staff = staffInfoService.getById(staffId);
@@ -38,19 +39,27 @@ public class CommController {
 
 //        HomestayInfoEntity homestayInfoEntity = homestayInfoService.getById(homestayId);
 //        map.put("homestay", homestayInfoEntity);
-        map.put("homestayId",homestayId);
+        map.put("homestayId", homestayId);
         return "modules/homestay/homestayUpdate";
     }
+
     @RequestMapping("/toAddStaffWorkPosition")
-    public String toAddStaffWorkPosition(@RequestParam String id,Map<String,Object> map){
-        map.put("id",id);
+    public String toAddStaffWorkPosition(@RequestParam String id, Map<String, Object> map) {
+        map.put("id", id);
         return "modules/homestay/staffWorkPosition";
     }
 
     @RequestMapping("/toUpdateRoom")
     public String toUpdateRoom(@RequestParam String id, Map<String, Object> map) {
-        map.put("id",id);
+        map.put("id", id);
         return "modules/homestay/roomAdd";
+    }
+    @RequestMapping("/getRoomWorkedRecord")
+    public String getRoomWorkedRecord(@RequestParam String homestayId, @RequestParam String roomId, Map<String, Object> map) {
+        map.put("homestayId", homestayId);
+        map.put("roomId", roomId);
+        return "modules/homestay/roomWorkedRecord";
+
     }
 
 }

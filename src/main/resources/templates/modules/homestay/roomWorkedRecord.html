@@ -6,10 +6,12 @@
     <!--引入通用css、js-->
     <div th:replace="header"></div>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" href="../assets/bootstrap-3.3.7-dist/css/bootstrap.css">
-    <link rel="stylesheet" th:href="@{/plugins/layui-v2.5.4/layui/css/layui.css}"
-          href="../assets/layui-v2.5.4/layui/css/layui.css">
+    <link rel="stylesheet" th:href="@{/plugins/layui-v2.5.4/layui/css/layui.css}" href="../assets/layui-v2.5.4/layui/css/layui.css">
     <link rel="stylesheet" th:href="@{/css/cleaning/common.css}" href="../common/common.css">
-    <link rel="stylesheet" th:href="@{/css/cleaning/room-info.css}" href="../css/room-info.css">
+
+
+    <link rel="stylesheet" th:href="@{/css/cleaning/normalize.css}" href="../common/normalize.css">
+    <link rel="stylesheet" th:href="@{/css/cleaning/roomifo-worked-record.css}" href="../css/roomifo-worked-record.css">
 
     <script th:src="@{/plugins/layui-v2.5.4/layui/layui.all.js}"
             src='../assets/layui-v2.5.4/layui/layui.all.js'></script>
@@ -25,7 +27,10 @@
 </head>
 <body>
 <div class='container' id="rrapp">
-    <input type="hidden" id="id" th:value="${id}"/>
+    <input type="hidden" id="homestayId" th:value="${homestayId}"/>
+    <input type="hidden" id="roomId" th:value="${roomId}"/>
+
+
     <div class='right'>
         <div class="main">
             <div class='main-box'>
@@ -35,23 +40,21 @@
 
                     <ul class="small">
                         <li>房间编号</li>
-                        <li>601-1</li>
+                        <li>{{roomInfo.roomId}}</li>
                         <li>房间户型</li>
                         <li>
-                            <input type="checkbox" checked>一室
-                            <input type="checkbox">二室
-                            <input type="checkbox">三室
+                            {{roomInfo.roomTypeName}}
                         </li>
                         <li>品牌名</li>
-                        <li>宿洁保洁</li>
+                        <li>{{roomInfo.homestayName}}</li>
                         <li>地址</li>
-                        <li>湖北省武汉市区洪山区</li>
+                        <li>{{roomInfo.homestayAddress}}</li>
                         <li>保洁密码</li>
-                        <li>123456</li>
+                        <li>{{roomInfo.roomPassword}}</li>
                         <li>保洁类型</li>
                         <li>普通保洁</li>
                         <li>保洁费用</li>
-                        <li>256</li>
+                        <li>{{roomInfo.price}}</li>
                     </ul>
                     <ul class="lage">
                         <li>床上区域 (一张照片)</li>
@@ -236,7 +239,6 @@
     </div>
 </div>
 </div>
-<script th:src="@{/js/modules/cleaning/room.js}"></script>
-<script th:src="@{/js/modules/cleaning/roomAdd.js}"></script>
+<script th:src="@{/js/modules/cleaning/roomWorkedRecord.js}"></script>
 </body>
 </html>

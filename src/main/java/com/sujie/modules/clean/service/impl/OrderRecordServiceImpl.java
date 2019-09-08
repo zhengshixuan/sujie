@@ -1,7 +1,9 @@
 package com.sujie.modules.clean.service.impl;
 
 import org.springframework.stereotype.Service;
+
 import java.util.Map;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -24,6 +26,12 @@ public class OrderRecordServiceImpl extends ServiceImpl<OrderRecordDao, OrderRec
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public int updateRecordStatus(Map<String, Object> params) {
+        baseMapper.updateRecordStatus(params);
+        return 0;
     }
 
 }

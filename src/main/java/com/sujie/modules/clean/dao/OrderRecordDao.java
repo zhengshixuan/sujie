@@ -16,6 +16,11 @@ import java.util.Map;
 @Mapper
 public interface OrderRecordDao extends BaseMapper<OrderRecordEntity> {
 
+    /**
+     * 更新订单状态
+     * @param params
+     * @return
+     */
     int updateRecordStatus(Map<String,Object> params);
 	
 }

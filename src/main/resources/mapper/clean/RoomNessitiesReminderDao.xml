@@ -12,6 +12,17 @@
         <result property="status" column="status"/>
         <result property="comments" column="comments"/>
     </resultMap>
+    <select id="getRoomNessitiesByOrderId" resultType="java.util.Map">
+
+        SELECT
+            a.item_code itemCode,
+            a.item_name itemName
+        FROM
+            homestay.room_nessities_reminder t
+            JOIN homestay.dict_daily_nessities a ON t.nessisties_id = a.item_code
+        WHERE
+            t.order_id = #{orderId}
+    </select>
 
 
 </mapper>

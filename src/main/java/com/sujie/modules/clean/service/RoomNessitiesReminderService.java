@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.sujie.common.utils.PageUtils;
 import com.sujie.modules.clean.entity.RoomNessitiesReminderEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +17,12 @@ import java.util.Map;
 public interface RoomNessitiesReminderService extends IService<RoomNessitiesReminderEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    /**
+     * 通过订单id查询房间缺少的必需品
+     * @param params
+     * @return
+     */
+    List<Map<String,Object>> getRoomNessitiesByOrderId(Map<String, Object> params);
 }
 

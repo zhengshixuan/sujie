@@ -52,8 +52,11 @@ function toSendOrder(id, options, rowObject) {
         '操作 <span class="caret"></span></button>' +
         '<ul class="dropdown-menu">' +
         '<li><a href="javascript:sendOrder(' + id + ')">派单</a></li>' +
-        '<li><a href="../html/roomifo-worked-record.html">查看详情</a></li></ul></div>';
+        '<li><a href="javascript:getLastCleanRecord(\''+rowObject.homestayId+'\',\''+rowObject.roomId+'\')">查看详情</a></li></ul></div>';
     return html;
+}
+function getLastCleanRecord(homestayId,roomId) {
+    window.location.href="/comm/getRoomWorkedRecord?homestayId="+homestayId+"&roomId="+roomId;
 }
 function sendOrder(id){
     // var staffName = $("#jqGrid").find("tr").eq(index).find("td select").val();

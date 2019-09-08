@@ -1,6 +1,8 @@
 package com.sujie.modules.clean.service.impl;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -24,6 +26,13 @@ public class OrderImageServiceImpl extends ServiceImpl<OrderImageDao, OrderImage
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<Map<String, Object>> findOrderImageByOrderId(Map<String, Object> params) {
+
+
+        return null;
     }
 
 }

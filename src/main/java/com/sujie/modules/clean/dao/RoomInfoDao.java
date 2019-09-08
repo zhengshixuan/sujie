@@ -24,6 +24,11 @@ public interface RoomInfoDao extends BaseMapper<RoomInfoEntity> {
     IPage<RoomInfoVO> selectPageVo(IPage<RoomInfoVO> page,@Param("params")  Map<String,Object> params);
 
 
+    Map<String, Object> getRoomInfoByHomestayIdANdRoomId(Map<String, Object> params);
+
+
+
+
 
 
 }

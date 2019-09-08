@@ -37,4 +37,9 @@ public class OrderImageEntity implements Serializable {
 	 */
 	private String path;
 
+	/**
+	 * 描述
+	 */
+	private String comments;
+
 }

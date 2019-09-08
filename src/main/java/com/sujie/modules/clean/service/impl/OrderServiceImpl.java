@@ -33,13 +33,23 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     @Autowired
     private StaffInfoService staffInfoService;
     @Autowired
-    private OrderRecordDao orderRecordDao;
+    private OrderRecordService orderRecordService;
+    @Autowired
+    private OrderService orderService;
+    @Override
+    public List<Map<String, Object>> getOrdersByHomestayIdAndRoomId(Map<String, Object> params) {
+
+
+
+        List<Map<String, Object>> list = baseMapper.getOrdersByHomestayIdAndRoomId(params);
+        return list;
+    }
 
     @Override
     public boolean updateOrder(Map<String, Object> params) {
-        params.put("status",3);
-        params.put("cleanStatusCode",3);
-        orderRecordDao.updateRecordStatus(params);
+        params.put("status", 3);
+        params.put("cleanStatusCode", 3);
+        orderRecordService.updateRecordStatus(params);
         baseMapper.updateCleanStatusCode(params);
         return true;
     }

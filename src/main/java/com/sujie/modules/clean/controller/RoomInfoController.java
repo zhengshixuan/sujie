@@ -11,6 +11,7 @@ import java.util.Map;
 import com.sujie.common.utils.ImageUtils;
 import com.sujie.modules.clean.entity.RoomImageEntity;
 import com.sujie.modules.clean.entity.StaffInfoEntity;
+import com.sujie.modules.clean.service.OrderService;
 import com.sujie.modules.clean.service.RoomImageService;
 import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
@@ -41,6 +42,15 @@ public class RoomInfoController {
     private RoomInfoService roomInfoService;
     @Autowired
     private RoomImageService roomImageService;
+    @Autowired
+    private OrderService orderService;
+
+    @RequestMapping("/getRoomInfo")
+    public R getRoomInfo(@RequestBody Map<String, Object> params) {
+        Map<String, Object> roomInfo = roomInfoService.getRoomInfoByHomestayIdANdRoomId(params);
+
+        return R.ok().put("roomInfo", roomInfo);
+    }
 
     /**
      * 列表

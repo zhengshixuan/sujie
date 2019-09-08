@@ -21,6 +21,7 @@ import java.util.Map;
 @Mapper
 public interface OrderDao extends BaseMapper<OrderEntity> {
 
+    List<Map<String,Object>> getOrdersByHomestayIdAndRoomId(Map<String, Object> params);
     /**
      * 更新订单状态
      * @param params
