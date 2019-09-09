@@ -52,7 +52,7 @@
                         <li>保洁密码</li>
                         <li>{{roomInfo.roomPassword}}</li>
                         <li>保洁类型</li>
-                        <li>普通保洁</li>
+                        <li>{{roomInfo.cleanTypeName}}</li>
                         <li>保洁费用</li>
                         <li>{{roomInfo.price}}</li>
                     </ul>
@@ -61,7 +61,6 @@
                         <li>
                             <div class="img-box">
                                 <img src="../images/上传照片icon.png" alt="">
-
                             </div>
                             <span>文字信息文字信息文字信息文字信息文字信息</span>
                         </li>
@@ -70,7 +69,6 @@
                         <li>
                             <div class="img-box">
                                 <img src="../images/上传照片icon.png" alt="">
-
                             </div>
                             <span>文字信息文字信息文字信息文字信息文字信息</span>
                         </li>
@@ -126,110 +124,23 @@
 
                         <li>说明</li>
                         <li>
-                            <span>没有拍照区域具体说明情况</span>
+                            <span>{{roomInfo.comments}}</span>
                         </li>
                         <li>
                             日用品耗损提醒
                         </li>
                         <li>
                             <div>
-                                <div class="tix">
-                                    <div>
-                                        牙膏，牙刷
+                                <div class="tix" v-for="nessities in roomInfo.nessitiesList">
+                                    <div >
+                                        {{nessities.itemName}}
                                     </div>
                                     <div>
-                                        <input type="checkbox" checked> 充足
-                                        <input type="checkbox"> 急需补充
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="tix">
-                                    <div>
-                                        牙膏，牙刷
-                                    </div>
-                                    <div>
-                                        <input type="checkbox" checked> 充足
-                                        <input type="checkbox"> 急需补充
+                                        <input type="checkbox" > 充足
+                                        <input type="checkbox"checked> 急需补充
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <div class="tix">
-                                    <div>
-                                        牙膏，牙刷
-                                    </div>
-                                    <div>
-                                        <input type="checkbox" checked> 充足
-                                        <input type="checkbox"> 急需补充
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="tix">
-                                    <div>
-                                        牙膏，牙刷
-                                    </div>
-                                    <div>
-                                        <input type="checkbox" checked> 充足
-                                        <input type="checkbox"> 急需补充
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="tix">
-                                    <div>
-                                        牙膏，牙刷
-                                    </div>
-                                    <div>
-                                        <input type="checkbox" checked> 充足
-                                        <input type="checkbox"> 急需补充
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="tix">
-                                    <div>
-                                        牙膏，牙刷
-                                    </div>
-                                    <div>
-                                        <input type="checkbox" checked> 充足
-                                        <input type="checkbox"> 急需补充
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="tix">
-                                    <div>
-                                        牙膏，牙刷
-                                    </div>
-                                    <div>
-                                        <input type="checkbox" checked> 充足
-                                        <input type="checkbox"> 急需补充
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="tix">
-                                    <div>
-                                        牙膏，牙刷
-                                    </div>
-                                    <div>
-                                        <input type="checkbox" checked> 充足
-                                        <input type="checkbox"> 急需补充
-                                    </div>
-                                </div>
-                                <div class="tix">
-                                    <div>
-                                        牙膏，牙刷
-                                    </div>
-                                    <div>
-                                        <input type="checkbox" checked> 充足
-                                        <input type="checkbox"> 急需补充
-                                    </div>
-                                </div>
-                            </div>
-
                         </li>
 
                     </ul>

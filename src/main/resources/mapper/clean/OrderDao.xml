@@ -205,15 +205,19 @@
         SELECT
             t.order_id orderId,
             t.homestay_id homestayId,
-            t.room_id roomId
+            t.room_id roomId,
+            a.clean_type_name cleanTypeName,
+            b.comments
         FROM
             homestay.order t
+            JOIN homestay.dict_clean_type a ON t.clean_type = a.clean_type_code
+            JOIN homestay.order_record b ON t.order_id = b.order_id
         WHERE
             t.homestay_id = #{homestayId}
             AND t.room_id = #{roomId}
             AND t.clean_status_code = 3
         ORDER BY
-	        t.create_date DESC
+            t.create_date DESC
     </select>
 
 </mapper>

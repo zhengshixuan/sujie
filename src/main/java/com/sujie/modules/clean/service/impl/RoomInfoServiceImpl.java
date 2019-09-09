@@ -48,13 +48,15 @@ public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoDao, RoomInfoEntity
         if(null!=orderList&&orderList.size()>0){
             //查询最近的一次保洁记录
             Map<String,Object> map = orderList.get(0);
+            roomInfo.put("comments",map.get("comments"));
+            roomInfo.put("cleanTypeName",map.get("cleanTypeName"));
             String orderId = (String) map.get("orderId");
             params.put("orderId",orderId);
             //查询图片信息
             List<Map<String, Object>> orderImageList = orderImageService.findOrderImageByOrderId(params);
             //查询缺少的物品信息
             List<Map<String, Object>> nessitiesList = roomNessitiesReminderService.getRoomNessitiesByOrderId(params);
-            roomInfo.put("imgage",orderImageList);
+            roomInfo.put("image",orderImageList);
             roomInfo.put("nessitiesList",nessitiesList);
         }
         return roomInfo;

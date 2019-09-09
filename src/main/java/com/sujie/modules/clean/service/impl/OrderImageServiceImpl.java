@@ -30,9 +30,9 @@ public class OrderImageServiceImpl extends ServiceImpl<OrderImageDao, OrderImage
 
     @Override
     public List<Map<String, Object>> findOrderImageByOrderId(Map<String, Object> params) {
+        List<Map<String, Object>> imageList = baseMapper.findOrderImageByOrderId(params);
 
-
-        return null;
+        return imageList;
     }
 
 }
