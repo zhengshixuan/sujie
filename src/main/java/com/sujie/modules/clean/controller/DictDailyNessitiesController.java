@@ -1,6 +1,7 @@
 package com.sujie.modules.clean.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -40,6 +41,12 @@ public class DictDailyNessitiesController {
         PageUtils page = dictDailyNessitiesService.queryPage(params);
 
         return R.ok().put("page", page);
+    }
+
+    @RequestMapping("/listAll")
+    public R listAll(){
+        List<Map<String, Object>> list = dictDailyNessitiesService.listMaps();
+        return R.ok().put("list",list);
     }
 
 

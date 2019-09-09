@@ -15,7 +15,7 @@ import lombok.Data;
  * @date 2019-08-18 10:15:18
  */
 @Data
-@TableName("room_nessities_reminder")
+@TableName("homestay.room_nessities_reminder")
 public class RoomNessitiesReminderEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

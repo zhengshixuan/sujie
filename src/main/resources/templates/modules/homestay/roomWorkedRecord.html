@@ -62,7 +62,7 @@
                             <div class="img-box">
                                 <img src="../images/上传照片icon.png" alt="">
                             </div>
-                            <span>文字信息文字信息文字信息文字信息文字信息</span>
+                            <span></span>
                         </li>
 
                         <li>沙发区域 (一张照片)</li>
@@ -70,7 +70,7 @@
                             <div class="img-box">
                                 <img src="../images/上传照片icon.png" alt="">
                             </div>
-                            <span>文字信息文字信息文字信息文字信息文字信息</span>
+                            <span></span>
                         </li>
                         <li>厨房区域 (一张照片)</li>
                         <li>
@@ -78,7 +78,7 @@
                                 <img src="../images/上传照片icon.png" alt="">
 
                             </div>
-                            <span>文字信息文字信息文字信息文字信息文字信息</span>
+                            <span></span>
                         </li>
 
                         <li>阳台区域 (一张照片)</li>
@@ -87,7 +87,7 @@
                                 <img src="../images/上传照片icon.png" alt="">
 
                             </div>
-                            <span>文字信息文字信息文字信息文字信息文字信息</span>
+                            <span></span>
                         </li>
                         <li>卫生间区域 ( 三张照片：洗漱台，马桶，卫生间地面)</li>
                         <li>
@@ -103,20 +103,15 @@
                                 </div>
 
                             </div>
-                            <span>文字信息文字信息文字信息文字信息文字</span>
+                            <span></span>
                         </li>
                         <li>其他区域（特别要求区域）</li>
                         <li>
-                            <div class="more-img-box">
-                                <div>
-                                    <img src="../images/上传照片icon.png" alt="">
+                            <div class="more-img-box" id="otherImg">
+                                <div v-for="path in otherImage">
+                                    <img src="../images/上传照片icon.png" :src="path" alt="">
                                 </div>
-                                <div>
-                                    <img src="../images/上传照片icon.png" alt="">
-                                </div>
-                                <div>
-                                    <img src="../images/上传照片icon.png" alt="">
-                                </div>
+
 
                             </div>
                             <span>文字信息文字信息文字信息文字信息文字</span>
@@ -131,13 +126,17 @@
                         </li>
                         <li>
                             <div>
-                                <div class="tix" v-for="nessities in roomInfo.nessitiesList">
+                                <div class="tix" v-for="(nessities,index) in roomInfo.nessitiesList">
                                     <div >
                                         {{nessities.itemName}}
                                     </div>
-                                    <div>
-                                        <input type="checkbox" > 充足
-                                        <input type="checkbox"checked> 急需补充
+                                    <div v-if="nessities.status==0">
+                                        <input type="checkbox" checked > 充足
+                                        <input type="checkbox"  > 急需补充
+                                    </div>
+                                    <div v-if="nessities.status==1">
+                                        <input type="checkbox"  > 充足
+                                        <input type="checkbox" checked > 急需补充
                                     </div>
                                 </div>
                             </div>

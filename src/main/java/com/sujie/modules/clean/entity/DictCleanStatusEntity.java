@@ -15,7 +15,7 @@ import lombok.Data;
  * @date 2019-08-18 10:15:20
  */
 @Data
-@TableName("dict_clean_status")
+@TableName("homestay.dict_clean_status")
 public class DictCleanStatusEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -51,15 +51,14 @@ function toSendOrder(id, options, rowObject) {
         '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
         '操作 <span class="caret"></span></button>' +
         '<ul class="dropdown-menu">' +
-        '<li><a href="javascript:sendOrder(' + id + ')">派单</a></li>' +
+        '<li><a href="javascript:sendOrder(' + rowObject + ')">派单</a></li>' +
         '<li><a href="javascript:getLastCleanRecord(\''+rowObject.homestayId+'\',\''+rowObject.roomId+'\')">查看详情</a></li></ul></div>';
     return html;
 }
 function getLastCleanRecord(homestayId,roomId) {
     window.location.href="/comm/getRoomWorkedRecord?homestayId="+homestayId+"&roomId="+roomId;
 }
-function sendOrder(id){
-    // var staffName = $("#jqGrid").find("tr").eq(index).find("td select").val();
+function sendOrder(rowObject){
     var data ="{\"id\":\"1\",\"staffId\":\"2\"}";
     $.ajax({
         type: "post",

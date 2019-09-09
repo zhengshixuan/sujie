@@ -109,8 +109,8 @@ public class RoomInfoController {
 
         if (null != roomInfo) {
             Map<String, Object> params = new HashMap<>();
-            params.put("homestay_id", roomInfo.getHomestayId());
-            params.put("room_id", roomInfo.getRoomId());
+            params.put("homestayId", roomInfo.getHomestayId());
+            params.put("roomId", roomInfo.getRoomId());
             List<RoomImageEntity> roomImageEntities = roomImageService.listByHomestayIdAndRoomId(params);
             Integer[] imageType = new Integer[15];
             String[] path = new String[15];
