@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : bsh
+ Source Server         : centos
  Source Server Type    : MySQL
- Source Server Version : 50562
- Source Host           : localhost:3306
+ Source Server Version : 50645
+ Source Host           : 192.168.0.47:3306
  Source Schema         : homestay
 
  Target Server Type    : MySQL
- Target Server Version : 50562
+ Target Server Version : 50645
  File Encoding         : 65001
 
- Date: 08/09/2019 23:11:45
+ Date: 10/09/2019 17:00:43
 */
 
 SET NAMES utf8mb4;
@@ -121,21 +121,21 @@ CREATE TABLE `dict_pic_type`  (
 -- ----------------------------
 -- Records of dict_pic_type
 -- ----------------------------
-INSERT INTO `dict_pic_type` VALUES (1, 1, '床上区域', 1, NULL);
-INSERT INTO `dict_pic_type` VALUES (2, 2, '沙发区域', 2, NULL);
-INSERT INTO `dict_pic_type` VALUES (3, 3, '厨房区域', 3, NULL);
-INSERT INTO `dict_pic_type` VALUES (4, 4, '阳台区域', 4, NULL);
-INSERT INTO `dict_pic_type` VALUES (5, 5, '洗漱台', 5, NULL);
-INSERT INTO `dict_pic_type` VALUES (6, 6, '马桶', 6, NULL);
-INSERT INTO `dict_pic_type` VALUES (7, 7, '卫生间地面', 7, NULL);
-INSERT INTO `dict_pic_type` VALUES (8, 8, '牙膏牙刷', 8, NULL);
-INSERT INTO `dict_pic_type` VALUES (9, 9, '洗发水、沐浴露', 9, NULL);
-INSERT INTO `dict_pic_type` VALUES (10, 10, '梳子', 10, NULL);
-INSERT INTO `dict_pic_type` VALUES (11, 11, '厕所用纸', 11, NULL);
-INSERT INTO `dict_pic_type` VALUES (12, 12, '客厅用纸', 12, NULL);
-INSERT INTO `dict_pic_type` VALUES (13, 13, '床单被套', 13, NULL);
-INSERT INTO `dict_pic_type` VALUES (14, 14, '厨具', 14, NULL);
-INSERT INTO `dict_pic_type` VALUES (15, 15, '垃圾袋', 15, NULL);
+INSERT INTO `dict_pic_type` VALUES (1, 0, '床上区域', 1, NULL);
+INSERT INTO `dict_pic_type` VALUES (2, 1, '沙发区域', 2, NULL);
+INSERT INTO `dict_pic_type` VALUES (3, 2, '厨房区域', 3, NULL);
+INSERT INTO `dict_pic_type` VALUES (4, 3, '阳台区域', 4, NULL);
+INSERT INTO `dict_pic_type` VALUES (5, 4, '洗漱台', 5, NULL);
+INSERT INTO `dict_pic_type` VALUES (6, 5, '马桶', 6, NULL);
+INSERT INTO `dict_pic_type` VALUES (7, 6, '卫生间地面', 7, NULL);
+INSERT INTO `dict_pic_type` VALUES (8, 7, '牙膏牙刷', 8, NULL);
+INSERT INTO `dict_pic_type` VALUES (9, 8, '洗发水、沐浴露', 9, NULL);
+INSERT INTO `dict_pic_type` VALUES (10, 9, '梳子', 10, NULL);
+INSERT INTO `dict_pic_type` VALUES (11, 10, '厕所用纸', 11, NULL);
+INSERT INTO `dict_pic_type` VALUES (12, 11, '客厅用纸', 12, NULL);
+INSERT INTO `dict_pic_type` VALUES (13, 12, '床单被套', 13, NULL);
+INSERT INTO `dict_pic_type` VALUES (14, 13, '厨具', 14, NULL);
+INSERT INTO `dict_pic_type` VALUES (15, 14, '垃圾袋', 15, NULL);
 
 -- ----------------------------
 -- Table structure for dict_room_type
@@ -196,15 +196,15 @@ CREATE TABLE `order`  (
   `homestay_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '民宿id(homestay_info中的homestay_id)',
   `room_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '房间id(room_info中的room_id)',
   `clean_type` int(6) NOT NULL COMMENT '保洁类型关联dict_clean_type',
-  `pre_clean_date` datetime NULL DEFAULT NULL COMMENT '预打扫时间',
+  `pre_clean_date` datetime(0) NULL DEFAULT NULL COMMENT '预打扫时间',
   `clean_price` decimal(10, 2) NOT NULL COMMENT '保洁费用',
   `is_check_out` int(1) NOT NULL COMMENT '是否已经退房，0是，1否',
-  `check_out_date` datetime NULL DEFAULT NULL COMMENT '退房时间',
+  `check_out_date` datetime(0) NULL DEFAULT NULL COMMENT '退房时间',
   `clean_status_code` int(1) NOT NULL COMMENT '关联dict_clean_status',
-  `create_date` datetime NOT NULL COMMENT '生成时间',
+  `create_date` datetime(0) NOT NULL COMMENT '生成时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `unique_order_orderId`(`order_id`) USING BTREE COMMENT '订单id唯一'
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '保洁订单主表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '保洁订单主表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of order
@@ -238,7 +238,7 @@ CREATE TABLE `order_record`  (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `order_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '关联订单记录表order_id',
   `staff_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '保洁阿姨选择',
-  `actual_clean_date` datetime NULL DEFAULT NULL COMMENT '实际保洁时间',
+  `actual_clean_date` datetime(0) NULL DEFAULT NULL COMMENT '实际保洁时间',
   `is_first` int(1) NOT NULL COMMENT '是否优先，0是，1否',
   `is_extra_bed` int(1) NOT NULL COMMENT '是否有加床，0是，1否',
   `staff_cost` decimal(10, 2) NOT NULL COMMENT '保洁阿姨费用',
@@ -251,7 +251,7 @@ CREATE TABLE `order_record`  (
 -- ----------------------------
 -- Records of order_record
 -- ----------------------------
-INSERT INTO `order_record` VALUES (1, '1', '2', '2019-09-08 15:46:18', 0, 1, 12.00, 123.00, 1, NULL);
+INSERT INTO `order_record` VALUES (1, '1', '2', '2019-09-08 15:46:18', 0, 1, 12.00, 123.00, 1, '正常');
 
 -- ----------------------------
 -- Table structure for room_image
@@ -266,7 +266,7 @@ CREATE TABLE `room_image`  (
   `comments` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `unique_roomImage_hrp`(`homestay_id`, `room_id`, `pic_type_code`) USING BTREE COMMENT '同一个机构和房间的同一类型图片只能唯一'
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '房间图片信息表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '房间图片信息表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of room_image
@@ -286,6 +286,21 @@ INSERT INTO `room_image` VALUES (14, '5a04276b87724632a5ced68fda0d00b7', '1212',
 INSERT INTO `room_image` VALUES (15, '5a04276b87724632a5ced68fda0d00b7', '1212', 12, '/path/4028b8816d0eac27016d0ec35c6a001b.jpg', '');
 INSERT INTO `room_image` VALUES (16, '5a04276b87724632a5ced68fda0d00b7', '1212', 13, '/path/4028b8816d0eac27016d0ec3664e001c.jpg', '');
 INSERT INTO `room_image` VALUES (17, '5a04276b87724632a5ced68fda0d00b7', '1212', 14, '/path/4028b8816d0eac27016d0ec3755a001e.jpg', '');
+INSERT INTO `room_image` VALUES (18, '5a04276b87724632a5ced68fda0d00b7', '1102', 0, '/path/4028b8816d18ae0b016d18ae0b2d0000.jpg', '床');
+INSERT INTO `room_image` VALUES (19, '5a04276b87724632a5ced68fda0d00b7', '1102', 1, '/path/4028b8816d18ae0b016d18ae28c10001.jpg', '沙发');
+INSERT INTO `room_image` VALUES (20, '5a04276b87724632a5ced68fda0d00b7', '1102', 2, '/path/4028b8816d18ae0b016d18ae41dd0002.jpg', '厨房');
+INSERT INTO `room_image` VALUES (21, '5a04276b87724632a5ced68fda0d00b7', '1102', 3, '/path/4028b8816d18ae0b016d18ae4ae80003.jpg', '阳台');
+INSERT INTO `room_image` VALUES (22, '5a04276b87724632a5ced68fda0d00b7', '1102', 4, '/path/4028b8816d18ae0b016d18ae53ec0004.jpg', '卫生间');
+INSERT INTO `room_image` VALUES (23, '5a04276b87724632a5ced68fda0d00b7', '1102', 5, '/path/4028b8816d18ae0b016d18ae5a4e0005.jpg', '');
+INSERT INTO `room_image` VALUES (24, '5a04276b87724632a5ced68fda0d00b7', '1102', 6, '/path/4028b8816d18ae0b016d18ae63a00006.jpg', '');
+INSERT INTO `room_image` VALUES (25, '5a04276b87724632a5ced68fda0d00b7', '1102', 7, '/path/4028b8816d18ae0b016d18ae6dbf0007.jpg', '牙刷');
+INSERT INTO `room_image` VALUES (26, '5a04276b87724632a5ced68fda0d00b7', '1102', 8, '/path/4028b8816d18ae0b016d18ae75d50008.jpg', '洗发水');
+INSERT INTO `room_image` VALUES (27, '5a04276b87724632a5ced68fda0d00b7', '1102', 9, '/path/4028b8816d18ae0b016d18ae7ca60009.jpg', '梳子');
+INSERT INTO `room_image` VALUES (28, '5a04276b87724632a5ced68fda0d00b7', '1102', 10, '/path/4028b8816d18ae0b016d18ae84de000a.jpg', '厕所');
+INSERT INTO `room_image` VALUES (29, '5a04276b87724632a5ced68fda0d00b7', '1102', 11, '/path/4028b8816d18ae0b016d18ae8c1e000b.jpg', '客厅');
+INSERT INTO `room_image` VALUES (30, '5a04276b87724632a5ced68fda0d00b7', '1102', 12, '/path/4028b8816d18ae0b016d18ae9291000c.jpg', '床单');
+INSERT INTO `room_image` VALUES (31, '5a04276b87724632a5ced68fda0d00b7', '1102', 13, '/path/4028b8816d18ae0b016d18ae9b9f000d.jpg', '厨具');
+INSERT INTO `room_image` VALUES (32, '5a04276b87724632a5ced68fda0d00b7', '1102', 14, '/path/4028b8816d192846016d192846ac0000.jpg', '垃圾袋');
 
 -- ----------------------------
 -- Table structure for room_info
@@ -306,12 +321,13 @@ CREATE TABLE `room_info`  (
   `comments` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注：找到房间的说明(一个房门里面两个房间或多个的情况)',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `unique_roomInfo_hr`(`homestay_id`, `room_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '房间信息' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '房间信息' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of room_info
 -- ----------------------------
 INSERT INTO `room_info` VALUES (5, '5a04276b87724632a5ced68fda0d00b7', '1212', '1212', 1, 0, '123', 0, NULL, 0, 123.00, NULL);
+INSERT INTO `room_info` VALUES (6, '5a04276b87724632a5ced68fda0d00b7', '1102', '1102', 0, 1, '123', 2, NULL, 0, 1234.00, NULL);
 
 -- ----------------------------
 -- Table structure for room_nessities_reminder
@@ -326,7 +342,13 @@ CREATE TABLE `room_nessities_reminder`  (
   `status` int(1) NULL DEFAULT NULL COMMENT '0已补充，1未补充',
   `comments` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '一次性物品不足提醒表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '一次性物品不足提醒表' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of room_nessities_reminder
+-- ----------------------------
+INSERT INTO `room_nessities_reminder` VALUES (1, '5a04276b87724632a5ced68fda0d00b7', '1212', '1', 0, 1, NULL);
+INSERT INTO `room_nessities_reminder` VALUES (2, '5a04276b87724632a5ced68fda0d00b7', '1212', '1', 1, 1, NULL);
 
 -- ----------------------------
 -- Table structure for staff_commission
@@ -341,7 +363,7 @@ CREATE TABLE `staff_commission`  (
   `comments` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `unique_staffCommission_sr`(`staff_id`, `room_type`) USING BTREE COMMENT '每个人每种类型房间只能唯一'
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '保洁阿姨的提成' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '保洁阿姨的提成' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of staff_commission
@@ -360,7 +382,7 @@ CREATE TABLE `staff_info`  (
   `telphone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '联系电话',
   `id_no` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '身份证号码',
   `password` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '密码',
-  `entry_time` datetime NOT NULL COMMENT '入职时间',
+  `entry_time` datetime(0) NOT NULL COMMENT '入职时间',
   `photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '照片',
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '详细地址',
   PRIMARY KEY (`id`) USING BTREE,

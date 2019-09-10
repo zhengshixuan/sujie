@@ -115,17 +115,20 @@ public class RoomInfoController {
             Integer[] imageType = new Integer[15];
             String[] path = new String[15];
             String[] imageDes = new String[15];
+            Integer[] ids = new Integer[15];
             if (null != roomImageEntities && roomImageEntities.size() > 0) {
                 for (int i = 0; i < roomImageEntities.size(); i++) {
                     RoomImageEntity imageEntity = roomImageEntities.get(i);
                     imageType[imageEntity.getPicTypeCode()] = imageEntity.getPicTypeCode();
                     path[imageEntity.getPicTypeCode()] = imageEntity.getPicPath();
                     imageDes[imageEntity.getPicTypeCode()] = imageEntity.getComments();
+                    ids[imageEntity.getPicTypeCode()]=imageEntity.getId();
                 }
             }
             roomInfo.setImageType(imageType);
             roomInfo.setPath(path);
             roomInfo.setImageDes(imageDes);
+            roomInfo.setIds(ids);
         }
         return R.ok().put("roomInfo", roomInfo);
     }
@@ -161,7 +164,22 @@ public class RoomInfoController {
     @RequestMapping("/update")
     public R update(@RequestBody RoomInfoEntity roomInfo) {
         roomInfoService.updateById(roomInfo);
+        if (null != roomInfo && roomInfo.getPath().length > 0) {
+            for (int i = 0; i < roomInfo.getPath().length; i++) {
+                String path = roomInfo.getPath()[i];
+                RoomImageEntity imageEntity = new RoomImageEntity();
+                imageEntity.setHomestayId(roomInfo.getHomestayId());
+                imageEntity.setRoomId(roomInfo.getRoomId());
+                if (StringUtils.isNotBlank(path)) {
+                    imageEntity.setPicPath(path);
+                    imageEntity.setPicTypeCode(roomInfo.getImageType()[i]);
+                    imageEntity.setComments(roomInfo.getImageDes()[i]);
+                    imageEntity.setId(roomInfo.getIds()[i]);
+                    roomImageService.saveOrUpdate(imageEntity);
+                }
+            }
 
+        }
         return R.ok();
     }
 

@@ -89,4 +89,10 @@ public class RoomInfoEntity implements Serializable {
     @TableField(exist = false)
     private String[] imageDes;
 
+	/**
+	 * 图片id
+	 */
+	@TableField(exist = false)
+    private Integer[] ids;
+
 }

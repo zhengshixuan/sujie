@@ -65,7 +65,8 @@ var vm = new Vue({
             roomType: 0,
             path: [],
             imageType: [],
-            imageDes: []
+            imageDes: [],
+            ids:[]
         },
         roomTypes: {},
 
