@@ -123,7 +123,7 @@ var vm = new Vue({
         saveOrUpdate: function () {
 
             var staffId = $("#staffId").val();
-            var url = staffId==""?'/staffinfo/save':'/staffinfo/update';
+            var url = this.isNotNull(staffId)?'/staffinfo/update':'/staffinfo/save';
             var staffName = vm.staff.staffName;
             var telphone = vm.staff.telphone;
             var password = vm.staff.password;

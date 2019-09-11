@@ -49,6 +49,18 @@ public class OrderController {
         return R.ok();
     }
 
+    @RequestMapping("cancelOrder")
+    public R cancelOrder(@RequestBody Map<String, Object> params) {
+        String id = (String) params.get("id");
+        //String staffId = (String) params.get("staffId");
+//        OrderEntity orderEntity = orderService.getById(id);
+        OrderRecordEntity orderRecordEntity = orderRecordService.getById(id);
+        orderRecordEntity.setStatus(0);
+        orderRecordEntity.setStaffId("0");
+        orderRecordService.saveOrUpdate(orderRecordEntity);
+        return R.ok();
+    }
+
     /**
      * 获取各地区各机构待保洁总数
      *
