@@ -16,5 +16,6 @@ import java.util.Map;
 public interface StaffCommissionService extends IService<StaffCommissionEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
 }
 
