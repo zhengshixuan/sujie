@@ -92,6 +92,15 @@
                                        v-model="room.needWashingSheets">
                                 <span>否</span>
                             </div>
+                            <div>
+                                <span>加床</span>
+                                <input type="radio" name="isExtraBed" value="0" checked style="width:15px;height: 15px;"
+                                       v-model="room.isExtraBed">
+                                <span>是</span>
+                                <input type="radio" name="isExtraBed" value="1" style="width:15px;height: 15px;"
+                                       v-model="room.isExtraBed">
+                                <span>否</span>
+                            </div>
 
                         </form>
                     </div>

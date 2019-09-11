@@ -26,4 +26,10 @@ public class StaffCommissionServiceImpl extends ServiceImpl<StaffCommissionDao, 
         return new PageUtils(page);
     }
 
+    @Override
+    public StaffCommissionEntity getStaffCommissionByStaffIdAndRoomType(Map<String, Object> params) {
+
+        return baseMapper.getStaffCommissionByStaffIdAndRoomType(params);
+    }
+
 }

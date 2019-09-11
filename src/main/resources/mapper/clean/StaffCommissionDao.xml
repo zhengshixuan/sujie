@@ -11,6 +11,22 @@
         <result property="commission" column="commission"/>
         <result property="comments" column="comments"/>
     </resultMap>
+    <select id="getStaffCommissionByStaffIdAndRoomType"
+            resultType="com.sujie.modules.clean.entity.StaffCommissionEntity">
+        SELECT
+            t.id id,
+            t.room_type roomType,
+            t.staff_id staffId,
+           t.commission,
+           t.extra_fee extraFee
+
+        FROM homestay.staff_commission t
+        WHERE
+          t.staff_id = #{staffId}
+        AND t.room_type = #{roomType}
+
+
+    </select>
 
 
 </mapper>

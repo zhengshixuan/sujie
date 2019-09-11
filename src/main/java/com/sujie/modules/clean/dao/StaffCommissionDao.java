@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sujie.modules.clean.entity.StaffCommissionEntity;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Map;
+
 /**
  * 保洁阿姨的提成
  * 
@@ -13,5 +15,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface StaffCommissionDao extends BaseMapper<StaffCommissionEntity> {
+    StaffCommissionEntity getStaffCommissionByStaffIdAndRoomType(Map<String, Object> params);
 	
 }

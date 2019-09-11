@@ -69,11 +69,16 @@
                             <input type="radio" name="isVip" value="1"  v-model="homestay.isVip">
                             <span>否</span>
                         </div>
+                        <div class="password-room-box">
+                            <span>前台房间密码</span>
+                            <input type="password" name="title" class='password-room' v-model="homestay.receptionPassword">
+                        </div>
                     </form>
                     <div class='btn-box'>
                         <button type="button" class="btn" @click="saveOrUpdate">保存</button>
                         <button type="button" class="btn" @click="goback">返回</button>
                     </div>
+
                 </div>
             </div>
         </div>

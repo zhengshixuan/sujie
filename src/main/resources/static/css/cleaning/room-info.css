@@ -119,7 +119,9 @@ textarea {
     width: 218px;
     height: 150px;
     border: 1px solid #ccc;
-    background: url('../../images/上传照片icon.png') center;
+    background-image: url('../../images/logo.png') ;
+    background-size: 218px 150px;
+    background-color:#2D6035;
     vertical-align: bottom;
 }
 

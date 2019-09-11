@@ -20,10 +20,30 @@ var vm = new Vue({
     },
     mounted:function () {
         this.getRoomType();
+        this.getStaffCommission();
     },
     methods: {
         query: function () {
             vm.reload();
+        },
+        getStaffCommission:function () {
+            var staffId = $("#staffId").val();
+            var data ="{\"staffId\":\""+staffId+"\",\"roomType\":\""+0+"\"}";
+            $.ajax({
+                type: "post",
+                url: "/staffcommission/getStaffCommission",
+                contentType: "application/json",
+                data: data,
+                success: function (r) {
+                    if (r.code === 0) {
+                        vm.staffCommission = r.staffCommission;
+                    } else {
+                        alert(r.msg);
+                    }
+                },error:function () {
+                    alert("保存失败！");
+                }
+            });
         },
         save:function () {
             var id = $("#id").val();

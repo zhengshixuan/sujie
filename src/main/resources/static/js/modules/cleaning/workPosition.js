@@ -15,6 +15,7 @@ var vm = new Vue({
     mounted: function () {
         this.getStaffInfo();
         this.getAllWorkPlace();
+
     },
     methods: {
         saveOrUpdate:function () {
@@ -34,6 +35,7 @@ var vm = new Vue({
                 }
             });
         },
+
         getStaffInfo: function () {
             var staffId = $("#staffId").val();
             if (null != staffId && "" != staffId) {
@@ -45,10 +47,11 @@ var vm = new Vue({
                     success: function (r) {
                         if (r.code === 0) {
                             vm.staff = r.staffInfo;
+                            vm.getWorkPosition();
                             // $('#demo1').attr('src', '/staffinfo/getStaffPhoto?id=' + vm.staff.id); //图片链接（base64）
                             // $('#picId').show();
                             // var url='/staffinfo/getStaffPhoto?id=' + vm.staff.id;
-                            $('#test1').css("background-image", 'url(' + r.staffInfo.photo + ')').css("background-size", "100% 100%");
+                            // $('#test1').css("background-image", 'url(' + r.staffInfo.photo + ')').css("background-size", "100% 100%");
                         } else {
                             alert(r.msg);
                         }
@@ -75,6 +78,25 @@ var vm = new Vue({
             history.go(-1);
         },
         save: function () {
+
+        },
+        getWorkPosition:function () {
+            var staffId = vm.staff.staffId;
+            if (null != staffId && "" != staffId) {
+                $.ajax({
+                    type: "get",
+                    url: "/staffworkplace/getWorkPosition",
+                    contentType: "application/json",
+                    data: {"staffId": staffId},
+                    success: function (r) {
+                        if (r.code === 0) {
+                            vm.workPosition=r.map;
+                        } else {
+                            alert(r.msg);
+                        }
+                    }
+                });
+            }
 
         }
     }

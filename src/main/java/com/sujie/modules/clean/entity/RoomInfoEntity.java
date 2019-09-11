@@ -95,4 +95,9 @@ public class RoomInfoEntity implements Serializable {
 	@TableField(exist = false)
     private Integer[] ids;
 
+	/**
+	 * 是否有加床，0是，1否
+	 */
+	private Integer isExtraBed;
+
 }

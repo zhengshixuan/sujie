@@ -91,7 +91,9 @@ public class HomestayInfoController {
             balance = homestayInfo.getBalance().add(balance);
             homestayInfo.setBalance(balance);
         }
-
+        if(!homestayInfo.getPassword().equalsIgnoreCase(oldHomestayInfo.getPassword())){
+            homestayInfo.setPassword(MD5Utils.getMD5(homestayInfo.getPassword()));
+        }
         homestayInfoService.updateById(homestayInfo);
 
         return R.ok();

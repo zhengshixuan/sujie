@@ -161,7 +161,10 @@ public class StaffInfoController {
      */
     @RequestMapping("/update")
     public R update(@RequestBody StaffInfoEntity staffInfo) {
-        staffInfo.setPassword(MD5Utils.getMD5(staffInfo.getPassword()));
+        StaffInfoEntity oldstaffInfo = staffInfoService.getById(staffInfo.getId());
+        if(!oldstaffInfo.getPassword().equalsIgnoreCase(staffInfo.getPassword())){
+            staffInfo.setPassword(MD5Utils.getMD5(staffInfo.getPassword()));
+        }
         staffInfoService.updateById(staffInfo);
 
         return R.ok();

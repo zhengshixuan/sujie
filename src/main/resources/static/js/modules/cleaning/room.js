@@ -63,6 +63,7 @@ var vm = new Vue({
             openMethod: 0,
             needWashingSheets: 0,
             roomType: 0,
+            isExtraBed:1,
             path: [],
             imageType: [],
             imageDes: [],

@@ -74,4 +74,9 @@ public class HomestayInfoEntity implements Serializable {
 	 */
 	private String password;
 
+	/**
+	 * 前台房间密码
+	 */
+	private String receptionPassword;
+
 }

@@ -3,6 +3,7 @@ package com.sujie.modules.clean.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +42,14 @@ public class StaffWorkPlaceController {
 
         return R.ok().put("page", page);
     }
+    @RequestMapping("/getWorkPosition")
+    public R getWorkPosition(@RequestParam String staffId){
+        QueryWrapper<StaffWorkPlaceEntity> staffWorkPlaceEntityQueryWrapper = new QueryWrapper<>();
+        staffWorkPlaceEntityQueryWrapper.eq("staff_id",staffId);
+        Map<String, Object> map = staffWorkPlaceService.getMap(staffWorkPlaceEntityQueryWrapper);
+        return R.ok().put("map",map);
 
+    }
 
     /**
      * 信息

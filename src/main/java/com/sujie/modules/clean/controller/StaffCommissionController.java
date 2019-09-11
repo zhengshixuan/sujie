@@ -46,6 +46,8 @@ public class StaffCommissionController {
     }
 
 
+
+
     /**
      * 信息
      */
@@ -55,6 +57,12 @@ public class StaffCommissionController {
 		StaffCommissionEntity staffCommission = staffCommissionService.getById(id);
 
         return R.ok().put("staffCommission", staffCommission);
+    }
+    @RequestMapping("/getStaffCommission")
+    public R getStaffCommission(@RequestBody Map<String,Object> params){
+        StaffCommissionEntity staffCommission = staffCommissionService.getStaffCommissionByStaffIdAndRoomType(params);
+        return R.ok().put("staffCommission",staffCommission);
+
     }
 
     /**

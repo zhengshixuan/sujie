@@ -12,12 +12,15 @@
 /* .content{
     position:relative
 } */
-
+.layui-btn{
+    background-color:#2D6035;
+}
 #test1 {
     width: 260px;
     height: 200px;
     border: 1px solid #ccc;
-    background-image: url('../../images/上传照片icon.png');
+    background-image: url('../../images/logo.png');
+    background-size: 206px 200px;
     position: relative;
     top: 100px;
     left: 50%;

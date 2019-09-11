@@ -17,5 +17,13 @@ public interface StaffCommissionService extends IService<StaffCommissionEntity> 
 
     PageUtils queryPage(Map<String, Object> params);
 
+    /**
+     * 通过人员id和房间类型查询提成信息
+     * @param params
+     * @return
+     */
+    StaffCommissionEntity getStaffCommissionByStaffIdAndRoomType(Map<String, Object> params);
+
+
 }
 
