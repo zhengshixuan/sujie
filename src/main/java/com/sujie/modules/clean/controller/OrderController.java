@@ -1,5 +1,6 @@
 package com.sujie.modules.clean.controller;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 import com.sujie.modules.clean.entity.OrderRecordEntity;
@@ -41,10 +42,16 @@ public class OrderController {
     public R sendOrder(@RequestBody Map<String, Object> params) {
         String id = (String) params.get("id");
         String staffId = (String) params.get("staffId");
+        String staffCost = (String) params.get("staffCost");
+        String bossCost = (String) params.get("bossCost");
 //        OrderEntity orderEntity = orderService.getById(id);
         OrderRecordEntity orderRecordEntity = orderRecordService.getById(id);
         orderRecordEntity.setStatus(1);
         orderRecordEntity.setStaffId(staffId);
+        BigDecimal staffCostDouble = new BigDecimal(staffCost);
+        BigDecimal bossCostDobule = new BigDecimal(bossCost);
+        orderRecordEntity.setStaffCost(staffCostDouble);
+        orderRecordEntity.setBossCost(bossCostDobule);
         orderRecordService.saveOrUpdate(orderRecordEntity);
         return R.ok();
     }

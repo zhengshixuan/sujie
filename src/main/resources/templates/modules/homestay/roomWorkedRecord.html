@@ -23,6 +23,7 @@
         }
 
 
+
     </style>
 </head>
 <body>
@@ -53,6 +54,8 @@
                         <li>{{roomInfo.roomPassword}}</li>
                         <li>保洁类型</li>
                         <li>{{roomInfo.cleanTypeName}}</li>
+                        <li>是否加床</li>
+                        <li>{{roomInfo.isExtraBed}}</li>
                         <li>保洁费用</li>
                         <li>{{roomInfo.price}}</li>
                     </ul>
@@ -60,7 +63,7 @@
                         <li>床上区域 (一张照片)</li>
                         <li>
                             <div class="img-box">
-                                <img src="../images/上传照片icon.png" alt="">
+                                <img class="img" src="../images/logo.png" alt="">
                             </div>
                             <span></span>
                         </li>
@@ -68,14 +71,14 @@
                         <li>沙发区域 (一张照片)</li>
                         <li>
                             <div class="img-box">
-                                <img src="../images/上传照片icon.png" alt="">
+                                <img class="img" src="../images/logo.png" alt="">
                             </div>
                             <span></span>
                         </li>
                         <li>厨房区域 (一张照片)</li>
                         <li>
                             <div class="img-box">
-                                <img src="../images/上传照片icon.png" alt="">
+                                <img class="img" src="../images/logo.png" alt="">
 
                             </div>
                             <span></span>
@@ -84,7 +87,7 @@
                         <li>阳台区域 (一张照片)</li>
                         <li>
                             <div class="img-box">
-                                <img src="../images/上传照片icon.png" alt="">
+                                <img  class="img" src="../images/logo.png" alt="">
 
                             </div>
                             <span></span>
@@ -93,13 +96,13 @@
                         <li>
                             <div class="more-img-box">
                                 <div>
-                                    <img src="../images/上传照片icon.png" alt="">
+                                    <img class="img" src="../images/logo.png" alt="">
                                 </div>
                                 <div>
-                                    <img src="../images/上传照片icon.png" alt="">
+                                    <img class="img" src="../images/logo.png" alt="">
                                 </div>
                                 <div>
-                                    <img src="../images/上传照片icon.png" alt="">
+                                    <img class="img" src="../images/logo.png" alt="">
                                 </div>
 
                             </div>
@@ -107,14 +110,23 @@
                         </li>
                         <li>其他区域（特别要求区域）</li>
                         <li>
-                            <div class="more-img-box" id="otherImg">
-                                <div v-for="path in otherImage">
-                                    <img src="../images/上传照片icon.png" :src="path" alt="">
-                                </div>
 
+                            <div class="more-img-box" id="otherImg">
+                                <div>
+                                    <img class="img" :src="otherImage[0]" alt="">
+                                </div>
+                                <div>
+                                    <img class="img" :src="otherImage[1]" alt="">
+                                </div>
+                                <div>
+                                    <img class="img" :src="otherImage[2]" alt="">
+                                </div>
+                                <!--<div v-for="(path,index) in otherImage" >-->
+                                    <!--<img class="img"  :src="otherImage[index]" />-->
+                                <!--</div>-->
 
                             </div>
-                            <span>文字信息文字信息文字信息文字信息文字</span>
+                            <span></span>
                         </li>
 
                         <li>说明</li>
@@ -128,15 +140,16 @@
                             <div>
                                 <div class="tix" v-for="(nessities,index) in roomInfo.nessitiesList">
                                     <div >
-                                        {{nessities.itemName}}
-                                    </div>
-                                    <div v-if="nessities.status==0">
-                                        <input type="checkbox" checked > 充足
-                                        <input type="checkbox"  > 急需补充
+                                        {{nessities.item_name}}
                                     </div>
                                     <div v-if="nessities.status==1">
                                         <input type="checkbox"  > 充足
                                         <input type="checkbox" checked > 急需补充
+                                    </div>
+                                    <div v-else>
+
+                                        <input type="checkbox" checked > 充足
+                                        <input type="checkbox"  > 急需补充
                                     </div>
                                 </div>
                             </div>

@@ -49,6 +49,7 @@
         a.homestay_name homestayName,
         a.homestay_address homestayAddress,
         t.room_password roomPassword,
+        if(t.is_extra_bed='0','是','否') isExtraBed,
         t.price price
     FROM
         homestay.room_info t

@@ -97,9 +97,17 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         return list;
     }
 
+    /**
+     * 查询待保洁还未保洁的记录
+     * @param params
+     * @return
+     */
     @Override
     public PageUtils listPrepareCleanOrder(Map<String, Object> params) {
+        //订单状态
         params.put("cleanStatusCode", 1);
+        //创建订单时间
+        params.put("createDate", SDF.format(new Date()));
         IPage<OrderVO> page = new Query<OrderVO>().getPage(params);
         IPage<OrderVO> orderVOIPage = baseMapper.listOrderVO(page, params);
         return new PageUtils(orderVOIPage);

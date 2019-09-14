@@ -4,6 +4,15 @@ body{
 .right{
     height: 100%;
 }
+.img{
+    background-image: url('../../images/logo.png') ;
+    background-size: 130px 130px;
+    background-color:#2D6035;
+}
+.imgSkin{
+    background-size: 390px 390px;
+    background-color:#2D6035;
+}
 .main{
   position: relative;
   width:100%;
@@ -58,6 +67,12 @@ margin: 10px;
 
  
 }
+
+ .img-box-big{
+     width: 390px;
+     height: 300px;
+     text-align: center;
+ }
 .img-box img {
   width: 100%;
 

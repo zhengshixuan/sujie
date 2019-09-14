@@ -7,12 +7,6 @@
     <resultMap type="com.sujie.modules.clean.entity.StaffWorkPlaceEntity" id="staffWorkPlaceMap">
         <result property="id" column="id"/>
         <result property="staffId" column="staff_id"/>
-        <result property="provinceCode" column="province_code"/>
-        <result property="provinceName" column="province_name"/>
-        <result property="cityCode" column="city_code"/>
-        <result property="cityName" column="city_name"/>
-        <result property="countyCode" column="county_code"/>
-        <result property="countyName" column="county_name"/>
         <result property="address" column="address"/>
     </resultMap>
 

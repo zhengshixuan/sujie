@@ -1,3 +1,31 @@
+$(function () {
+    $(".img").click(function () {
+        var path = $(this).attr("src");
+
+        // layer.open({
+        //     type: 1,
+        //     title: false,
+        //     closeBtn: 0,
+        //     shadeClose: true,
+        //     skin: 'yourclass',
+        //     content: '自定义HTML内容'
+        // });
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 1,
+            area: '516px',
+            offset:'100px',
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: '<img style="width:100%;height: 100%;top:100px;" src="'+path+'"></img>'
+        });
+
+
+        // $(this).attr("width","300px").attr("height","200px");
+    });
+});
+
 var vm = new Vue({
     el: '#rrapp',
     data: {
@@ -47,6 +75,11 @@ var vm = new Vue({
                                     if(vm.image[i].item_code==16){
                                         $("#otherImg").parent().find("span").text(vm.image[i].comments);
                                         vm.otherImage.push(vm.image[i].path);
+                                    }
+                                }
+                                if(vm.otherImage.length<3){
+                                    for(var i=0;i<=3-vm.otherImage.length;i++){
+                                        vm.otherImage.push("../../images/logo.png");
                                     }
                                 }
                             }

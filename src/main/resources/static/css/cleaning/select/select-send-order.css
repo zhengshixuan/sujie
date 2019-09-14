@@ -131,5 +131,8 @@
 }
 
 .ui-jqgrid .ui-jqgrid-btable tbody tr.jqgrow td {
-  overflow: visible;
+    overflow-x: visible;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    overflow-y: visible;
 }

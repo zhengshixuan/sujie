@@ -5,15 +5,15 @@ $(function () {
         colModel: [
             {label: '序号', name: 'id', width: 30, key: true},
             {label: '房间号', name: 'roomId', sortable: false, width: 60},
-            {label: '地址', name: 'homestayAddress', width: 100},
+            {label: '地址', name: 'homestayAddress', width: 120,formatter:huanhang},
             {label: '品牌名', name: 'homestayName', width: 80},
             {label: '保洁时间', name: 'preCleanDate', width: 80},
-            {label: '保洁老板费用', name: 'bossCost', width: 80},
+            {label: '保洁老板费用', name: 'bossCost', classes:'bossCost',width: 80,formatter:transInput},
             {label: '优先打扫', name: 'isFirst', width: 80, formatter: isFirst},
-            {label: '阿姨选择', name: '', width: 80, formatter: staffList},
-            {label: '保洁阿姨费用', name: 'staffCost', width: 80},
-            {label: '保洁状态', name: 'statusName', width: 80},
-            {label: '操作', name: 'id', width: 80, formatter: toSendOrder}
+            {label: '阿姨选择', name: '',classes:'over', width: 80, formatter: staffList},
+            {label: '保洁阿姨费用', name: 'staffCost', classes:"staffCost", width: 80,formatter:transInput},
+            {label: '保洁状态', name: 'statusName', width: 80,formatter:huanhang},
+            {label: '操作', name: 'id',align: 'left', width: 80, formatter: toSendOrder}
         ],
         // viewrecords: true,
         //间隔行样式
@@ -45,13 +45,21 @@ $(function () {
     });
 
 });
+function transInput(value, options, rowObject) {
+    var html = '<input type="text" value="'+value+'" style="width: 50%;"></input>' ;
+    return html;
+}
+function huanhang(value, options, rowObject) {
+    var html = '<div class="address">'+value+'</div>' ;
+    return html;
+}
 
 function toSendOrder(id, options, rowObject) {
     var html = '<div class="btn-group">' +
         '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
         '操作 <span class="caret"></span></button>' +
         '<ul class="dropdown-menu">' +
-        '<li><a href="javascript:sendOrder(\'' + rowObject.id +'\',\'' + rowObject.homestayId+'\',\'' + rowObject.roomId + '\')">派单</a></li>' +
+        '<li><a href="javascript:sendOrder(\'' + rowObject.id +'\',\'' + rowObject.homestayId+'\',\'' + rowObject.roomId + '\',\''+options.rowId+'\')">派单</a></li>' +
         '<li><a href="javascript:cancelOrder(\'' + rowObject.id +'\',\'' +rowObject.homestayId+'\',\'' + rowObject.roomId+ '\')">取消派单</a></li>' +
         '<li><a href="javascript:getLastCleanRecord(\''+rowObject.homestayId+'\',\''+rowObject.roomId+'\')">查看详情</a></li></ul></div>';
     return html;
@@ -76,15 +84,21 @@ function cancelOrder(id,homestayId,roomId){
         }
     });
 }
-function sendOrder(id,homestayId,roomId){
+function sendOrder(id,homestayId,roomId,rowId){
+    var staffCost = $(".staffCost").eq(rowId-1).find('input').val();
+    var bossCost = $(".bossCost").eq(rowId-1).find('input').val();
     var select = $('.demo').fSelect();
     var staff_id = getSelectStaff(select, id, homestayId, roomId);
+    if(!/^(([1-9]\d*)|\d)(\.\d{1,2})?$/.test(staffCost)||!/^(([1-9]\d*)|\d)(\.\d{1,2})?$/.test(bossCost)){
+        alert("保洁费用和老板费用只能为数字!")
+        return;
+    }
     if (staff_id == null) {
         alert("请选择阿姨！");
         return;
     }
 
-    var data ="{\"id\":\""+id+"\",\"staffId\":\""+staff_id+"\"}";
+    var data ="{\"id\":\""+id+"\",\"staffId\":\""+staff_id+"\",\"staffCost\":\""+staffCost+"\",\"bossCost\":\""+bossCost+"\"}";
     $.ajax({
         type: "post",
         url: "/order/sendOrder",
@@ -92,8 +106,8 @@ function sendOrder(id,homestayId,roomId){
         contentType: "application/json",
         success: function (r) {
             if (r.code == 0) {
-                window.location.reload();
                 alert("派单成功");
+                // window.location.reload();
             } else {
                 alert(r.msg);
             }

@@ -8,6 +8,8 @@ import com.sujie.modules.clean.vo.RoomInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -21,6 +23,8 @@ import com.sujie.modules.clean.entity.RoomInfoEntity;
 
 @Service("roomInfoService")
 public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoDao, RoomInfoEntity> implements RoomInfoService {
+    @Autowired
+    private DictDailyNessitiesService dictDailyNessitiesService;
     @Autowired
     private RoomImageService roomImageService;
     @Autowired
@@ -45,6 +49,8 @@ public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoDao, RoomInfoEntity
         Map<String, Object> roomInfo = baseMapper.getRoomInfoByHomestayIdANdRoomId(params);
 
         List<Map<String,Object>> orderList = orderService.getOrdersByHomestayIdAndRoomId(params);
+        List<Map<String, Object>> orderImageList=null;
+        List<Map<String, Object>> nessitiesList=null;
         if(null!=orderList&&orderList.size()>0){
             //查询最近的一次保洁记录
             Map<String,Object> map = orderList.get(0);
@@ -53,12 +59,21 @@ public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoDao, RoomInfoEntity
             String orderId = (String) map.get("orderId");
             params.put("orderId",orderId);
             //查询图片信息
-            List<Map<String, Object>> orderImageList = orderImageService.findOrderImageByOrderId(params);
+            orderImageList = orderImageService.findOrderImageByOrderId(params);
             //查询缺少的物品信息
-            List<Map<String, Object>> nessitiesList = roomNessitiesReminderService.getRoomNessitiesByOrderId(params);
-            roomInfo.put("image",orderImageList);
-            roomInfo.put("nessitiesList",nessitiesList);
+            nessitiesList = roomNessitiesReminderService.getRoomNessitiesByOrderId(params);
+
+        }else{
+            orderImageList = new LinkedList<>();
+            Map<String,Object> imgMap = new HashMap<>();
+            imgMap.put("path","../../images/logo.png");
+            imgMap.put("item_code","16");
+            orderImageList.add(imgMap);
+            nessitiesList = dictDailyNessitiesService.listMaps();
+            roomInfo.put("cleanTypeName","普通保洁");
         }
+        roomInfo.put("image",orderImageList);
+        roomInfo.put("nessitiesList",nessitiesList);
         return roomInfo;
     }
 
