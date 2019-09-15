@@ -76,8 +76,10 @@ function cancelOrder(id,homestayId,roomId){
         contentType: "application/json",
         success: function (r) {
             if (r.code == 0) {
-                window.location.reload();
-                alert("成功取消派单");
+
+                alert("成功取消派单",function () {
+                    window.location.reload();
+                });
             } else {
                 alert(r.msg);
             }
@@ -106,8 +108,9 @@ function sendOrder(id,homestayId,roomId,rowId){
         contentType: "application/json",
         success: function (r) {
             if (r.code == 0) {
-                alert("派单成功");
-                // window.location.reload();
+                alert("派单成功",function () {
+                    window.location.reload();
+                });
             } else {
                 alert(r.msg);
             }

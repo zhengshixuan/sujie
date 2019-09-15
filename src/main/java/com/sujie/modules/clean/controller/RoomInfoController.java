@@ -83,7 +83,6 @@ public class RoomInfoController {
         if (is != null) {
             int i = 0; // 得到文件大小
             try {
-
                 i = is.available();
                 byte data[] = new byte[i];
                 is.read(data); // 读数据
