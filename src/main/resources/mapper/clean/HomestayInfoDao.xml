@@ -26,5 +26,23 @@
         homestay.homestay_info t
 
 </select>
+    <select id="getHomestayInfoDetail" resultType="java.util.Map">
+        SELECT
+            t.homestay_name homeStayBreand,
+            t.homestay_address address,
+            t.operators_name operatorName,
+            t.operators_telephone operatorPhone,
+            t.rooms_number roomsNum,
+        IF
+            ( is_vip = '0', '普通用户', '会员用户' ) customType,
+        IF
+            ( is_reception = '0', '是', '否' ) isFrontDest,
+            t.reception_password AS frontDestRoom
+        FROM
+            homestay.homestay_info t
+        WHERE
+            t.operators_telephone = #{operatorPhone}
+
+    </select>
 
 </mapper>

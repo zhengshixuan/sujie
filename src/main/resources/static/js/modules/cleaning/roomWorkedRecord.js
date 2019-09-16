@@ -58,6 +58,7 @@ var vm = new Vue({
             var roomId = $("#roomId").val();
             var data = "{\"homestayId\":\"" + homestayId + "\",\"roomId\":\"" + roomId + "\"}";
             var $img_box = $(".img-box");
+            var $more_img_box = $("#toiletPic");
             if (null != homestayId && "" != homestayId && null != roomId && "" != roomId) {
                 $.ajax({
                     type: "post",
@@ -72,7 +73,16 @@ var vm = new Vue({
                                 for(var i=0;i<vm.image.length;i++){
                                     $img_box.find("img").eq(vm.image[i].item_code-1).attr("src",vm.image[i].path);
                                     $img_box.parent().find("span").eq(vm.image[i].item_code-1).text(vm.image[i].comments)
-                                    if(vm.image[i].item_code==16){
+                                    if(vm.image[i].item_code==5){
+                                        $("#toilet1").find("img").attr("src",vm.image[i].path);
+                                        $more_img_box.parent().find("span").text(vm.image[i].comments)
+                                    }else if(vm.image[i].item_code==6){
+                                        $("#toilet2").find("img").attr("src",vm.image[i].path);
+                                        $more_img_box.parent().find("span").text(vm.image[i].comments)
+                                    }else if(vm.image[i].item_code==7){
+                                        $("#toilet3").find("img").attr("src",vm.image[i].path);
+                                        $more_img_box.parent().find("span").text(vm.image[i].comments)
+                                    }else if(vm.image[i].item_code==16){
                                         $("#otherImg").parent().find("span").text(vm.image[i].comments);
                                         vm.otherImage.push(vm.image[i].path);
                                     }

@@ -61,5 +61,16 @@
         AND t.room_id = #{roomId}
 
     </select>
+    <select id="listRoomInfosByOperatorPhone" resultType="java.util.Map">
+        SELECT
+            t.homestay_name homeStayBreand,
+            t.homestay_address address,
+            a.room_id roomNo
+        FROM
+            homestay.homestay_info t
+            JOIN homestay.room_info a ON t.homestay_id = a.homestay_id
+        WHERE
+            t.operators_telephone = #{operatorPhone}
+    </select>
 
 </mapper>

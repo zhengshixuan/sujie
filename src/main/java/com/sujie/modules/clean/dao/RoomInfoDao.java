@@ -26,6 +26,13 @@ public interface RoomInfoDao extends BaseMapper<RoomInfoEntity> {
 
     Map<String, Object> getRoomInfoByHomestayIdANdRoomId(Map<String, Object> params);
 
+    /**
+     * 通过运营者手机号查询此民宿下所有房间信息
+     * @param params
+     * @return
+     */
+    List<Map<String,Object>> listRoomInfosByOperatorPhone(Map<String, Object> params);
+
 
 
 

@@ -23,5 +23,7 @@ public interface HomestayInfoService extends IService<HomestayInfoEntity> {
      * @return
      */
     List<String> getAllWorkPalce();
+
+    Map<String,Object> getHomestayInfoDetail(Map<String,Object> params);
 }
 

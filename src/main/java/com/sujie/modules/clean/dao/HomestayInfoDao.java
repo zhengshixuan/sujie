@@ -5,6 +5,7 @@ import com.sujie.modules.clean.entity.HomestayInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 民宿基本信息表
@@ -20,5 +21,7 @@ public interface HomestayInfoDao extends BaseMapper<HomestayInfoEntity> {
      * @return
      */
     List<String> getAllWorkPlace();
+
+    Map<String,Object> getHomestayInfoDetail(Map<String,Object> params);
 	
 }

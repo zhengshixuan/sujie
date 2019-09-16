@@ -27,6 +27,12 @@ public interface RoomInfoService extends IService<RoomInfoEntity> {
     Map<String,Object> getRoomInfoByHomestayIdANdRoomId(Map<String, Object> params);
 
 
+    /**
+     * 查询房间信息
+     * @param params
+     * @return homeStayBreand 民宿品牌 address 民宿地址 roomNo 房间号
+     */
+    List<Map<String,Object>> getRoomInfos(Map<String,Object> params);
 
 }
 

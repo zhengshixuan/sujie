@@ -45,4 +45,10 @@ public class HomestayInfoServiceImpl extends ServiceImpl<HomestayInfoDao, Homest
         return allWorkPlace;
     }
 
+    @Override
+    public Map<String, Object> getHomestayInfoDetail(Map<String, Object> params) {
+        Map<String, Object> homestayInfoDetail = baseMapper.getHomestayInfoDetail(params);
+        return homestayInfoDetail;
+    }
+
 }
