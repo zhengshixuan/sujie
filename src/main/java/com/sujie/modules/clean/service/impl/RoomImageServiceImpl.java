@@ -35,10 +35,11 @@ public class RoomImageServiceImpl extends ServiceImpl<RoomImageDao, RoomImageEnt
 
     @Override
     public List<RoomImageEntity> listRoomImage(Map<String, Object> params) {
-
-
-
-        return null;
+        QueryWrapper<RoomImageEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("homestay_id",params.get("homestayId"));
+        queryWrapper.eq("room_id",params.get("roomNo"));
+        List<RoomImageEntity> roomImageEntities = this.baseMapper.selectList(queryWrapper);
+        return roomImageEntities;
     }
 
 }

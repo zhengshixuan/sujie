@@ -63,6 +63,7 @@
     </select>
     <select id="listRoomInfosByOperatorPhone" resultType="java.util.Map">
         SELECT
+
             t.homestay_name homeStayBreand,
             t.homestay_address address,
             a.room_id roomNo,
@@ -72,6 +73,51 @@
             JOIN homestay.room_info a ON t.homestay_id = a.homestay_id
         WHERE
             t.operators_telephone = #{operatorPhone}
+    </select>
+    <select id="getRoomInfoDetail" resultType="java.util.Map">
+        SELECT
+            t.homestay_id homestayId,
+            t.homestay_name homeStayBreand,
+            t.homestay_address address,
+            a.room_id roomNo,
+        CASE
+                a.room_type
+                WHEN '0' THEN
+                '1'
+                WHEN '1' THEN
+                '2'
+                WHEN '2' THEN
+                '3'
+            END roomType,
+            a.comments roomDescripe,
+        CASE
+                a.open_method
+                WHEN '0' THEN
+                '1'
+                WHEN '1' THEN
+                '2'
+            END doorWay,
+        CASE
+                a.need_washing_sheets
+                WHEN '0' THEN
+                '1'
+                WHEN '1' THEN
+                '2'
+            END sheetClear,
+        CASE
+                a.is_extra_bed
+                WHEN '0' THEN
+                '1'
+                WHEN '1' THEN
+                '2'
+            END extraBed
+        FROM
+            homestay.homestay_info t
+            JOIN homestay.room_info a ON t.homestay_id = a.homestay_id
+        WHERE t.homestay_name = #{homeStayBreand}
+        AND t.homestay_address = #{address}
+        AND a.room_id = #{roomNo}
+
     </select>
 
 </mapper>

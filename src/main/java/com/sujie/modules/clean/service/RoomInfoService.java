@@ -34,5 +34,12 @@ public interface RoomInfoService extends IService<RoomInfoEntity> {
      */
     List<Map<String,Object>> getRoomInfos(Map<String,Object> params);
 
+    /**
+     * 查询房间详细信息,老板端使用
+     * @param params
+     * @return
+     */
+    Map<String,Object> getRoomInfoDetail(Map<String,Object> params);
+
 }
 

@@ -93,6 +93,28 @@ public class Boss {
         return R.appOK().put("data", roomInfos);
     }
 
+    @RequestMapping("/getRoomInfoDetail")
+    public R getRoomInfoDetail(@RequestBody Map<String, Object> params) {
+        String homeStayBreand = (String) params.get("homeStayBreand");
+        String address = (String) params.get("address");
+        String roomNo = (String) params.get("roomNo");
+        if (StringUtils.isBlank(homeStayBreand)) {
+            return R.error("民宿品牌不能为空");
+        } else {
+            if (StringUtils.isBlank(address)) {
+                return R.error("民宿地址不能为空");
+            } else {
+                if (StringUtils.isBlank(roomNo)) {
+                    return R.error("房间号不能为空");
+                } else {
+                    Map<String, Object> roomInfoDetail = roomInfoService.getRoomInfoDetail(params);
+                    return R.appOK().put("data", roomInfoDetail);
+                }
+            }
+        }
+
+    }
+
     @RequestMapping("/sendPreOrder")
     public R sendPreOrder(@RequestBody Map<String, Object> params) {
         String homestayId = (String) params.get("homestayId");
@@ -105,15 +127,15 @@ public class Boss {
         String ischeckOut = (String) params.get("ischeckOut");
         String state = (String) params.get("state");
 
-        if(StringUtils.isNotBlank(homestayId)){
-            if(StringUtils.isNotBlank(homeStayBreand)){
-                if(StringUtils.isNotBlank(address)){
-                    if(StringUtils.isNotBlank(roomNo)){
-                        if(StringUtils.isNotBlank(clearStart)){
-                            if(StringUtils.isNotBlank(clearEnd)){
-                                if(StringUtils.isNotBlank(clearType)){
-                                    if(StringUtils.isNotBlank(ischeckOut)){
-                                        if(StringUtils.isNotBlank(state)){
+        if (StringUtils.isNotBlank(homestayId)) {
+            if (StringUtils.isNotBlank(homeStayBreand)) {
+                if (StringUtils.isNotBlank(address)) {
+                    if (StringUtils.isNotBlank(roomNo)) {
+                        if (StringUtils.isNotBlank(clearStart)) {
+                            if (StringUtils.isNotBlank(clearEnd)) {
+                                if (StringUtils.isNotBlank(clearType)) {
+                                    if (StringUtils.isNotBlank(ischeckOut)) {
+                                        if (StringUtils.isNotBlank(state)) {
 
                                         }
                                     }
@@ -123,7 +145,7 @@ public class Boss {
                     }
                 }
             }
-        }else{
+        } else {
             return R.error("民宿id不能为空");
         }
 
@@ -132,7 +154,7 @@ public class Boss {
     }
 
 
-    public R getPreOrders(@RequestBody Map<String,Object> params){
+    public R getPreOrders(@RequestBody Map<String, Object> params) {
 
         return R.appOK();
     }
