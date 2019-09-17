@@ -79,6 +79,7 @@ public class Boss {
 
     /**
      * 三．派单页面  用户点击“派单”按钮，显示所有房间
+     *
      * @param params
      * @return
      */
@@ -90,6 +91,50 @@ public class Boss {
         }
         List<Map<String, Object>> roomInfos = roomInfoService.getRoomInfos(params);
         return R.appOK().put("data", roomInfos);
+    }
+
+    @RequestMapping("/sendPreOrder")
+    public R sendPreOrder(@RequestBody Map<String, Object> params) {
+        String homestayId = (String) params.get("homestayId");
+        String homeStayBreand = (String) params.get("homeStayBreand");
+        String address = (String) params.get("address");
+        String roomNo = (String) params.get("roomNo");
+        String clearStart = (String) params.get("clearStart");
+        String clearEnd = (String) params.get("clearEnd");
+        String clearType = (String) params.get("clearType");
+        String ischeckOut = (String) params.get("ischeckOut");
+        String state = (String) params.get("state");
+
+        if(StringUtils.isNotBlank(homestayId)){
+            if(StringUtils.isNotBlank(homeStayBreand)){
+                if(StringUtils.isNotBlank(address)){
+                    if(StringUtils.isNotBlank(roomNo)){
+                        if(StringUtils.isNotBlank(clearStart)){
+                            if(StringUtils.isNotBlank(clearEnd)){
+                                if(StringUtils.isNotBlank(clearType)){
+                                    if(StringUtils.isNotBlank(ischeckOut)){
+                                        if(StringUtils.isNotBlank(state)){
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }else{
+            return R.error("民宿id不能为空");
+        }
+
+
+        return R.appOK();
+    }
+
+
+    public R getPreOrders(@RequestBody Map<String,Object> params){
+
+        return R.appOK();
     }
 
 }

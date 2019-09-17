@@ -65,7 +65,8 @@
         SELECT
             t.homestay_name homeStayBreand,
             t.homestay_address address,
-            a.room_id roomNo
+            a.room_id roomNo,
+            t.homestay_id homestayId
         FROM
             homestay.homestay_info t
             JOIN homestay.room_info a ON t.homestay_id = a.homestay_id
