@@ -177,6 +177,8 @@ public class App {
             return R.error(0, "民宿地址不能为空");
         }
         ArrayList imageList = (ArrayList) params.get("image");
+        params.put("status", 3);
+        params.put("cleanStatusCode", 3);
         orderService.updateOrder(params);
         if(imageList!=null&&imageList.size()>0){
             orderImageService.saveBatch(imageList);

@@ -35,9 +35,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     private OrderRecordService orderRecordService;
     @Autowired
     private OrderService orderService;
+
     @Override
     public List<Map<String, Object>> getOrdersByHomestayIdAndRoomId(Map<String, Object> params) {
-
 
 
         List<Map<String, Object>> list = baseMapper.getOrdersByHomestayIdAndRoomId(params);
@@ -46,11 +46,15 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Override
     public boolean updateOrder(Map<String, Object> params) {
-        params.put("status", 3);
-        params.put("cleanStatusCode", 3);
         orderRecordService.updateRecordStatus(params);
         baseMapper.updateCleanStatusCode(params);
         return true;
+    }
+
+    @Override
+    public List<Map<String, Object>> listPreOrderByStatus(Map<String, Object> params) {
+        List<Map<String, Object>> mapList = baseMapper.listOrderByStatus(params);
+        return mapList;
     }
 
     @Override
@@ -99,6 +103,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     /**
      * 查询待保洁还未保洁的记录
+     *
      * @param params
      * @return
      */

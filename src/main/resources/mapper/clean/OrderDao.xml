@@ -10,8 +10,9 @@
         <result property="homestayId" column="homestay_id"/>
         <result property="roomId" column="room_id"/>
         <result property="cleanType" column="clean_type"/>
-        <result property="preCleanDate" column="pre_clean_date"/>
         <result property="cleanPrice" column="clean_price"/>
+        <result property="preStartCleanDate" column="pre_start_clean_date"/>
+        <result property="preEndCleanDate" column="pre_end_clean_date"/>
         <result property="isCheckOut" column="is_check_out"/>
         <result property="checkOutDate" column="check_out_date"/>
         <result property="cleanStatusCode" column="clean_status_code"/>
@@ -88,7 +89,7 @@
         d.comments ,
         c.is_first,
         c.boss_cost,
-        t.pre_clean_date,
+        t.pre_start_clean_date,
         f.item_name statusName
         FROM
         homestay.order t
@@ -222,6 +223,19 @@
             AND t.clean_status_code = 3
         ORDER BY
             t.create_date DESC
+    </select>
+    <select id="listOrderByStatus" resultType="java.util.Map">
+        SELECT
+            t.order_id orderId,
+            a.homestay_Name homeStayBreand,
+            a.homestay_address address,
+            t.room_id roomNo,
+            t.clean_status_code state
+        FROM
+            homestay.order t
+        JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
+        WHERE t.homestay_id = #{homestayId}
+        and t.clean_status_code = #{cleanStatusCode}
     </select>
 
 </mapper>

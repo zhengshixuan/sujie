@@ -51,6 +51,11 @@ public class R extends HashMap<String, Object> {
 		r.put("code",1);
 		return r;
 	}
+	public static R appError(){
+		R r = new R();
+		r.put("code",0);
+		return r;
+	}
 
 	@Override
 	public R put(String key, Object value) {

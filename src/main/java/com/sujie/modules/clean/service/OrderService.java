@@ -30,6 +30,20 @@ public interface OrderService extends IService<OrderEntity> {
     boolean updateOrder(Map<String,Object> params);
 
     /**
+     * 根据订单状态查询订单
+     * @param params
+     * @return
+     */
+    List<Map<String,Object>> listPreOrderByStatus(Map<String,Object> params);
+
+    /**
+     * 查询
+     * @param params
+     * @return
+     */
+    List<Map<String,Object>> listOrderByStatus(Map<String,Object> params);
+
+    /**
      * 查询今日预排单
      * @param params
      * @return

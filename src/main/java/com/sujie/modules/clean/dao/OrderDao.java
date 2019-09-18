@@ -21,6 +21,13 @@ import java.util.Map;
 @Mapper
 public interface OrderDao extends BaseMapper<OrderEntity> {
 
+    /**
+     * 根据订单状态查询订单信息
+     * @param params
+     * @return
+     */
+    List<Map<String,Object>> listOrderByStatus(Map<String,Object> params);
+
     List<Map<String,Object>> getOrdersByHomestayIdAndRoomId(Map<String, Object> params);
     /**
      * 更新订单状态
