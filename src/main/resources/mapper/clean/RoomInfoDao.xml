@@ -115,8 +115,7 @@
             homestay.homestay_info t
             JOIN homestay.room_info a ON t.homestay_id = a.homestay_id
         WHERE t.homestay_name = #{homeStayBreand}
-        AND t.homestay_address = #{address}
-        AND a.room_id = #{roomNo}
+            t.homestay_id = #{homestayId}
 
     </select>
 

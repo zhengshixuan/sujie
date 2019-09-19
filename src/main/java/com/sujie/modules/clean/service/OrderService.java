@@ -112,5 +112,27 @@ public interface OrderService extends IService<OrderEntity> {
     List<Map<String, Object>> listPreOrderDetail(Map<String, Object> map);
 
 
+    /**
+     * 老板端查找订单信息
+     * @param map
+     * @return
+     */
+    List<Map<String,Object>> searchOrders(Map<String, Object> map);
+
+    /**
+     * 根据民宿id,房间号,状态码查询订单信息
+     * @param map
+     * @return OrderEntity
+     */
+    OrderEntity getOrder(Map<String, Object> map);
+
+    /**
+     * 通过订单id查询唯一订单
+     * @param orderId
+     * @return
+     */
+    OrderEntity getOrderByOrderId(String orderId);
+
+
 }
 

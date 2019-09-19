@@ -19,6 +19,13 @@ public interface OrderRecordService extends IService<OrderRecordEntity> {
     PageUtils queryPage(Map<String, Object> params);
     int updateRecordStatus(Map<String,Object> params);
 
+    /**
+     * 通过订单id查询未派单的订单信息
+     * @param orderId 订单id
+     * @return OrderRecordEntity
+     */
+    OrderRecordEntity getOrderRecordByOrderId(String orderId);
+
 
 }
 

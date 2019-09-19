@@ -8,6 +8,7 @@ import com.sujie.modules.clean.vo.OrderVO;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -53,15 +54,26 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Override
     public List<Map<String, Object>> listPreOrderByStatus(Map<String, Object> params) {
-        List<Map<String, Object>> mapList = baseMapper.listOrderByStatus(params);
+        List<Map<String, Object>> mapList = baseMapper.listPreOrderByStatus(params);
         return mapList;
+    }
+
+    @Override
+    public List<Map<String, Object>> listOrderByStatus(Map<String, Object> params) {
+
+        List<Map<String, Object>> list = baseMapper.listOrderByStatus(params);
+        return list;
     }
 
     @Override
     public Map<String, Object> getTodayPreOrder(Map<String, Object> params) {
         Map<String, Object> map = staffInfoService.listStaffInfoByTelphone(params);
-        if (StringUtils.isNotBlank((String) map.get("address"))) {
-            params.put("address", map.get("address"));
+        if (null != map) {
+            if (StringUtils.isNotBlank((String) map.get("address"))) {
+                params.put("address", map.get("address"));
+            }
+        } else {
+            params.put("address", "中南国际汇");
         }
         params.put("currentDate", SDF.format(new Date()));
         Integer preOrderCount = baseMapper.getPreOrderCount(params);//预派单数（总数）
@@ -144,5 +156,32 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     public List<Map<String, Object>> listPreOrderDetail(Map<String, Object> map) {
         List<Map<String, Object>> maps = baseMapper.listPreOrderDetail(map);
         return maps;
+    }
+
+    @Override
+    public List<Map<String, Object>> searchOrders(Map<String, Object> map) {
+        List<Map<String, Object>> list = baseMapper.searchOrders(map);
+        return list;
+    }
+
+    @Override
+    public OrderEntity getOrder(Map<String, Object> map) {
+        QueryWrapper<OrderEntity> orderQueryWrapper = new QueryWrapper<>();
+        String homestayId = (String) map.get("homestayId");
+        String roomNo = (String) map.get("roomNo");
+        orderQueryWrapper.eq("homestay_id", homestayId);
+        orderQueryWrapper.eq("room_id", roomNo);
+        orderQueryWrapper.eq("clean_status_code", 0);
+        orderQueryWrapper.eq("pre_start_clean_date", SDF.format(new Date()));
+        OrderEntity orderEntity = baseMapper.selectOne(orderQueryWrapper);
+        return orderEntity;
+    }
+
+    @Override
+    public OrderEntity getOrderByOrderId(String orderId) {
+        QueryWrapper<OrderEntity> orderQueryWrapper = new QueryWrapper<>();
+        orderQueryWrapper.eq("order_id", orderId);
+        OrderEntity orderEntity = baseMapper.selectOne(orderQueryWrapper);
+        return orderEntity;
     }
 }

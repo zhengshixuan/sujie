@@ -18,7 +18,6 @@ import com.sujie.common.utils.PageUtils;
 import com.sujie.common.utils.R;
 
 
-
 /**
  * 保洁阿姨工作位置
  *
@@ -37,17 +36,19 @@ public class StaffWorkPlaceController {
      */
     @RequestMapping("/list")
     @RequiresPermissions("clean:staffworkplace:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = staffWorkPlaceService.queryPage(params);
 
         return R.ok().put("page", page);
     }
+
     @RequestMapping("/getWorkPosition")
-    public R getWorkPosition(@RequestParam String staffId){
+    public R getWorkPosition(@RequestParam String staffId) {
         QueryWrapper<StaffWorkPlaceEntity> staffWorkPlaceEntityQueryWrapper = new QueryWrapper<>();
-        staffWorkPlaceEntityQueryWrapper.eq("staff_id",staffId);
+        staffWorkPlaceEntityQueryWrapper.eq("staff_id", staffId);
+
         Map<String, Object> map = staffWorkPlaceService.getMap(staffWorkPlaceEntityQueryWrapper);
-        return R.ok().put("map",map);
+        return R.ok().put("map", map);
 
     }
 
@@ -56,8 +57,8 @@ public class StaffWorkPlaceController {
      */
     @RequestMapping("/info/{id}")
     @RequiresPermissions("clean:staffworkplace:info")
-    public R info(@PathVariable("id") String id){
-		StaffWorkPlaceEntity staffWorkPlace = staffWorkPlaceService.getById(id);
+    public R info(@PathVariable("id") String id) {
+        StaffWorkPlaceEntity staffWorkPlace = staffWorkPlaceService.getById(id);
 
         return R.ok().put("staffWorkPlace", staffWorkPlace);
     }
@@ -66,11 +67,18 @@ public class StaffWorkPlaceController {
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody StaffWorkPlaceEntity staffWorkPlace){
+    public R save(@RequestBody StaffWorkPlaceEntity staffWorkPlace) {
+        QueryWrapper<StaffWorkPlaceEntity> staffWorkPlaceEntityQueryWrapper = new QueryWrapper<>();
+        staffWorkPlaceEntityQueryWrapper.eq("staff_id", staffWorkPlace.getStaffId());
+        staffWorkPlaceEntityQueryWrapper.eq("address", staffWorkPlace.getAddress());
+        StaffWorkPlaceEntity staffWorkPlaceEntity = this.staffWorkPlaceService.getOne(staffWorkPlaceEntityQueryWrapper);
+        if (staffWorkPlaceEntity != null) {
+            return R.error("已指定过此地区!");
+        } else {
+            staffWorkPlaceService.saveOrUpdate(staffWorkPlace);
+            return R.ok();
+        }
 
-        staffWorkPlaceService.save(staffWorkPlace);
-
-        return R.ok();
     }
 
     /**
@@ -78,8 +86,8 @@ public class StaffWorkPlaceController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("clean:staffworkplace:update")
-    public R update(@RequestBody StaffWorkPlaceEntity staffWorkPlace){
-		staffWorkPlaceService.updateById(staffWorkPlace);
+    public R update(@RequestBody StaffWorkPlaceEntity staffWorkPlace) {
+        staffWorkPlaceService.updateById(staffWorkPlace);
 
         return R.ok();
     }
@@ -89,8 +97,8 @@ public class StaffWorkPlaceController {
      */
     @RequestMapping("/delete")
     @RequiresPermissions("clean:staffworkplace:delete")
-    public R delete(@RequestBody String[] ids){
-		staffWorkPlaceService.removeByIds(Arrays.asList(ids));
+    public R delete(@RequestBody String[] ids) {
+        staffWorkPlaceService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }

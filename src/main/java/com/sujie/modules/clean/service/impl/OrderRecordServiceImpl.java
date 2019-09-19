@@ -34,4 +34,13 @@ public class OrderRecordServiceImpl extends ServiceImpl<OrderRecordDao, OrderRec
         return 0;
     }
 
+    @Override
+    public OrderRecordEntity getOrderRecordByOrderId(String orderId) {
+        QueryWrapper<OrderRecordEntity> orderRecordEntityQueryWrapper = new QueryWrapper<>();
+        orderRecordEntityQueryWrapper.eq("order_id",orderId);
+        orderRecordEntityQueryWrapper.eq("status",0);
+        OrderRecordEntity orderRecordEntity = baseMapper.selectOne(orderRecordEntityQueryWrapper);
+        return orderRecordEntity;
+    }
+
 }

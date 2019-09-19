@@ -87,7 +87,6 @@ public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoDao, RoomInfoEntity
     @Override
     public Map<String, Object> getRoomInfoDetail(Map<String, Object> params) {
         Map<String, Object> roomInfoDetail = baseMapper.getRoomInfoDetail(params);
-        params.put("homestayId", roomInfoDetail.get("homestayId"));
         List<RoomImageEntity> roomImageEntities = roomImageService.listRoomImage(params);
         if (null != roomImageEntities && roomImageEntities.size() > 0) {
             List<String> otherPitList = new ArrayList<>();
