@@ -7,6 +7,7 @@ import com.sujie.modules.clean.entity.RoomInfoEntity;
 import com.sujie.modules.clean.vo.RoomInfoVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import java.util.Map;
  * @email zhengsx@126.com
  * @date 2019-08-18 10:15:20
  */
+@Repository
 @Mapper
 public interface RoomInfoDao extends BaseMapper<RoomInfoEntity> {
 

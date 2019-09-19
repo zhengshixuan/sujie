@@ -7,9 +7,11 @@ import com.sujie.common.utils.R;
 import com.sujie.common.utils.UUIDUtils;
 import com.sujie.modules.clean.entity.*;
 import com.sujie.modules.clean.service.*;
+import io.swagger.annotations.*;
 import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +22,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Api("老板端")
 @RestController
 @RequestMapping("/boss")
 public class Boss {
@@ -40,7 +42,8 @@ public class Boss {
      * @param params
      * @return
      */
-    @RequestMapping("/login")
+    @ApiOperation(value="登录",notes = "根据手机号密码用户登录")
+    @PostMapping("/login")
     public R login(@RequestBody Map<String, Object> params) {
         String operatorPhone = (String) params.get("operatorPhone");
         String pwd = (String) params.get("pwd");
@@ -419,15 +422,28 @@ public class Boss {
         }
     }
 
-    public R getCompleteOrderRoomInfo(@RequestBody Map<String, Object> params){
-        String orderId= (String) params.get("orderId");
-        if(StringUtils.isBlank(orderId)){
-            return R.error(0,"订单号不能为空");
-        }else{
+    /**
+     * 查询已完成订单详细信息
+     *
+     * @param params
+     * @return
+     */
+    @RequestMapping("/getCompleteOrderDetail")
+    public R getCompleteOrderRoomInfo(@RequestBody Map<String, Object> params) {
+        String orderId = (String) params.get("orderId");
+        if (StringUtils.isBlank(orderId)) {
+            return R.error(0, "订单号不能为空");
+        } else {
             OrderEntity order = orderService.getOrderByOrderId(orderId);
+            if (null != order) {
+                params.put("homestayId", order.getHomestayId());
+                params.put("roomNo", order.getRoomId());
+                Map<String, Object> stringObjectHashMap = orderService.getComeleteOrder(params);
+                return R.appOK().put("data", stringObjectHashMap);
+            } else {
+                return R.error(0, "未找到对应的订单号");
+            }
 
-
-            return R.appOK();
         }
 
     }

@@ -133,6 +133,13 @@ public interface OrderService extends IService<OrderEntity> {
      */
     OrderEntity getOrderByOrderId(String orderId);
 
+    /**
+     * 查询已经完成保洁的订单的详细
+     * @param params
+     * @return
+     */
+    Map<String,Object> getComeleteOrder(Map<String,Object> params);
+
 
 }
 

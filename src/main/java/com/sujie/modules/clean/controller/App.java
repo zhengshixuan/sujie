@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -261,13 +262,22 @@ public class App {
     /**
      * 上传图片
      *
-     * @param file
+     * @param files
      * @return
      */
     @RequestMapping("/upload")
-    public R upload(@RequestParam MultipartFile file) {
-        R r = ImageUtils.upload(file);
-        return r;
+    public R upload(HttpServletRequest request, @RequestParam("file")MultipartFile[] files) {
+        if (files == null || files.length == 0) {
+            return R.error(0, "文件为空");
+        }
+
+        for (int i = 0; i < files.length; i++) {
+            if (files[i] != null) {
+                return ImageUtils.upload(files[i]);
+            }
+        }
+
+        return R.error(0, "参数错误");
     }
 
 }

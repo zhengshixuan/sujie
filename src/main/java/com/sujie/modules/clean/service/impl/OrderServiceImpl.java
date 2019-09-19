@@ -1,7 +1,10 @@
 package com.sujie.modules.clean.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.sujie.modules.clean.dao.OrderImageDao;
 import com.sujie.modules.clean.dao.OrderRecordDao;
+import com.sujie.modules.clean.dao.RoomInfoDao;
+import com.sujie.modules.clean.entity.OrderImageEntity;
 import com.sujie.modules.clean.service.OrderRecordService;
 import com.sujie.modules.clean.service.StaffInfoService;
 import com.sujie.modules.clean.vo.OrderVO;
@@ -12,9 +15,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -36,6 +37,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     private OrderRecordService orderRecordService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private RoomInfoDao roomInfoDao;
+    @Autowired
+    private OrderImageDao orderImageDao;
 
     @Override
     public List<Map<String, Object>> getOrdersByHomestayIdAndRoomId(Map<String, Object> params) {
@@ -183,5 +188,69 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         orderQueryWrapper.eq("order_id", orderId);
         OrderEntity orderEntity = baseMapper.selectOne(orderQueryWrapper);
         return orderEntity;
+    }
+
+    @Override
+    public Map<String, Object> getComeleteOrder(Map<String, Object> params) {
+        Map<String, Object> roomInfoDetail = roomInfoDao.getRoomInfoDetail(params);
+        QueryWrapper<OrderImageEntity> orderImageEntityQueryWrapper = new QueryWrapper<>();
+        orderImageEntityQueryWrapper.eq("order_id",params.get("orderId"));
+        List<OrderImageEntity> orderImageEntities = orderImageDao.selectList(orderImageEntityQueryWrapper);
+        if(null!=orderImageEntities&&orderImageEntities.size()>0){
+            List<String> otherPitList = new ArrayList<>();
+            List<String> bathRoomPitList = new ArrayList<>();
+            for (OrderImageEntity orderImageEntity : orderImageEntities) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("explain", orderImageEntity.getComments());
+                if ("1".equals(orderImageEntity.getPicTypeCode().toString().toString())) {
+                    map.put("bedPitUrl", orderImageEntity.getPath());
+                    roomInfoDetail.put("Area-bed", map);
+                } else if ("2".equals(orderImageEntity.getPicTypeCode().toString())) {
+                    map.put("livingRoomPitUrl", orderImageEntity.getPath());
+                    roomInfoDetail.put("Area-LivingRoom", map);
+                } else if ("3".equals(orderImageEntity.getPicTypeCode().toString())) {
+                    map.put("kitchenPitUrl", orderImageEntity.getPath());
+                    roomInfoDetail.put("Area-kitchen", map);
+                } else if ("4".equals(orderImageEntity.getPicTypeCode().toString())) {
+                    map.put("balconyPitUrl", orderImageEntity.getPath());
+                    roomInfoDetail.put("Area-balcony", map);
+                } else if ("5".equals(orderImageEntity.getPicTypeCode().toString()) || "6".equals(orderImageEntity.getPicTypeCode().toString()) || "7".equals(orderImageEntity.getPicTypeCode().toString())) {
+                    bathRoomPitList.add(orderImageEntity.getPath());
+
+                    roomInfoDetail.put("Area-bathRoom", bathRoomPitList.toArray());
+                } else if ("8".equals(orderImageEntity.getPicTypeCode().toString())) {
+                    map.put("toothBrushPitUrl", orderImageEntity.getPath());
+                    roomInfoDetail.put("custom-toothBrush", map);
+                } else if ("9".equals(orderImageEntity.getPicTypeCode().toString())) {
+                    map.put("shampooPitUrl", orderImageEntity.getPath());
+                    roomInfoDetail.put("custom-shampoo", map);
+                } else if ("10".equals(orderImageEntity.getPicTypeCode().toString())) {
+                    map.put("comPitUrl", orderImageEntity.getPath());
+                    roomInfoDetail.put("custom-comb", map);
+
+                } else if ("11".equals(orderImageEntity.getPicTypeCode().toString())) {
+                    map.put("toiletPaperPitUrl", orderImageEntity.getPath());
+                    roomInfoDetail.put("custom-toiletPaper", map);
+                } else if ("12".equals(orderImageEntity.getPicTypeCode().toString())) {
+                    map.put("livingRoomPaperPitUrl", orderImageEntity.getPath());
+                    roomInfoDetail.put("custom-livingRoomPaper", map);
+                } else if ("13".equals(orderImageEntity.getPicTypeCode().toString())) {
+                    map.put("bedSheetPitUrl", orderImageEntity.getPath());
+                    roomInfoDetail.put("custom-bedsheet", map);
+                } else if ("14".equals(orderImageEntity.getPicTypeCode().toString())) {
+                    map.put("kitchenwarePitUrl", orderImageEntity.getPath());
+                    roomInfoDetail.put("custom-kitchenware", map);
+                } else if ("15".equals(orderImageEntity.getPicTypeCode().toString())) {
+                    map.put("rubbishBagPitUrl", orderImageEntity.getPath());
+                    roomInfoDetail.put("custom-rubbishBag", map);
+                } else if ("16".equals(orderImageEntity.getPicTypeCode().toString())) {
+                    otherPitList.add(orderImageEntity.getPath());
+                    roomInfoDetail.put("Area-other", otherPitList.toArray());
+                }
+
+            }
+        }
+
+        return roomInfoDetail;
     }
 }
