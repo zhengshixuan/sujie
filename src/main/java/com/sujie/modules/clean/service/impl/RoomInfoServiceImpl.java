@@ -108,8 +108,8 @@ public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoDao, RoomInfoEntity
                     roomInfoDetail.put("Area-balcony", map);
                 } else if ("5".equals(image.getPicTypeCode().toString()) || "6".equals(image.getPicTypeCode().toString()) || "7".equals(image.getPicTypeCode().toString())) {
                     bathRoomPitList.add(image.getPicPath());
-
-                    roomInfoDetail.put("Area-bathRoom", bathRoomPitList.toArray());
+                    map.put("bathRoomPitUrlArr", bathRoomPitList.toArray());
+                    roomInfoDetail.put("Area-bathRoom", map);
                 } else if ("8".equals(image.getPicTypeCode().toString())) {
                     map.put("toothBrushPitUrl", image.getPicPath());
                     roomInfoDetail.put("custom-toothBrush", map);
@@ -137,7 +137,8 @@ public class RoomInfoServiceImpl extends ServiceImpl<RoomInfoDao, RoomInfoEntity
                     roomInfoDetail.put("custom-rubbishBag", map);
                 } else if ("16".equals(image.getPicTypeCode().toString())) {
                     otherPitList.add(image.getPicPath());
-                    roomInfoDetail.put("Area-other", otherPitList.toArray());
+                    map.put("otherPitUrlArr", otherPitList.toArray());
+                    roomInfoDetail.put("Area-other", map);
                 }
 
             }

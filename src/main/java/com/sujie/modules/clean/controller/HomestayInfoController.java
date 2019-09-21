@@ -1,13 +1,12 @@
 package com.sujie.modules.clean.controller;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import com.sujie.common.utils.MD5Utils;
+import com.sujie.modules.clean.entity.HomestayChargeRecordEntity;
 import com.sujie.modules.clean.entity.RoomInfoEntity;
+import com.sujie.modules.clean.service.HomestayChargeRecordService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +29,8 @@ import com.sujie.common.utils.R;
 public class HomestayInfoController {
     @Autowired
     private HomestayInfoService homestayInfoService;
+    @Autowired
+    private HomestayChargeRecordService homestayChargeRecordService;
 
     /**
      * 列表
@@ -87,14 +88,35 @@ public class HomestayInfoController {
     public R update(@RequestBody HomestayInfoEntity homestayInfo) {
         HomestayInfoEntity oldHomestayInfo = homestayInfoService.getById(homestayInfo.getId());
         if (null != oldHomestayInfo) {
-            BigDecimal balance = oldHomestayInfo.getBalance();
-            balance = homestayInfo.getBalance().add(balance);
-            homestayInfo.setBalance(balance);
+            //判断是否是充值
+            if (null != homestayInfo.getBalance()) {
+                BigDecimal balance = oldHomestayInfo.getBalance();
+                balance = homestayInfo.getBalance().add(balance);
+                homestayInfo.setBalance(balance);
+                //保存充值记录信息
+                try {
+                    HomestayChargeRecordEntity homestayChargeRecordEntity = new HomestayChargeRecordEntity();
+                    homestayChargeRecordEntity.setAmount(homestayInfo.getBalance());
+                    homestayChargeRecordEntity.setChargeDate(new Date());
+                    homestayChargeRecordEntity.setHomestayId(oldHomestayInfo.getHomestayId());
+                    homestayInfoService.updateById(homestayInfo);
+                    homestayChargeRecordService.saveOrUpdate(homestayChargeRecordEntity);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return R.error("充值失败!");
+                }
+            } else {
+                if (!homestayInfo.getPassword().equalsIgnoreCase(oldHomestayInfo.getPassword())) {
+                    homestayInfo.setPassword(MD5Utils.getMD5(homestayInfo.getPassword()));
+                }
+                try {
+                    homestayInfoService.updateById(homestayInfo);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return R.error("充值失败!");
+                }
+            }
         }
-        if(!homestayInfo.getPassword().equalsIgnoreCase(oldHomestayInfo.getPassword())){
-            homestayInfo.setPassword(MD5Utils.getMD5(homestayInfo.getPassword()));
-        }
-        homestayInfoService.updateById(homestayInfo);
 
         return R.ok();
     }

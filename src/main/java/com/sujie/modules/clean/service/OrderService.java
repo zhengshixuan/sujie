@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.sujie.common.utils.PageUtils;
 import com.sujie.modules.clean.entity.OrderEntity;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -139,6 +140,13 @@ public interface OrderService extends IService<OrderEntity> {
      * @return
      */
     Map<String,Object> getComeleteOrder(Map<String,Object> params);
+
+    /**
+     * 查询消费总金额,已订单完成为准
+     * @param params
+     * @return
+     */
+    BigDecimal getConCount(Map<String,Object> params);
 
 
 }

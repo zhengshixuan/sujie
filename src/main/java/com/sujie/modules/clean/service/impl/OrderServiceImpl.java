@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -216,8 +217,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                     roomInfoDetail.put("Area-balcony", map);
                 } else if ("5".equals(orderImageEntity.getPicTypeCode().toString()) || "6".equals(orderImageEntity.getPicTypeCode().toString()) || "7".equals(orderImageEntity.getPicTypeCode().toString())) {
                     bathRoomPitList.add(orderImageEntity.getPath());
-
-                    roomInfoDetail.put("Area-bathRoom", bathRoomPitList.toArray());
+                    map.put("bathRoomPitUrlArr", bathRoomPitList.toArray());
+                    roomInfoDetail.put("Area-bathRoom", map);
                 } else if ("8".equals(orderImageEntity.getPicTypeCode().toString())) {
                     map.put("toothBrushPitUrl", orderImageEntity.getPath());
                     roomInfoDetail.put("custom-toothBrush", map);
@@ -245,12 +246,20 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                     roomInfoDetail.put("custom-rubbishBag", map);
                 } else if ("16".equals(orderImageEntity.getPicTypeCode().toString())) {
                     otherPitList.add(orderImageEntity.getPath());
-                    roomInfoDetail.put("Area-other", otherPitList.toArray());
+                    map.put("otherPitUrlArr", otherPitList.toArray());
+                    roomInfoDetail.put("Area-other", map);
                 }
 
             }
         }
 
         return roomInfoDetail;
+    }
+
+    @Override
+    public BigDecimal getConCount(Map<String, Object> params) {
+        BigDecimal conCount = baseMapper.getConCount(params);
+
+        return conCount;
     }
 }

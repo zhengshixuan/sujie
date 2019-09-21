@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sujie.modules.clean.dao.HomestayChargeRecordDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.sujie.modules.clean.entity.HomestayChargeRecordEntity" id="homestayChargeRecordMap">
+        <result property="id" column="id"/>
+        <result property="homestayId" column="homestay_id"/>
+        <result property="amount" column="amount"/>
+        <result property="chargeDate" column="charge_date"/>
+    </resultMap>
+    <select id="getChargeCount" resultType="java.math.BigDecimal">
+          SELECT
+            sum(t.amount) recharge
+          FROM
+            homestay.homestay_charge_record t
+
+    </select>
+
+
+</mapper>

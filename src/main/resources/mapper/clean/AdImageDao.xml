@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sujie.modules.clean.dao.AdImageDao">
+
+
+    <select id="listPic" resultType="java.util.Map">
+        SELECT
+            t.path path,
+            t.comments comments
+        FROM homestay.ad_image t
+        WHERE t.status = 1
+
+    </select>
+</mapper>

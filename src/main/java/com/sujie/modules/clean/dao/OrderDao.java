@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.core.annotation.Order;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -99,5 +100,12 @@ public interface OrderDao extends BaseMapper<OrderEntity> {
      */
     List<Map<String, Object>> searchOrders(Map<String, Object> map);
 
+
+    /**
+     * 通过民宿id和保洁状态查询消费总额
+     * @param params
+     * @return
+     */
+    BigDecimal getConCount(Map<String,Object> params);
 
 }

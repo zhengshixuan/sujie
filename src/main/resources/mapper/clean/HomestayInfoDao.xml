@@ -37,7 +37,9 @@
             ( is_vip = '0', '普通用户', '会员用户' ) customType,
         IF
             ( is_reception = '0', '是', '否' ) isFrontDest,
-            t.reception_password AS frontDestRoom
+            t.reception_password AS frontDestRoom,
+            t.homestay_id homestayId
+
         FROM
             homestay.homestay_info t
         WHERE

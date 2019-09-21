@@ -242,8 +242,22 @@
             a.homestay_name homeStayBreand,
             a.homestay_address address,
             c.room_id roomNo,
-            c.room_type roomType,
-            t.clean_type clearType,
+            CASE
+        c.room_type
+        WHEN '0' THEN
+            '1'
+            WHEN '1' THEN
+            '2'
+            WHEN '2' THEN
+            '3'
+            END roomType,
+            CASE
+        t.clean_type
+            WHEN '0' THEN
+            '1'
+            WHEN '1' THEN
+            '2'
+            END clearType,
             b.boss_cost expense,
             t.clean_status_code state,
             t.order_id orderId
@@ -253,22 +267,36 @@
             JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
             JOIN homestay.room_info c ON t.room_id = c.room_id
         WHERE 1=1
-        <if test="cleanStatusCode1!=null and cleanStatusCode1!='' ">
-            t.clean_status_code = #{cleanStatusCode1}
+        <if test="cleanStatusCode1!=null and cleanStatusCode1!='' and cleanStatusCode2!=null and cleanStatusCode2!='' ">
+           AND (t.clean_status_code = #{cleanStatusCode1} OR t.clean_status_code = #{cleanStatusCode2})
         </if>
-        <if test="cleanStatusCode2!=null and cleanStatusCode2!='' ">
-            OR t.clean_status_code = #{cleanStatusCode2}
+        <if test="cleanStatusCode!=null and cleanStatusCode!='' ">
+            AND t.clean_status_code = #{cleanStatusCode}
         </if>
-
 
 
     </select>
     <select id="searchOrders" resultType="java.util.Map">
         SELECT
+            CASE
+            c.room_type
+            WHEN '0' THEN
+            '1'
+            WHEN '1' THEN
+            '2'
+            WHEN '2' THEN
+            '3'
+            END roomType,
+            CASE
+            t.clean_type
+            WHEN '0' THEN
+            '1'
+            WHEN '1' THEN
+            '2'
+            END clearType,
+
             b.actual_clean_date date,
             c.room_id roomNo,
-            c.room_type roomType,
-            t.clean_type clearType,
             b.boss_cost expense
         FROM
             homestay.order t
@@ -287,6 +315,18 @@
         <if test="place!=null and place!='' ">
             AND  a.homestay_address = #{place}
         </if>
+
+    </select>
+    <select id="getConCount" resultType="java.math.BigDecimal">
+
+        SELECT
+          sum(a.boss_cost) conSum
+        FROM
+          homestay.order t JOIN homestay.order_record a ON t.order_id = a.order_id
+        WHERE
+          t.homestay_id = #{homestayId}
+        AND t.clean_status_code = 3
+
 
     </select>
 

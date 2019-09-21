@@ -10,18 +10,19 @@ import com.sujie.modules.clean.service.*;
 import io.swagger.annotations.*;
 import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Api("老板端")
 @RestController
 @RequestMapping("/boss")
@@ -35,6 +36,10 @@ public class Boss {
     private OrderService orderService;
     @Autowired
     private OrderRecordService orderRecordService;
+    @Autowired
+    private AdImageService adImageService;
+    @Autowired
+    private HomestayChargeRecordService homestayChargeRecordService;
 
     /**
      * 1.登录
@@ -42,7 +47,7 @@ public class Boss {
      * @param params
      * @return
      */
-    @ApiOperation(value="登录",notes = "根据手机号密码用户登录")
+    @ApiOperation(value = "登录", notes = "根据手机号密码用户登录")
     @PostMapping("/login")
     public R login(@RequestBody Map<String, Object> params) {
         String operatorPhone = (String) params.get("operatorPhone");
@@ -73,20 +78,145 @@ public class Boss {
     }
 
     /**
+     * 修改密码
+     *
+     * @param params 入参
+     * @return R
+     */
+    @PostMapping("/updatePassword")
+    public R updatePassword(@RequestBody Map<String, Object> params) {
+        String operatorPhone = (String) params.get("operatorPhone");
+        String initPwd = (String) params.get("initPwd");
+        String modPwd = (String) params.get("modPwd");
+
+        if (StringUtils.isBlank(operatorPhone)) {
+            return R.error(0, "运营人员手机号码不能为空");
+        } else {
+
+            if (StringUtils.isBlank(initPwd)) {
+                return R.error(0, "初始密码不能为空");
+            } else {
+                if (StringUtils.isBlank(modPwd)) {
+                    return R.error(0, "修改密码不能为空");
+                } else {
+
+                    QueryWrapper<HomestayInfoEntity> queryWrapper = new QueryWrapper<>();
+                    queryWrapper.eq("operators_telephone", operatorPhone);
+                    // 查询详细
+
+                    HomestayInfoEntity homestayInfoEntity = homestayInfoService.getOne(queryWrapper);
+                    if (homestayInfoEntity == null) {
+                        return R.error(0, "未查到相关运营人员手机号");
+                    } else {
+                        if (!MD5Utils.getMD5(initPwd).equalsIgnoreCase(homestayInfoEntity.getPassword())) {
+                            return R.error(0, "初始密码不正确");
+                        } else {
+                            homestayInfoEntity.setPassword(MD5Utils.getMD5(modPwd));
+                            boolean b = homestayInfoService.saveOrUpdate(homestayInfoEntity);
+                            if (b) {
+                                return R.appOK();
+                            } else {
+                                return R.error(0, "修改失败,请联系系统管理员");
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    /**
+     * 查询展示图片信息
+     *
+     * @return
+     */
+    @PostMapping("/listPic")
+    public R listPic() {
+        List<Map<String, Object>> maps = adImageService.listPic();
+        return R.appOK().put("data", maps);
+    }
+
+    /**
+     * 查询余额信息
+     *
+     * @param params
+     * @return
+     */
+    @PostMapping("/getConDetail")
+    public R getConDetail(@RequestBody Map<String, Object> params) {
+        String homestayId = (String) params.get("homestayId");
+        if (StringUtils.isBlank(homestayId)) {
+            return R.error(0, "民宿id不能为空");
+        } else {
+            QueryWrapper<HomestayInfoEntity> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("homestay_id", params.get("homestayId"));
+            HomestayInfoEntity homestayInfoEntity = homestayInfoService.getOne(queryWrapper);
+            if (null == homestayInfoEntity) {
+                return R.error(0, "请输入正确的民宿id");
+            } else {
+                Map<String, Object> map = new HashMap<>();
+                BigDecimal recharge = homestayChargeRecordService.getChargeCount(params);
+                BigDecimal consum = orderService.getConCount(params);
+                map.put("isMember", Trans.trans(homestayInfoEntity.getIsVip()));
+                map.put("remain", homestayInfoEntity.getBalance());
+                map.put("recharge", recharge);
+                map.put("consum", consum);
+                return R.appOK().put("data", map);
+            }
+        }
+
+    }
+
+    /**
+     * 查询民宿客服等相关信息
+     *
+     * @param params
+     * @return
+     */
+    @PostMapping("/getConsumer")
+    public R getOtherHomestayInfo(@RequestBody Map<String, Object> params) {
+        String homestayId = (String) params.get("homestayId");
+        if (StringUtils.isBlank(homestayId)) {
+            return R.error(0, "民宿id不能为空");
+        } else {
+            QueryWrapper<HomestayInfoEntity> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("homestay_id", params.get("homestayId"));
+            HomestayInfoEntity homestayInfoEntity = homestayInfoService.getOne(queryWrapper);
+            if (null == homestayInfoEntity) {
+                return R.error(0, "请输入正确的民宿id");
+            } else {
+                Map<String, Object> map = new HashMap<>();
+                map.put("telephone", homestayInfoEntity.getWorkPhone());
+                map.put("clientWX", homestayInfoEntity.getCustomerWx());
+                map.put("clientPhone", homestayInfoEntity.getCustomerPhone());
+                map.put("workTime", homestayInfoEntity.getWorkTime());
+                return R.appOK().put("data", map);
+            }
+        }
+
+    }
+
+
+    /**
      * 二．门店信息
      *
      * @param params
      * @return
      */
-    @RequestMapping("/getHomestayInfo")
+    @PostMapping("/getHomestayInfo")
     public R getHomestayInfo(@RequestBody Map<String, Object> params) {
         String operatorPhone = (String) params.get("operatorPhone");
         if (StringUtils.isBlank(operatorPhone)) {
-            return R.error(0, "手机号不能为空");
+            return R.error(0, "运营者手机号不能为空");
+        } else {
+            // 查询详细
+            Map<String, Object> homestayInfoEntity = this.homestayInfoService.getHomestayInfoDetail(params);
+            if (null == homestayInfoEntity) {
+                return R.error(0, "未找到此运营者手机号相关民宿信息");
+            }
+            return R.appOK().put("data", homestayInfoEntity);
         }
-        // 查询详细
-        Map<String, Object> homestayInfoEntity = this.homestayInfoService.getHomestayInfoDetail(params);
-        return R.appOK().put("data", homestayInfoEntity);
     }
 
     /**
@@ -95,14 +225,15 @@ public class Boss {
      * @param params
      * @return
      */
-    @RequestMapping("/getRoomInfos")
+    @PostMapping("/getRoomInfos")
     public R getRoomInfos(@RequestBody Map<String, Object> params) {
         String operatorPhone = (String) params.get("operatorPhone");
         if (StringUtils.isBlank(operatorPhone)) {
             return R.error(0, "手机号不能为空");
+        } else {
+            List<Map<String, Object>> roomInfos = roomInfoService.getRoomInfos(params);
+            return R.appOK().put("data", roomInfos);
         }
-        List<Map<String, Object>> roomInfos = roomInfoService.getRoomInfos(params);
-        return R.appOK().put("data", roomInfos);
     }
 
     /**
@@ -111,7 +242,7 @@ public class Boss {
      * @param params
      * @return
      */
-    @RequestMapping("/getRoomInfoDetail")
+    @PostMapping("/getRoomInfoDetail")
     public R getRoomInfoDetail(@RequestBody Map<String, Object> params) {
         String homestayId = (String) params.get("homestayId");
         String roomNo = (String) params.get("roomNo");
@@ -134,7 +265,7 @@ public class Boss {
      * @param params
      * @return
      */
-    @RequestMapping("/sendPreOrder")
+    @PostMapping("/sendPreOrder")
     public R sendPreOrder(@RequestBody Map<String, Object> params) {
         String homestayId = (String) params.get("homestayId");
         String homeStayBreand = (String) params.get("homeStayBreand");
@@ -144,7 +275,6 @@ public class Boss {
         String clearEnd = (String) params.get("clearEnd");
         String clearType = (String) params.get("clearType");
         String ischeckOut = (String) params.get("ischeckOut");
-        String state = (String) params.get("state");
 
         if (StringUtils.isNotBlank(homestayId)) {
             if (StringUtils.isNotBlank(homeStayBreand)) {
@@ -159,43 +289,47 @@ public class Boss {
                                         roomInfoEntityQueryWrapper.eq("homestay_id", homestayId);
                                         roomInfoEntityQueryWrapper.eq("room_id", roomNo);
                                         RoomInfoEntity roomInfo = roomInfoService.getOne(roomInfoEntityQueryWrapper);
+                                        if (null == roomInfo) {
+                                            return R.error(0,"未找到对应房间信息,请输入正确的民宿id和房间号");
+                                        } else {
+                                            //订单表
+                                            OrderEntity orderEntity = new OrderEntity();
 
-                                        //订单表
-                                        OrderEntity orderEntity = new OrderEntity();
+                                            //订单详细表
+                                            OrderRecordEntity orderRecordEntity = new OrderRecordEntity();
 
-                                        //订单详细表
-                                        OrderRecordEntity orderRecordEntity = new OrderRecordEntity();
-
-                                        try {
-                                            orderEntity.setOrderId(UUIDUtils.getUUIDHex());
-                                            orderEntity.setHomestayId(homestayId);
-                                            orderEntity.setRoomId(roomNo);
-                                            orderEntity.setCleanStatusCode(0);
-                                            orderEntity.setCleanType(Trans.trans(Integer.valueOf(clearType)));
-                                            orderEntity.setIsCheckOut(Trans.trans(Integer.valueOf(ischeckOut)));
-                                            Date startDate = SDF.parse(clearStart);
-                                            Date endDate = SDF.parse(clearEnd);
-                                            orderEntity.setPreStartCleanDate(startDate);
-                                            orderEntity.setPreEndCleanDate(endDate);
-                                            orderEntity.setCreateDate(new Date());
-
-                                            orderRecordEntity.setOrderId(orderEntity.getOrderId());
-                                            orderRecordEntity.setBossCost(roomInfo.getPrice());
-                                            orderRecordEntity.setIsFirst(1);
-                                            orderRecordEntity.setIsExtraBed(roomInfo.getIsExtraBed());
-                                            orderRecordEntity.setStatus(0);
-                                            this.orderRecordService.saveOrUpdate(orderRecordEntity);
-                                            this.orderService.saveOrUpdate(orderEntity);
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                            return R.error(0, "请输入正确的日期格式yyyy-MM-dd hh:mm");
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                            return R.error(0, "保存失败");
+                                            try {
+                                                //订单
+                                                orderEntity.setOrderId(UUIDUtils.getUUIDHex());
+                                                orderEntity.setHomestayId(homestayId);
+                                                orderEntity.setRoomId(roomNo);
+                                                orderEntity.setCleanStatusCode(0);
+                                                orderEntity.setCleanType(Trans.trans(Integer.valueOf(clearType)));
+                                                orderEntity.setIsCheckOut(Trans.trans(Integer.valueOf(ischeckOut)));
+                                                Date startDate = SDF.parse(clearStart);
+                                                Date endDate = SDF.parse(clearEnd);
+                                                orderEntity.setPreStartCleanDate(startDate);
+                                                orderEntity.setPreEndCleanDate(endDate);
+                                                orderEntity.setCreateDate(new Date());
+                                                //订单记录
+                                                orderRecordEntity.setOrderId(orderEntity.getOrderId());
+                                                orderRecordEntity.setBossCost(roomInfo.getPrice());
+                                                orderRecordEntity.setIsFirst(1);
+                                                orderRecordEntity.setIsExtraBed(roomInfo.getIsExtraBed());
+                                                orderRecordEntity.setStatus(0);
+                                                this.orderRecordService.saveOrUpdate(orderRecordEntity);
+                                                this.orderService.saveOrUpdate(orderEntity);
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
+                                                return R.error(0, "请输入正确的日期格式yyyy-MM-dd hh:mm");
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                                return R.error(0, "保存失败");
+                                            }
                                         }
 
                                     } else {
-                                        return R.error(0, "是否退房不能为空");
+                                        return R.error(0, "退房信息不能为空");
                                     }
                                 } else {
                                     return R.error(0, "保洁类型不能为空");
@@ -229,7 +363,7 @@ public class Boss {
      * @param params
      * @return
      */
-    @RequestMapping("/sendOrder")
+    @PostMapping("/sendOrder")
     public R sendOrder(@RequestBody Map<String, Object> params) {
         String homestayId = (String) params.get("homestayId");
         String roomNo = (String) params.get("roomNo");
@@ -239,7 +373,6 @@ public class Boss {
         String clearEnd = (String) params.get("clearEnd");
         String clearType = (String) params.get("clearType");
         String ischeckOut = (String) params.get("ischeckOut");
-        String state = (String) params.get("state");
 
 
         if (StringUtils.isNotBlank(homestayId)) {
@@ -355,11 +488,16 @@ public class Boss {
         return R.appOK();
     }
 
-    @RequestMapping("/getPreOrders")
+    /**
+     * 查询待保洁订单
+     * @param params
+     * @return
+     */
+    @PostMapping("/getPreOrders")
     public R getPreOrders(@RequestBody Map<String, Object> params) {
         String homestayId = (String) params.get("homestayId");
         if (StringUtils.isBlank(homestayId)) {
-            return R.error("民宿id不能为空");
+            return R.error(0,"民宿id不能为空");
         } else {
             //0为预打扫
             params.put("cleanStatusCode", 0);
@@ -368,7 +506,7 @@ public class Boss {
         }
     }
 
-    @RequestMapping("/cancleOrder")
+    @PostMapping("/cancleOrder")
     public R canclePreOrder(@RequestBody Map<String, Object> params) {
         String orderId = (String) params.get("orderId");
         if (StringUtils.isBlank(orderId)) {
@@ -376,8 +514,13 @@ public class Boss {
         } else {
             Map<String, Object> map = new HashMap<>();
             map.put("order_id", orderId);
-            orderService.removeByMap(map);
-            orderRecordService.removeByMap(map);
+            try {
+                orderService.removeByMap(map);
+                orderRecordService.removeByMap(map);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return R.error(0,"取消订单失败");
+            }
         }
         return R.appOK();
     }
@@ -388,11 +531,11 @@ public class Boss {
      * @param params
      * @return
      */
-    @RequestMapping("/getOrders")
+    @PostMapping("/getOrders")
     public R getOrders(@RequestBody Map<String, Object> params) {
         String homestayId = (String) params.get("homestayId");
         if (StringUtils.isBlank(homestayId)) {
-            return R.error("民宿id不能为空");
+            return R.error(0,"民宿id不能为空");
         } else {
             //1为待保洁
             params.put("cleanStatusCode1", 1);
@@ -409,7 +552,7 @@ public class Boss {
      * @param params 入参
      * @return
      */
-    @RequestMapping("/getCompleteOrders")
+    @PostMapping("/getCompleteOrders")
     public R getCompleteOrders(@RequestBody Map<String, Object> params) {
         String homestayId = (String) params.get("homestayId");
         if (StringUtils.isBlank(homestayId)) {
@@ -428,7 +571,7 @@ public class Boss {
      * @param params
      * @return
      */
-    @RequestMapping("/getCompleteOrderDetail")
+    @PostMapping("/getCompleteOrderDetail")
     public R getCompleteOrderRoomInfo(@RequestBody Map<String, Object> params) {
         String orderId = (String) params.get("orderId");
         if (StringUtils.isBlank(orderId)) {
@@ -449,7 +592,7 @@ public class Boss {
     }
 
 
-    @RequestMapping("/searchOrders")
+    @PostMapping("/searchOrders")
     public R searchOrders(@RequestBody Map<String, Object> params) {
         String operatorPhone = (String) params.get("operatorPhone");
         if (StringUtils.isBlank(operatorPhone)) {
