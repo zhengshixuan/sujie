@@ -12,7 +12,7 @@
     </resultMap>
     <select id="getChargeCount" resultType="java.math.BigDecimal">
           SELECT
-            sum(t.amount) recharge
+            IFNULL(sum(t.amount),0) recharge
           FROM
             homestay.homestay_charge_record t
 

@@ -230,7 +230,18 @@
             a.homestay_Name homeStayBreand,
             a.homestay_address address,
             t.room_id roomNo,
-            t.clean_status_code state
+            CASE
+              t.clean_status_code
+             WHEN '0' THEN
+            '1'
+            WHEN '1' THEN
+            '2'
+            WHEN '2' THEN
+            '3'
+            WHEN '3' THEN
+            '4'
+            END state,
+            dATE_FORMAT(t.create_date,'%Y-%m-%d %H:%i') appointment
         FROM
             homestay.order t
         JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
@@ -320,7 +331,7 @@
     <select id="getConCount" resultType="java.math.BigDecimal">
 
         SELECT
-          sum(a.boss_cost) conSum
+          IFNULL(sum(a.boss_cost),0) conSum
         FROM
           homestay.order t JOIN homestay.order_record a ON t.order_id = a.order_id
         WHERE

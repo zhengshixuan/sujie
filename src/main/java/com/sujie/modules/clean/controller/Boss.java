@@ -158,8 +158,12 @@ public class Boss {
                 Map<String, Object> map = new HashMap<>();
                 BigDecimal recharge = homestayChargeRecordService.getChargeCount(params);
                 BigDecimal consum = orderService.getConCount(params);
+                if (null == homestayInfoEntity.getBalance()) {
+                    map.put("remain", 0);
+                } else {
+                    map.put("remain", homestayInfoEntity.getBalance());
+                }
                 map.put("isMember", Trans.trans(homestayInfoEntity.getIsVip()));
-                map.put("remain", homestayInfoEntity.getBalance());
                 map.put("recharge", recharge);
                 map.put("consum", consum);
                 return R.appOK().put("data", map);
@@ -290,7 +294,7 @@ public class Boss {
                                         roomInfoEntityQueryWrapper.eq("room_id", roomNo);
                                         RoomInfoEntity roomInfo = roomInfoService.getOne(roomInfoEntityQueryWrapper);
                                         if (null == roomInfo) {
-                                            return R.error(0,"未找到对应房间信息,请输入正确的民宿id和房间号");
+                                            return R.error(0, "未找到对应房间信息,请输入正确的民宿id和房间号");
                                         } else {
                                             //订单表
                                             OrderEntity orderEntity = new OrderEntity();
@@ -490,6 +494,7 @@ public class Boss {
 
     /**
      * 查询待保洁订单
+     *
      * @param params
      * @return
      */
@@ -497,7 +502,7 @@ public class Boss {
     public R getPreOrders(@RequestBody Map<String, Object> params) {
         String homestayId = (String) params.get("homestayId");
         if (StringUtils.isBlank(homestayId)) {
-            return R.error(0,"民宿id不能为空");
+            return R.error(0, "民宿id不能为空");
         } else {
             //0为预打扫
             params.put("cleanStatusCode", 0);
@@ -519,7 +524,7 @@ public class Boss {
                 orderRecordService.removeByMap(map);
             } catch (Exception e) {
                 e.printStackTrace();
-                return R.error(0,"取消订单失败");
+                return R.error(0, "取消订单失败");
             }
         }
         return R.appOK();
@@ -535,7 +540,7 @@ public class Boss {
     public R getOrders(@RequestBody Map<String, Object> params) {
         String homestayId = (String) params.get("homestayId");
         if (StringUtils.isBlank(homestayId)) {
-            return R.error(0,"民宿id不能为空");
+            return R.error(0, "民宿id不能为空");
         } else {
             //1为待保洁
             params.put("cleanStatusCode1", 1);
@@ -606,5 +611,17 @@ public class Boss {
         }
 
     }
+
+    @PostMapping("/listHomestayPlace")
+    public R listHomestayPlace(@RequestBody Map<String, Object> params) {
+        String operatorPhone = (String) params.get("operatorPhone");
+        if (StringUtils.isBlank(operatorPhone)) {
+            return R.error(0, "运营者手机号不能为空");
+        } else {
+            List<String> allWorkPalce = homestayInfoService.getAllWorkPalce();
+            return R.appOK().put("data", allWorkPalce);
+        }
+    }
+
 
 }
