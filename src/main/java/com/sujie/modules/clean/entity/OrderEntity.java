@@ -71,4 +71,14 @@ public class OrderEntity implements Serializable {
      */
     private Date createDate;
 
+    /**
+     * 保洁密码
+     */
+    private String roomPassword;
+
+    /**
+     * 老板下单时填写的费用
+     */
+    private BigDecimal orderCost;
+
 }

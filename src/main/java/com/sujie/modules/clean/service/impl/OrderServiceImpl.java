@@ -128,7 +128,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     @Override
     public PageUtils listPrepareCleanOrder(Map<String, Object> params) {
         //订单状态
-        params.put("cleanStatusCode", 1);
+//        params.put("cleanStatusCode", 1);
         //创建订单时间
         params.put("createDate", SDF.format(new Date()));
         IPage<OrderVO> page = new Query<OrderVO>().getPage(params);
@@ -194,63 +194,82 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     @Override
     public Map<String, Object> getComeleteOrder(Map<String, Object> params) {
         Map<String, Object> roomInfoDetail = roomInfoDao.getRoomInfoDetail(params);
-        QueryWrapper<OrderImageEntity> orderImageEntityQueryWrapper = new QueryWrapper<>();
-        orderImageEntityQueryWrapper.eq("order_id",params.get("orderId"));
-        List<OrderImageEntity> orderImageEntities = orderImageDao.selectList(orderImageEntityQueryWrapper);
-        if(null!=orderImageEntities&&orderImageEntities.size()>0){
-            List<String> otherPitList = new ArrayList<>();
-            List<String> bathRoomPitList = new ArrayList<>();
-            for (OrderImageEntity orderImageEntity : orderImageEntities) {
-                Map<String, Object> map = new HashMap<>();
-                map.put("explain", orderImageEntity.getComments());
-                if ("1".equals(orderImageEntity.getPicTypeCode().toString().toString())) {
-                    map.put("bedPitUrl", orderImageEntity.getPath());
-                    roomInfoDetail.put("Area-bed", map);
-                } else if ("2".equals(orderImageEntity.getPicTypeCode().toString())) {
-                    map.put("livingRoomPitUrl", orderImageEntity.getPath());
-                    roomInfoDetail.put("Area-LivingRoom", map);
-                } else if ("3".equals(orderImageEntity.getPicTypeCode().toString())) {
-                    map.put("kitchenPitUrl", orderImageEntity.getPath());
-                    roomInfoDetail.put("Area-kitchen", map);
-                } else if ("4".equals(orderImageEntity.getPicTypeCode().toString())) {
-                    map.put("balconyPitUrl", orderImageEntity.getPath());
-                    roomInfoDetail.put("Area-balcony", map);
-                } else if ("5".equals(orderImageEntity.getPicTypeCode().toString()) || "6".equals(orderImageEntity.getPicTypeCode().toString()) || "7".equals(orderImageEntity.getPicTypeCode().toString())) {
-                    bathRoomPitList.add(orderImageEntity.getPath());
-                    map.put("bathRoomPitUrlArr", bathRoomPitList.toArray());
-                    roomInfoDetail.put("Area-bathRoom", map);
-                } else if ("8".equals(orderImageEntity.getPicTypeCode().toString())) {
-                    map.put("toothBrushPitUrl", orderImageEntity.getPath());
-                    roomInfoDetail.put("custom-toothBrush", map);
-                } else if ("9".equals(orderImageEntity.getPicTypeCode().toString())) {
-                    map.put("shampooPitUrl", orderImageEntity.getPath());
-                    roomInfoDetail.put("custom-shampoo", map);
-                } else if ("10".equals(orderImageEntity.getPicTypeCode().toString())) {
-                    map.put("comPitUrl", orderImageEntity.getPath());
-                    roomInfoDetail.put("custom-comb", map);
+        if (null != roomInfoDetail) {
+            QueryWrapper<OrderImageEntity> orderImageEntityQueryWrapper = new QueryWrapper<>();
+            orderImageEntityQueryWrapper.eq("order_id", params.get("orderId"));
+            List<OrderImageEntity> orderImageEntities = orderImageDao.selectList(orderImageEntityQueryWrapper);
+            if (null != orderImageEntities && orderImageEntities.size() > 0) {
+                List<String> otherPitList = new ArrayList<>();
+                List<String> bathRoomPitList = new ArrayList<>();
+                for (OrderImageEntity orderImageEntity : orderImageEntities) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("explain", orderImageEntity.getComments());
+                    if ("1".equals(orderImageEntity.getPicTypeCode().toString().toString())) {
+                        map.put("bedPitUrl", orderImageEntity.getPath());
+                        roomInfoDetail.put("areaBed", map);
+                    } else if ("2".equals(orderImageEntity.getPicTypeCode().toString())) {
+                        map.put("livingRoomPitUrl", orderImageEntity.getPath());
+                        roomInfoDetail.put("areaLivingRoom", map);
+                    } else if ("3".equals(orderImageEntity.getPicTypeCode().toString())) {
+                        map.put("kitchenPitUrl", orderImageEntity.getPath());
+                        roomInfoDetail.put("areaKitchen", map);
+                    } else if ("4".equals(orderImageEntity.getPicTypeCode().toString())) {
+                        map.put("balconyPitUrl", orderImageEntity.getPath());
+                        roomInfoDetail.put("areaBalcony", map);
+                    } else if ("5".equals(orderImageEntity.getPicTypeCode().toString()) || "6".equals(orderImageEntity.getPicTypeCode().toString()) || "7".equals(orderImageEntity.getPicTypeCode().toString())) {
+                        bathRoomPitList.add(orderImageEntity.getPath());
+                        map.put("bathRoomPitUrlArr", bathRoomPitList.toArray());
+                        roomInfoDetail.put("areaBathRoom", map);
+                    } else if ("8".equals(orderImageEntity.getPicTypeCode().toString())) {
+                        map.put("toothBrushPitUrl", orderImageEntity.getPath());
+                        roomInfoDetail.put("customToothBrush", map);
+                    } else if ("9".equals(orderImageEntity.getPicTypeCode().toString())) {
+                        map.put("shampooPitUrl", orderImageEntity.getPath());
+                        roomInfoDetail.put("customShampoo", map);
+                    } else if ("10".equals(orderImageEntity.getPicTypeCode().toString())) {
+                        map.put("comPitUrl", orderImageEntity.getPath());
+                        roomInfoDetail.put("customComb", map);
+                    } else if ("11".equals(orderImageEntity.getPicTypeCode().toString())) {
+                        map.put("toiletPaperPitUrl", orderImageEntity.getPath());
+                        roomInfoDetail.put("customToiletPaper", map);
+                    } else if ("12".equals(orderImageEntity.getPicTypeCode().toString())) {
+                        map.put("livingRoomPaperPitUrl", orderImageEntity.getPath());
+                        roomInfoDetail.put("customLivingRoomPaper", map);
+                    } else if ("13".equals(orderImageEntity.getPicTypeCode().toString())) {
+                        map.put("bedSheetPitUrl", orderImageEntity.getPath());
+                        roomInfoDetail.put("customBedsheet", map);
+                    } else if ("14".equals(orderImageEntity.getPicTypeCode().toString())) {
+                        map.put("kitchenwarePitUrl", orderImageEntity.getPath());
+                        roomInfoDetail.put("customKitchenware", map);
+                    } else if ("15".equals(orderImageEntity.getPicTypeCode().toString())) {
+                        map.put("rubbishBagPitUrl", orderImageEntity.getPath());
+                        roomInfoDetail.put("customRubbishBag", map);
+                    } else if ("16".equals(orderImageEntity.getPicTypeCode().toString())) {
+                        otherPitList.add(orderImageEntity.getPath());
+                        map.put("otherPitUrlArr", otherPitList.toArray());
+                        roomInfoDetail.put("areaOther", map);
+                    }
 
-                } else if ("11".equals(orderImageEntity.getPicTypeCode().toString())) {
-                    map.put("toiletPaperPitUrl", orderImageEntity.getPath());
-                    roomInfoDetail.put("custom-toiletPaper", map);
-                } else if ("12".equals(orderImageEntity.getPicTypeCode().toString())) {
-                    map.put("livingRoomPaperPitUrl", orderImageEntity.getPath());
-                    roomInfoDetail.put("custom-livingRoomPaper", map);
-                } else if ("13".equals(orderImageEntity.getPicTypeCode().toString())) {
-                    map.put("bedSheetPitUrl", orderImageEntity.getPath());
-                    roomInfoDetail.put("custom-bedsheet", map);
-                } else if ("14".equals(orderImageEntity.getPicTypeCode().toString())) {
-                    map.put("kitchenwarePitUrl", orderImageEntity.getPath());
-                    roomInfoDetail.put("custom-kitchenware", map);
-                } else if ("15".equals(orderImageEntity.getPicTypeCode().toString())) {
-                    map.put("rubbishBagPitUrl", orderImageEntity.getPath());
-                    roomInfoDetail.put("custom-rubbishBag", map);
-                } else if ("16".equals(orderImageEntity.getPicTypeCode().toString())) {
-                    otherPitList.add(orderImageEntity.getPath());
-                    map.put("otherPitUrlArr", otherPitList.toArray());
-                    roomInfoDetail.put("Area-other", map);
                 }
-
             }
+            String[] keys = {"areaBed", "areaLivingRoom", "areaKitchen", "areaBalcony", "areaBathRoom", "customToothBrush",
+                    "customShampoo", "customComb", "customToiletPaper", "customLivingRoomPaper", "customBedsheet", "customKitchenware", "customRubbishBag", "areaOther"};
+            String[] mapKesys = {"bedPitUrl", "livingRoomPitUrl", "kitchenPitUrl", "balconyPitUrl", "bathRoomPitUrlArr", "toothBrushPitUrl", "shampooPitUrl", "comPitUrl",
+                    "toiletPaperPitUrl", "livingRoomPaperPitUrl", "bedSheetPitUrl", "kitchenwarePitUrl", "rubbishBagPitUrl", "otherPitUrlArr"};
+            for (int i = 0; i < keys.length; i++) {
+                if (!roomInfoDetail.containsKey(keys[i])) {
+                    Map<String, Object> map = new HashMap<>();
+                    if (keys[i].equals("areaBathRoom") || keys[i].equals("areaOther")) {
+                        map.put(mapKesys[i], new String[0]);
+                    } else {
+                        map.put(mapKesys[i], "");
+                    }
+                    map.put("explain", "");
+                    roomInfoDetail.put(keys[i], map);
+                }
+            }
+        } else {
+            roomInfoDetail = new HashMap<>();
         }
 
         return roomInfoDetail;

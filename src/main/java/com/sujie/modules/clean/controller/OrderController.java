@@ -3,8 +3,10 @@ package com.sujie.modules.clean.controller;
 import java.math.BigDecimal;
 import java.util.*;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sujie.modules.clean.entity.OrderRecordEntity;
 import com.sujie.modules.clean.service.OrderRecordService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +37,7 @@ public class OrderController {
 
     /**
      * 派送订单给阿姨
+     *
      * @param params
      * @return
      */
@@ -44,16 +47,28 @@ public class OrderController {
         String staffId = (String) params.get("staffId");
         String staffCost = (String) params.get("staffCost");
         String bossCost = (String) params.get("bossCost");
-//        OrderEntity orderEntity = orderService.getById(id);
-        OrderRecordEntity orderRecordEntity = orderRecordService.getById(id);
-        orderRecordEntity.setStatus(1);
-        orderRecordEntity.setStaffId(staffId);
-        BigDecimal staffCostDouble = new BigDecimal(staffCost);
-        BigDecimal bossCostDobule = new BigDecimal(bossCost);
-        orderRecordEntity.setStaffCost(staffCostDouble);
-        orderRecordEntity.setBossCost(bossCostDobule);
-        orderRecordService.saveOrUpdate(orderRecordEntity);
-        return R.ok();
+        OrderEntity orderEntity = orderService.getById(id);
+
+        if (orderEntity != null) {
+            orderEntity.setCleanStatusCode(1);
+            QueryWrapper<OrderRecordEntity> orderRecordEntityQueryWrapper = new QueryWrapper<>();
+            OrderRecordEntity orderRecordEntity = orderRecordService.getOrderRecordByOrderId(orderEntity.getOrderId());
+            if (null != orderRecordEntity) {
+                orderRecordEntity.setStaffId(staffId);
+                BigDecimal staffCostDouble = new BigDecimal(staffCost);
+                BigDecimal bossCostDobule = new BigDecimal(bossCost);
+                orderRecordEntity.setStatus(1);
+                orderRecordEntity.setStaffCost(staffCostDouble);
+                orderRecordEntity.setBossCost(bossCostDobule);
+                orderService.saveOrUpdate(orderEntity);
+                orderRecordService.saveOrUpdate(orderRecordEntity);
+                return R.ok();
+            } else {
+                return R.error("派单失败,请核实此订单是否已经派单");
+            }
+        } else {
+            return R.error("派单失败,请联系系统管理员");
+        }
     }
 
     @RequestMapping("cancelOrder")

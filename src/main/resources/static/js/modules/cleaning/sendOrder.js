@@ -87,8 +87,17 @@ function cancelOrder(id,homestayId,roomId){
     });
 }
 function sendOrder(id,homestayId,roomId,rowId){
-    var staffCost = $(".staffCost").eq(rowId-1).find('input').val();
-    var bossCost = $(".bossCost").eq(rowId-1).find('input').val();
+    // var a = $("#jqGrid").getRowData(rowId).bossCost;
+    //
+    //
+    // var bossCostArr = $("#jqGrid").getRowData(rowId).bossCost.split("\"");
+    // var bossCostArr = $("#jqGrid").getRowData(rowId).staffCost.split("\"");
+    // var staffCost = bossCostArr[3];
+    // var bossCost = bossCostArr[3];
+
+    var staffCost = $("#"+rowId).find("td").eq(5).find("input").val();
+
+    var bossCost = $("#"+rowId).find("td").eq(8).find("input").val();
     var select = $('.demo').fSelect();
     var staff_id = getSelectStaff(select, id, homestayId, roomId);
     if(!/^(([1-9]\d*)|\d)(\.\d{1,2})?$/.test(staffCost)||!/^(([1-9]\d*)|\d)(\.\d{1,2})?$/.test(bossCost)){

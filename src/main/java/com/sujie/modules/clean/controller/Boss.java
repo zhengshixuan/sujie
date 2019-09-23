@@ -378,7 +378,8 @@ public class Boss {
         String clearType = (String) params.get("clearType");
         String ischeckOut = (String) params.get("ischeckOut");
         String comments = (String) params.get("comments");
-
+        String roomPassword = (String) params.get("roomPassword");
+        String orderCost = (String) params.get("orderCost");
 
         if (StringUtils.isNotBlank(homestayId)) {
             if (StringUtils.isNotBlank(homeStayBreand)) {
@@ -388,80 +389,96 @@ public class Boss {
                             if (StringUtils.isNotBlank(clearEnd)) {
                                 if (StringUtils.isNotBlank(clearType)) {
                                     if (StringUtils.isNotBlank(ischeckOut)) {
+                                        if (StringUtils.isNotBlank(roomPassword)) {
 
-                                        OrderEntity orderEntity = orderService.getOrder(params);
+                                            OrderEntity orderEntity = orderService.getOrder(params);
 
-                                        //房间信息
-                                        QueryWrapper<RoomInfoEntity> roomInfoEntityQueryWrapper = new QueryWrapper<RoomInfoEntity>();
-                                        roomInfoEntityQueryWrapper.eq("homestay_id", homestayId);
-                                        roomInfoEntityQueryWrapper.eq("room_id", roomNo);
-                                        RoomInfoEntity roomInfo = roomInfoService.getOne(roomInfoEntityQueryWrapper);
+                                            //房间信息
+                                            QueryWrapper<RoomInfoEntity> roomInfoEntityQueryWrapper = new QueryWrapper<RoomInfoEntity>();
+                                            roomInfoEntityQueryWrapper.eq("homestay_id", homestayId);
+                                            roomInfoEntityQueryWrapper.eq("room_id", roomNo);
+                                            RoomInfoEntity roomInfo = roomInfoService.getOne(roomInfoEntityQueryWrapper);
 
-                                        if (null != orderEntity) {
-                                            try {
-                                                OrderRecordEntity orderRecordEntity = orderRecordService.getOrderRecordByOrderId(orderEntity.getOrderId());
-                                                if (orderRecordEntity == null) {
-                                                    orderRecordEntity = new OrderRecordEntity();
+                                            if (null != orderEntity) {
+                                                try {
+                                                    OrderRecordEntity orderRecordEntity = orderRecordService.getOrderRecordByOrderId(orderEntity.getOrderId());
+                                                    if (orderRecordEntity == null) {
+                                                        orderRecordEntity = new OrderRecordEntity();
+                                                        orderRecordEntity.setOrderId(orderEntity.getOrderId());
+                                                        orderRecordEntity.setIsFirst(1);
+                                                        orderRecordEntity.setIsExtraBed(roomInfo.getIsExtraBed());
+                                                        orderRecordEntity.setBossCost(roomInfo.getPrice());
+                                                        orderRecordEntity.setStatus(0);
+                                                        orderRecordEntity.setComments(comments);
+                                                        this.orderRecordService.saveOrUpdate(orderRecordEntity);
+                                                    }
+                                                    Date startDate = SDF.parse(clearStart);
+                                                    Date endDate = SDF.parse(clearEnd);
+                                                    orderEntity.setPreStartCleanDate(startDate);
+                                                    orderEntity.setPreEndCleanDate(endDate);
+                                                    orderEntity.setCleanType(Integer.valueOf(clearType));
+                                                    orderEntity.setIsCheckOut(Integer.valueOf(ischeckOut));
+                                                    orderEntity.setCleanStatusCode(1);
+                                                    if (StringUtils.isNotBlank(orderCost)) {
+                                                        BigDecimal orderCostBigDecimal = new BigDecimal(orderCost);
+                                                        orderEntity.setOrderCost(orderCostBigDecimal);
+                                                    }
+                                                    orderEntity.setRoomPassword(roomPassword);
+
+                                                    //订单表
+                                                    this.orderRecordService.saveOrUpdate(orderRecordEntity);
+                                                    this.orderService.saveOrUpdate(orderEntity);
+                                                } catch (ParseException e) {
+                                                    e.printStackTrace();
+                                                    return R.error(0, "请输入正确的日期格式yyyy-MM-dd hh:mm");
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                    return R.error(0, "保存失败");
+                                                }
+                                            } else {
+                                                //订单表
+                                                orderEntity = new OrderEntity();
+
+                                                //订单详细表
+                                                OrderRecordEntity orderRecordEntity = new OrderRecordEntity();
+
+                                                try {
+                                                    orderEntity.setOrderId(UUIDUtils.getUUIDHex());
+                                                    orderEntity.setHomestayId(homestayId);
+                                                    orderEntity.setCleanStatusCode(1);
+                                                    orderEntity.setRoomId(roomNo);
+                                                    orderEntity.setCleanType(Trans.trans(Integer.valueOf(clearType)));
+                                                    orderEntity.setIsCheckOut(Trans.trans(Integer.valueOf(ischeckOut)));
+                                                    Date startDate = SDF.parse(clearStart);
+                                                    Date endDate = SDF.parse(clearEnd);
+                                                    orderEntity.setPreStartCleanDate(startDate);
+                                                    orderEntity.setPreEndCleanDate(endDate);
+                                                    orderEntity.setCreateDate(new Date());
+                                                    if (StringUtils.isNotBlank(orderCost)) {
+                                                        BigDecimal orderCostBigDecimal = new BigDecimal(orderCost);
+                                                        orderEntity.setOrderCost(orderCostBigDecimal);
+                                                    }
+                                                    orderEntity.setRoomPassword(roomPassword);
+
+                                                    orderRecordEntity.setBossCost(roomInfo.getPrice());
                                                     orderRecordEntity.setOrderId(orderEntity.getOrderId());
                                                     orderRecordEntity.setIsFirst(1);
                                                     orderRecordEntity.setIsExtraBed(roomInfo.getIsExtraBed());
-                                                    orderRecordEntity.setBossCost(roomInfo.getPrice());
                                                     orderRecordEntity.setStatus(0);
+                                                    orderRecordEntity.setComments(comments);
                                                     this.orderRecordService.saveOrUpdate(orderRecordEntity);
+                                                    this.orderService.saveOrUpdate(orderEntity);
+                                                } catch (ParseException e) {
+                                                    e.printStackTrace();
+                                                    return R.error(0, "请输入正确的日期格式yyyy-MM-dd hh:mm");
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                    return R.error(0, "保存失败");
                                                 }
-                                                Date startDate = SDF.parse(clearStart);
-                                                Date endDate = SDF.parse(clearEnd);
-                                                orderEntity.setPreStartCleanDate(startDate);
-                                                orderEntity.setPreEndCleanDate(endDate);
-                                                orderEntity.setCleanType(Integer.valueOf(clearType));
-                                                orderEntity.setIsCheckOut(Integer.valueOf(ischeckOut));
-                                                orderEntity.setCleanStatusCode(1);
 
-                                                //订单表
-                                                this.orderRecordService.saveOrUpdate(orderRecordEntity);
-                                                this.orderService.saveOrUpdate(orderEntity);
-                                            } catch (ParseException e) {
-                                                e.printStackTrace();
-                                                return R.error(0, "请输入正确的日期格式yyyy-MM-dd hh:mm");
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                                return R.error(0, "保存失败");
                                             }
                                         } else {
-                                            //订单表
-                                            orderEntity = new OrderEntity();
-
-                                            //订单详细表
-                                            OrderRecordEntity orderRecordEntity = new OrderRecordEntity();
-
-                                            try {
-                                                orderEntity.setOrderId(UUIDUtils.getUUIDHex());
-                                                orderEntity.setHomestayId(homestayId);
-                                                orderEntity.setCleanStatusCode(1);
-                                                orderEntity.setRoomId(roomNo);
-                                                orderEntity.setCleanType(Trans.trans(Integer.valueOf(clearType)));
-                                                orderEntity.setIsCheckOut(Trans.trans(Integer.valueOf(ischeckOut)));
-                                                Date startDate = SDF.parse(clearStart);
-                                                Date endDate = SDF.parse(clearEnd);
-                                                orderEntity.setPreStartCleanDate(startDate);
-                                                orderEntity.setPreEndCleanDate(endDate);
-                                                orderEntity.setCreateDate(new Date());
-
-                                                orderRecordEntity.setBossCost(roomInfo.getPrice());
-                                                orderRecordEntity.setOrderId(orderEntity.getOrderId());
-                                                orderRecordEntity.setIsFirst(1);
-                                                orderRecordEntity.setIsExtraBed(roomInfo.getIsExtraBed());
-                                                orderRecordEntity.setStatus(0);
-                                                this.orderRecordService.saveOrUpdate(orderRecordEntity);
-                                                this.orderService.saveOrUpdate(orderEntity);
-                                            } catch (ParseException e) {
-                                                e.printStackTrace();
-                                                return R.error(0, "请输入正确的日期格式yyyy-MM-dd hh:mm");
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                                return R.error(0, "保存失败");
-                                            }
-
+                                            return R.error(0, "房间密码不能为空");
                                         }
 
                                     } else {

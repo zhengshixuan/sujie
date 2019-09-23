@@ -90,7 +90,7 @@
                 '3'
                 ELSE '1'
             END roomType,
-            a.comments roomDescripe,
+            IFNULL(a.comments,'') roomDescripe,
         CASE
                 a.open_method
                 WHEN '0' THEN
@@ -119,7 +119,6 @@
             JOIN homestay.room_info a ON t.homestay_id = a.homestay_id
         WHERE a.room_id = #{roomNo}
             AND t.homestay_id = #{homestayId}
-
     </select>
 
 </mapper>
