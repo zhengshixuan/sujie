@@ -148,6 +148,13 @@ public interface OrderService extends IService<OrderEntity> {
      */
     BigDecimal getConCount(Map<String,Object> params);
 
+    /**
+     * 通过民宿id,房间号,当前日期,订单状态查询订单,每天同一个房间只允许一个订单号
+     * @param params
+     * @return
+     */
+    OrderEntity getOrderByHomestayIdANdRoomIdAndStatusCode(Map<String,Object> params);
+
 
 }
 

@@ -281,4 +281,13 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
         return conCount;
     }
+
+    @Override
+    public OrderEntity getOrderByHomestayIdANdRoomIdAndStatusCode(Map<String, Object> params) {
+        QueryWrapper<OrderEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("homestay_id",params.get("homestayId")).eq("room_id",params.get("roomId"))
+                .eq("clean_status_code",params.get("cleanStatusCode")).eq("DATE_FORMAT(create_date,'%Y-%m-%d')",SDF.format(new Date()));
+        OrderEntity one = this.getOne(queryWrapper);
+        return one;
+    }
 }

@@ -292,45 +292,66 @@ public class Boss {
                                         QueryWrapper<RoomInfoEntity> roomInfoEntityQueryWrapper = new QueryWrapper<RoomInfoEntity>();
                                         roomInfoEntityQueryWrapper.eq("homestay_id", homestayId);
                                         roomInfoEntityQueryWrapper.eq("room_id", roomNo);
+                                        // 获取房间新信息
                                         RoomInfoEntity roomInfo = roomInfoService.getOne(roomInfoEntityQueryWrapper);
                                         if (null == roomInfo) {
                                             return R.error(0, "未找到对应房间信息,请输入正确的民宿id和房间号");
                                         } else {
-                                            //订单表
-                                            OrderEntity orderEntity = new OrderEntity();
-
-                                            //订单详细表
-                                            OrderRecordEntity orderRecordEntity = new OrderRecordEntity();
-
-                                            try {
-                                                //订单
+                                            Map<String, Object> map = new HashMap<>();
+                                            map.put("homestayId", homestayId);
+                                            map.put("roomId", roomNo);
+                                            map.put("cleanStatusCode", 0);
+                                            OrderEntity orderEntity = this.orderService.getOrderByHomestayIdANdRoomIdAndStatusCode(map);
+                                            OrderRecordEntity orderRecordEntity = null;
+                                            if (null == orderEntity) {
+                                                //订单表
+                                                orderEntity = new OrderEntity();
                                                 orderEntity.setOrderId(UUIDUtils.getUUIDHex());
                                                 orderEntity.setHomestayId(homestayId);
                                                 orderEntity.setRoomId(roomNo);
                                                 orderEntity.setCleanStatusCode(0);
-                                                orderEntity.setCleanType(Trans.trans(Integer.valueOf(clearType)));
-                                                orderEntity.setIsCheckOut(Trans.trans(Integer.valueOf(ischeckOut)));
-                                                Date startDate = SDF.parse(clearStart);
-                                                Date endDate = SDF.parse(clearEnd);
-                                                orderEntity.setPreStartCleanDate(startDate);
-                                                orderEntity.setPreEndCleanDate(endDate);
                                                 orderEntity.setCreateDate(new Date());
-                                                //订单记录
+                                                //订单记录表
+                                                orderRecordEntity = new OrderRecordEntity();
                                                 orderRecordEntity.setOrderId(orderEntity.getOrderId());
                                                 orderRecordEntity.setBossCost(roomInfo.getPrice());
                                                 orderRecordEntity.setIsFirst(1);
                                                 orderRecordEntity.setIsExtraBed(roomInfo.getIsExtraBed());
                                                 orderRecordEntity.setStatus(0);
                                                 this.orderRecordService.saveOrUpdate(orderRecordEntity);
-                                                this.orderService.saveOrUpdate(orderEntity);
-                                            } catch (ParseException e) {
-                                                e.printStackTrace();
-                                                return R.error(0, "请输入正确的日期格式yyyy-MM-dd hh:mm");
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                                return R.error(0, "保存失败");
+                                            } else {
+
+                                                QueryWrapper<OrderRecordEntity> orderRecordEntityQueryWrapper = new QueryWrapper<>();
+                                                orderRecordEntityQueryWrapper.eq("order_id",orderEntity.getOrderId());
+                                                orderRecordEntity = orderRecordService.getOne(orderRecordEntityQueryWrapper);
                                             }
-                                        }
+
+
+
+                                            //订单详细表
+
+                                                try {
+                                                    //订单
+
+                                                    orderEntity.setCleanType(Trans.trans(Integer.valueOf(clearType)));
+                                                    orderEntity.setIsCheckOut(Trans.trans(Integer.valueOf(ischeckOut)));
+                                                    Date startDate = SDF.parse(clearStart);
+                                                    Date endDate = SDF.parse(clearEnd);
+                                                    orderEntity.setPreStartCleanDate(startDate);
+                                                    orderEntity.setPreEndCleanDate(endDate);
+
+                                                    //订单记录
+
+                                                    this.orderService.saveOrUpdate(orderEntity);
+                                                } catch (ParseException e) {
+                                                    e.printStackTrace();
+                                                    return R.error(0, "请输入正确的日期格式yyyy-MM-dd hh:mm");
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                    return R.error(0, "保存失败");
+                                                }
+
+                                            }
 
                                     } else {
                                         return R.error(0, "退房信息不能为空");
