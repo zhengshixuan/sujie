@@ -82,10 +82,10 @@
         b.room_id,
         d.item_name roomType,
         IFNULL(c.staff_cost,0) staff_cost,
-        <if test="params.cleanStatusCode==3">
+        <!--<if test="params.cleanStatusCode==3">-->
             e.staff_id,
             e.staff_name,
-        </if>
+        <!--</if>-->
         d.comments ,
         c.is_first,
         IFNULL(c.boss_cost,0) boss_cost,
@@ -97,9 +97,9 @@
         JOIN homestay.room_info b ON t.room_id = b.room_id
         JOIN homestay.order_record c ON t.order_id = c.order_id
         JOIN homestay.dict_room_type d ON b.room_type = d.item_code
-        <if test="params.cleanStatusCode==3">
+        <!--<if test="params.cleanStatusCode==3">-->
             LEFT JOIN homestay.staff_info e ON c.staff_id = e.staff_id
-        </if>
+        <!--</if>-->
         JOIN homestay.dict_order_status f ON c.status = f.item_code
         WHERE
         1 = 1
