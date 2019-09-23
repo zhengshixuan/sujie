@@ -241,7 +241,8 @@
             WHEN '3' THEN
             '4'
             END state,
-            dATE_FORMAT(t.create_date,'%Y-%m-%d %H:%i') appointment
+            dATE_FORMAT(t.create_date,'%Y-%m-%d %H:%i') appointment,
+            IFNULL(a.logo,'') logo
         FROM
             homestay.order t
         JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id

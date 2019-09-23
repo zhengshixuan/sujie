@@ -17,7 +17,4 @@ import java.util.Map;
 @Mapper
 public interface StaffInfoDao extends BaseMapper<StaffInfoEntity> {
     List<Map<String,Object>> listStaffInfoByTelphone(Map<String,Object> params);
-
-
-	
 }

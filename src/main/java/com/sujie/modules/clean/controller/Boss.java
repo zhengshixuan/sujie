@@ -377,6 +377,7 @@ public class Boss {
         String clearEnd = (String) params.get("clearEnd");
         String clearType = (String) params.get("clearType");
         String ischeckOut = (String) params.get("ischeckOut");
+        String comments = (String) params.get("comments");
 
 
         if (StringUtils.isNotBlank(homestayId)) {
@@ -515,16 +516,21 @@ public class Boss {
     public R canclePreOrder(@RequestBody Map<String, Object> params) {
         String orderId = (String) params.get("orderId");
         if (StringUtils.isBlank(orderId)) {
-            R.error("订单id不能为空");
+            return R.error(0, "订单id不能为空");
         } else {
             Map<String, Object> map = new HashMap<>();
             map.put("order_id", orderId);
-            try {
-                orderService.removeByMap(map);
-                orderRecordService.removeByMap(map);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return R.error(0, "取消订单失败");
+            OrderEntity orderEntity = orderService.getOrderByOrderId(orderId);
+            if (null == orderEntity) {
+                return R.error(0, "未找到相应的订单,请上传正确的订单号");
+            } else {
+                try {
+                    orderService.removeByMap(map);
+                    orderRecordService.removeByMap(map);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return R.error(0, "取消订单失败");
+                }
             }
         }
         return R.appOK();

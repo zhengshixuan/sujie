@@ -88,6 +88,7 @@
                 '2'
                 WHEN '2' THEN
                 '3'
+                ELSE '1'
             END roomType,
             a.comments roomDescripe,
         CASE
@@ -96,6 +97,7 @@
                 '1'
                 WHEN '1' THEN
                 '2'
+                ELSE '2'
             END doorWay,
         CASE
                 a.need_washing_sheets
@@ -110,6 +112,7 @@
                 '1'
                 WHEN '1' THEN
                 '2'
+                ELSE '2'
             END extraBed
         FROM
             homestay.homestay_info t
