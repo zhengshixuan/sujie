@@ -320,12 +320,14 @@ public class Boss {
                                                 orderRecordEntity.setIsExtraBed(roomInfo.getIsExtraBed());
                                                 orderRecordEntity.setStatus(0);
                                                 orderRecordEntity.setComments(comments);
-                                                this.orderRecordService.saveOrUpdate(orderRecordEntity);
+
                                             } else {
 
                                                 QueryWrapper<OrderRecordEntity> orderRecordEntityQueryWrapper = new QueryWrapper<>();
                                                 orderRecordEntityQueryWrapper.eq("order_id",orderEntity.getOrderId());
                                                 orderRecordEntity = orderRecordService.getOne(orderRecordEntityQueryWrapper);
+                                                orderRecordEntity.setComments(comments);
+
                                             }
 
 
@@ -343,7 +345,7 @@ public class Boss {
                                                     orderEntity.setPreEndCleanDate(endDate);
 
                                                     //订单记录
-
+                                                    this.orderRecordService.saveOrUpdate(orderRecordEntity);
                                                     this.orderService.saveOrUpdate(orderEntity);
                                                 } catch (ParseException e) {
                                                     e.printStackTrace();
