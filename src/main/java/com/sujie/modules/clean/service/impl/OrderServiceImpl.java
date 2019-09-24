@@ -177,8 +177,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         String roomNo = (String) map.get("roomNo");
         orderQueryWrapper.eq("homestay_id", homestayId);
         orderQueryWrapper.eq("room_id", roomNo);
-        orderQueryWrapper.eq("clean_status_code", 0);
-        orderQueryWrapper.eq("pre_start_clean_date", SDF.format(new Date()));
+//        orderQueryWrapper.eq("clean_status_code", 0);
+        orderQueryWrapper.eq("DATE_FORMAT(create_date,'%Y-%m-%d')", SDF.format(new Date()));
         OrderEntity orderEntity = baseMapper.selectOne(orderQueryWrapper);
         return orderEntity;
     }

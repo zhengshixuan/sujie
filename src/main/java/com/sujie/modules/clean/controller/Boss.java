@@ -279,6 +279,7 @@ public class Boss {
         String clearEnd = (String) params.get("clearEnd");
         String clearType = (String) params.get("clearType");
         String ischeckOut = (String) params.get("ischeckOut");
+        String comments = (String) params.get("comments");
 
         if (StringUtils.isNotBlank(homestayId)) {
             if (StringUtils.isNotBlank(homeStayBreand)) {
@@ -318,6 +319,7 @@ public class Boss {
                                                 orderRecordEntity.setIsFirst(1);
                                                 orderRecordEntity.setIsExtraBed(roomInfo.getIsExtraBed());
                                                 orderRecordEntity.setStatus(0);
+                                                orderRecordEntity.setComments(comments);
                                                 this.orderRecordService.saveOrUpdate(orderRecordEntity);
                                             } else {
 
@@ -419,7 +421,7 @@ public class Boss {
                                             roomInfoEntityQueryWrapper.eq("homestay_id", homestayId);
                                             roomInfoEntityQueryWrapper.eq("room_id", roomNo);
                                             RoomInfoEntity roomInfo = roomInfoService.getOne(roomInfoEntityQueryWrapper);
-
+                                            //判断是否有预排单信息,如果有直接更新即可
                                             if (null != orderEntity) {
                                                 try {
                                                     OrderRecordEntity orderRecordEntity = orderRecordService.getOrderRecordByOrderId(orderEntity.getOrderId());
@@ -430,6 +432,9 @@ public class Boss {
                                                         orderRecordEntity.setIsExtraBed(roomInfo.getIsExtraBed());
                                                         orderRecordEntity.setBossCost(roomInfo.getPrice());
                                                         orderRecordEntity.setStatus(0);
+                                                        orderRecordEntity.setComments(comments);
+                                                        this.orderRecordService.saveOrUpdate(orderRecordEntity);
+                                                    } else{
                                                         orderRecordEntity.setComments(comments);
                                                         this.orderRecordService.saveOrUpdate(orderRecordEntity);
                                                     }
@@ -457,6 +462,7 @@ public class Boss {
                                                     return R.error(0, "保存失败");
                                                 }
                                             } else {
+                                                //没有预排单信息,新建订单
                                                 //订单表
                                                 orderEntity = new OrderEntity();
 

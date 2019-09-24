@@ -121,7 +121,7 @@ public interface OrderService extends IService<OrderEntity> {
     List<Map<String,Object>> searchOrders(Map<String, Object> map);
 
     /**
-     * 根据民宿id,房间号,状态码查询订单信息
+     * 根据民宿id,房间号,当前日期
      * @param map
      * @return OrderEntity
      */
