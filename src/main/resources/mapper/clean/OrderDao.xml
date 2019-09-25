@@ -279,6 +279,9 @@
             JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
             JOIN homestay.room_info c ON t.room_id = c.room_id
         WHERE 1=1
+        <if test="homestayId!=null and homestayId!='' ">
+          AND t.homestay_id = #{homestayId}
+        </if>
         <if test="cleanStatusCode1!=null and cleanStatusCode1!='' and cleanStatusCode2!=null and cleanStatusCode2!='' ">
            AND (t.clean_status_code = #{cleanStatusCode1} OR t.clean_status_code = #{cleanStatusCode2})
         </if>
