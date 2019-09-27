@@ -35,7 +35,7 @@
             homestay.order t
         INNER JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
         WHERE 1 = 1
-        AND t.clean_status_code = 1
+        AND t.clean_status_code = 0
 
 
         GROUP BY
