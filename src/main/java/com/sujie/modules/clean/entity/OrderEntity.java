@@ -45,11 +45,11 @@ public class OrderEntity implements Serializable {
     /**
      * 预开始打扫时间
      */
-    private Date preStartCleanDate;
+    private String preStartCleanDate;
     /**
      * 预结束打扫时间
      */
-    private Date preEndCleanDate;
+    private String preEndCleanDate;
     /**
      * 保洁费用
      */
@@ -69,7 +69,7 @@ public class OrderEntity implements Serializable {
     /**
      * 生成时间
      */
-    private Date createDate;
+    private String createDate;
 
     /**
      * 保洁密码

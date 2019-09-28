@@ -2,6 +2,7 @@ package com.sujie.modules.clean.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sujie.common.utils.PageUtils;
+import com.sujie.common.utils.R;
 import com.sujie.modules.clean.entity.OrderEntity;
 
 import java.math.BigDecimal;
@@ -121,7 +122,7 @@ public interface OrderService extends IService<OrderEntity> {
     List<Map<String,Object>> searchOrders(Map<String, Object> map);
 
     /**
-     * 根据民宿id,房间号,当前日期
+     * 根据民宿id,房间号,当前预保洁开始日期
      * @param map
      * @return OrderEntity
      */
@@ -154,6 +155,22 @@ public interface OrderService extends IService<OrderEntity> {
      * @return
      */
     OrderEntity getOrderByHomestayIdANdRoomIdAndStatusCode(Map<String,Object> params);
+
+
+    /**
+     * 保存待保洁订单,状态为1
+     * @param params
+     * @return
+     */
+    R saveOrder(Map<String,Object> params);
+
+    /**
+     * 保存预保洁订单信息,状态为0
+     * @param params
+     * @return
+     */
+    R savePreOrder(Map<String,Object> params);
+
 
 
 }

@@ -1,13 +1,12 @@
 package com.sujie.modules.clean.vo;
 
-import com.sujie.modules.clean.entity.OrderEntity;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
-public class OrderVO extends OrderEntity {
+public class OrderVO {
 
     /**
      * 是否优先打扫
