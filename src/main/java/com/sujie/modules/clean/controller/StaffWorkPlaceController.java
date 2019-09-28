@@ -31,17 +31,6 @@ public class StaffWorkPlaceController {
     @Autowired
     private StaffWorkPlaceService staffWorkPlaceService;
 
-    /**
-     * 列表
-     */
-    @RequestMapping("/list")
-    @RequiresPermissions("clean:staffworkplace:list")
-    public R list(@RequestParam Map<String, Object> params) {
-        PageUtils page = staffWorkPlaceService.queryPage(params);
-
-        return R.ok().put("page", page);
-    }
-
     @RequestMapping("/getWorkPosition")
     public R getWorkPosition(@RequestParam String staffId) {
         QueryWrapper<StaffWorkPlaceEntity> staffWorkPlaceEntityQueryWrapper = new QueryWrapper<>();
@@ -49,14 +38,12 @@ public class StaffWorkPlaceController {
 
         Map<String, Object> map = staffWorkPlaceService.getMap(staffWorkPlaceEntityQueryWrapper);
         return R.ok().put("map", map);
-
     }
 
     /**
      * 信息
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("clean:staffworkplace:info")
     public R info(@PathVariable("id") String id) {
         StaffWorkPlaceEntity staffWorkPlace = staffWorkPlaceService.getById(id);
 
@@ -76,7 +63,7 @@ public class StaffWorkPlaceController {
             return R.error("已指定过此地区!");
         } else {
             staffWorkPlaceService.saveOrUpdate(staffWorkPlace);
-            return R.ok();
+            return R.ok("指定位置成功");
         }
 
     }

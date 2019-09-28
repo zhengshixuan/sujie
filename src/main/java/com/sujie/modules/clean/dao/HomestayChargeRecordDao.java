@@ -3,6 +3,7 @@ package com.sujie.modules.clean.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sujie.modules.clean.entity.HomestayChargeRecordEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.Map;
  * @date 2019-09-21 10:09:37
  */
 @Mapper
+@Repository
 public interface HomestayChargeRecordDao extends BaseMapper<HomestayChargeRecordEntity> {
 
     BigDecimal getChargeCount(Map<String,Object> params);

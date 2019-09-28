@@ -32,7 +32,7 @@ var vm = new Vue({
             var data = JSON.stringify(vm.homestay);
             $.ajax({
                 type: "post",
-                url: "/updateHomeStayInfo",
+                url: "/recharge",
                 contentType: "application/json",
                 data: data,
                 success: function (r) {

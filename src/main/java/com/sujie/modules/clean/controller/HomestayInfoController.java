@@ -82,43 +82,24 @@ public class HomestayInfoController {
     }
 
     /**
+     * 充值金额
+     *
+     * @param homestayInfo
+     * @return
+     */
+    @RequestMapping("/recharge")
+    public R recharge(@RequestBody HomestayInfoEntity homestayInfo) {
+        return homestayInfoService.recharge(homestayInfo);
+    }
+
+
+    /**
      * 修改
      */
     @PostMapping("/updateHomeStayInfo")
     public R update(@RequestBody HomestayInfoEntity homestayInfo) {
-        HomestayInfoEntity oldHomestayInfo = homestayInfoService.getById(homestayInfo.getId());
-        if (null != oldHomestayInfo) {
-            //判断是否是充值
-            if (null != homestayInfo.getBalance()) {
-                BigDecimal balance = oldHomestayInfo.getBalance();
-                balance = homestayInfo.getBalance().add(balance);
-                homestayInfo.setBalance(balance);
-                //保存充值记录信息
-                try {
-                    HomestayChargeRecordEntity homestayChargeRecordEntity = new HomestayChargeRecordEntity();
-                    homestayChargeRecordEntity.setAmount(homestayInfo.getBalance());
-                    homestayChargeRecordEntity.setChargeDate(new Date());
-                    homestayChargeRecordEntity.setHomestayId(oldHomestayInfo.getHomestayId());
-                    homestayInfoService.updateById(homestayInfo);
-                    homestayChargeRecordService.saveOrUpdate(homestayChargeRecordEntity);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return R.error("充值失败!");
-                }
-            } else {
-                if (!homestayInfo.getPassword().equalsIgnoreCase(oldHomestayInfo.getPassword())) {
-                    homestayInfo.setPassword(MD5Utils.getMD5(homestayInfo.getPassword()));
-                }
-                try {
-                    homestayInfoService.updateById(homestayInfo);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return R.error("充值失败!");
-                }
-            }
-        }
 
-        return R.ok();
+        return homestayInfoService.updateHomestayInfo(homestayInfo);
     }
 
     @DeleteMapping("/homestayInfo/{id}")

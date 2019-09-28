@@ -8,9 +8,7 @@ var vm = new Vue({
         title: null,
         staff: {},
         places: {},
-        workPosition:{
-
-        }
+        workPosition: {}
     },
     mounted: function () {
         this.getStaffInfo();
@@ -18,8 +16,9 @@ var vm = new Vue({
 
     },
     methods: {
-        saveOrUpdate:function () {
-            vm.workPosition.staffId=vm.staff.staffId;
+        saveOrUpdate: function () {
+            vm.workPosition.staffId = vm.staff.staffId;
+            vm.workPosition.id=null;
             var data = JSON.stringify(vm.workPosition);
             $.ajax({
                 type: "post",
@@ -28,7 +27,8 @@ var vm = new Vue({
                 data: data,
                 success: function (r) {
                     if (r.code === 0) {
-                        window.location.href="";
+                        alert(r.msg);
+
                     } else {
                         alert(r.msg);
                     }
@@ -67,7 +67,9 @@ var vm = new Vue({
                 contentType: "application/json",
                 success: function (r) {
                     if (r.code === 0) {
-                        vm.places = r.places;
+                        if (r.places != null) {
+                            vm.places = r.places;
+                        }
                     } else {
                         alert(r.msg);
                     }
@@ -80,7 +82,7 @@ var vm = new Vue({
         save: function () {
 
         },
-        getWorkPosition:function () {
+        getWorkPosition: function () {
             var staffId = vm.staff.staffId;
             if (null != staffId && "" != staffId) {
                 $.ajax({
@@ -90,7 +92,9 @@ var vm = new Vue({
                     data: {"staffId": staffId},
                     success: function (r) {
                         if (r.code === 0) {
-                            vm.workPosition=r.map;
+                            if (null != r.map) {
+                                vm.workPosition = r.map;
+                            }
                         } else {
                             alert(r.msg);
                         }

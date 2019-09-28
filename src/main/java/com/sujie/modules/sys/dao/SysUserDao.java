@@ -4,6 +4,7 @@ package com.sujie.modules.sys.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sujie.modules.sys.entity.SysUserEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  *
  */
 @Mapper
+@Repository
 public interface SysUserDao extends BaseMapper<SysUserEntity> {
 	
 	/**

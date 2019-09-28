@@ -2,6 +2,7 @@ package com.sujie.modules.clean.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sujie.common.utils.PageUtils;
+import com.sujie.common.utils.R;
 import com.sujie.modules.clean.entity.HomestayInfoEntity;
 
 import java.util.List;
@@ -25,5 +26,21 @@ public interface HomestayInfoService extends IService<HomestayInfoEntity> {
     List<String> getAllWorkPalce();
 
     Map<String,Object> getHomestayInfoDetail(Map<String,Object> params);
+
+
+    /**
+     * 充值金额
+     * @param homestayInfo
+     * @return
+     */
+    R recharge(HomestayInfoEntity homestayInfo);
+
+
+    /**
+     * 更新民宿信息
+     * @param homestayInfo
+     * @return
+     */
+    R updateHomestayInfo(HomestayInfoEntity homestayInfo);
 }
 

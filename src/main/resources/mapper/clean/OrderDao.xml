@@ -27,8 +27,6 @@
     </update>
     <select id="listPreOrder" resultType="java.util.Map">
         SELECT
-            -- a.id id,
-            -- a.homestay_name homestayName,
             a.homestay_address homestayAddress,
             count( 1 ) count
         FROM
@@ -36,11 +34,8 @@
         INNER JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
         WHERE 1 = 1
         AND t.clean_status_code = 0
-
-
+        AND DATE_FORMAT(t.pre_start_clean_date,'%Y-%m-%d') = DATE_FORMAT(current_date+1,'%Y-%m-%d')
         GROUP BY
-        -- a.id,
-        -- a.homestay_name,
         a.homestay_address
     </select>
 
@@ -54,7 +49,8 @@
         INNER JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
         WHERE
         1 = 1
-            AND t.clean_status_code = 1
+            AND t.clean_status_code = 0
+            AND DATE_FORMAT(t.pre_start_clean_date,'%Y-%m-%d') = DATE_FORMAT(current_date+1,'%Y-%m-%d')
         AND a.homestay_address = #{homestayAddress}
         GROUP BY
             a.id,
@@ -69,7 +65,8 @@
         INNER JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
         WHERE
         1 = 1
-        AND t.clean_status_code = 1
+        AND t.clean_status_code = 0
+        AND DATE_FORMAT(t.pre_start_clean_date,'%Y-%m-%d') = DATE_FORMAT(current_date+1,'%Y-%m-%d')
 
     </select>
     <select id="listOrderVO" resultType="com.sujie.modules.clean.vo.OrderVO">

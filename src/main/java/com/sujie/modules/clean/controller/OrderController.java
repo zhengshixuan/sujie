@@ -92,10 +92,13 @@ public class OrderController {
 
     @GetMapping("/listPreOrder")
     public R listPreOrder(@RequestParam Map<String, Object> map) {
+        //状态为预保洁,且开始保洁时间为明天的总数
         Integer total = orderService.getPreorderCount(map);
+        //状态为预保洁,且开始时间为明天,按地区划分
         List<Map<String, Object>> list = orderService.listPreOrder(map);
         if (list != null) {
             for (Map<String, Object> preOrderMap : list) {
+                //查询预保洁状态订单详细信息
                 List<Map<String, Object>> maps = orderService.listPreOrderDetail(preOrderMap);
                 preOrderMap.put("detail", maps);
             }
