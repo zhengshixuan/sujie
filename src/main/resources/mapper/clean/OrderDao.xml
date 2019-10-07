@@ -87,7 +87,8 @@
         c.is_first,
         IFNULL(c.boss_cost,0) boss_cost,
         t.pre_start_clean_date,
-        f.item_name statusName
+        f.item_name statusName,
+        DATE_FORMAT(t.create_date,'%Y-%m-%d ') as  create_date
         FROM
         homestay.order t
         JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
@@ -244,7 +245,8 @@
             homestay.order t
         JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
         WHERE t.homestay_id = #{homestayId}
-        and t.clean_status_code = #{cleanStatusCode}
+        AND DATE_FORMAT(t.pre_start_clean_date,'%Y-%m-%d') = DATE_FORMAT(current_date,'%Y-%m-%d')
+        AND t.clean_status_code = #{cleanStatusCode}
     </select>
     <select id="listOrderByStatus" resultType="java.util.Map">
         SELECT
@@ -276,6 +278,7 @@
             JOIN homestay.homestay_info a ON t.homestay_id = a.homestay_id
             JOIN homestay.room_info c ON t.room_id = c.room_id
         WHERE 1=1
+        AND DATE_FORMAT(t.pre_start_clean_date,'%Y-%m-%d') = DATE_FORMAT(current_date,'%Y-%m-%d')
         <if test="homestayId!=null and homestayId!='' ">
           AND t.homestay_id = #{homestayId}
         </if>

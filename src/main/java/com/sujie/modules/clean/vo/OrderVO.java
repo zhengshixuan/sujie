@@ -7,6 +7,7 @@ import java.util.Date;
 
 @Data
 public class OrderVO {
+    private String id;
 
     /**
      * 是否优先打扫
@@ -67,5 +68,11 @@ public class OrderVO {
      * 订单状态
      */
     private String statusName;
+
+
+    /**
+     * 下单时间
+     */
+    private String createDate;
 
 }

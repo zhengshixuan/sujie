@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 日期工具类
  */
-public  class DateUtils {
+public class DateUtils {
 
     private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -29,9 +29,5 @@ public  class DateUtils {
         }
         return result;
     }
-
-
-
-
 
 }

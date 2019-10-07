@@ -338,104 +338,108 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                                             }
 
                                             if (null != dateList && dateList.size() > 0) {
-                                                QueryWrapper<RoomInfoEntity> roomInfoEntityQueryWrapper = new QueryWrapper<RoomInfoEntity>();
-                                                roomInfoEntityQueryWrapper.eq("homestay_id", homestayId);
-                                                roomInfoEntityQueryWrapper.eq("room_id", roomNo);
-                                                //房间信息
-                                                RoomInfoEntity roomInfo = roomInfoDao.selectOne(roomInfoEntityQueryWrapper);
-                                                if (null == roomInfo) {
-                                                    return R.error(0, "未找到对应房间信息,请输入正确的民宿id和房间号");
+                                                if (dateList.size() > 1) {
+                                                    return R.error(0, "日期错误,开始日期和结束日期仅允许一天");
                                                 } else {
-                                                    for (String preStartCleanDate : dateList) {
-                                                        //查询是否有待保洁的订单
-                                                        params.put("preStartCleanDate", preStartCleanDate);
-                                                        params.put("cleanStatusCode", 1);
-                                                        OrderEntity orderEntity = this.getOrder(params);
-                                                        if (orderEntity == null) {
-                                                            // 查询状态为预保洁的订单,及状态为0
-                                                            params.put("cleanStatusCode", 0);
-                                                            OrderEntity preOrderEntity = this.getOrder(params);
-                                                            //判断是否有预排单信息,如果有直接更新即可
-                                                            if (null != preOrderEntity) {
-                                                                //通过订单号查询订单详细信息
-                                                                OrderRecordEntity orderRecordEntity = orderRecordService.getOrderRecordByOrderId(preOrderEntity.getOrderId());
+                                                    QueryWrapper<RoomInfoEntity> roomInfoEntityQueryWrapper = new QueryWrapper<RoomInfoEntity>();
+                                                    roomInfoEntityQueryWrapper.eq("homestay_id", homestayId);
+                                                    roomInfoEntityQueryWrapper.eq("room_id", roomNo);
+                                                    //房间信息
+                                                    RoomInfoEntity roomInfo = roomInfoDao.selectOne(roomInfoEntityQueryWrapper);
+                                                    if (null == roomInfo) {
+                                                        return R.error(0, "未找到对应房间信息,请输入正确的民宿id和房间号");
+                                                    } else {
+                                                        for (String preStartCleanDate : dateList) {
+                                                            //查询是否有待保洁的订单
+                                                            params.put("preStartCleanDate", preStartCleanDate);
+                                                            params.put("cleanStatusCode", 1);
+                                                            OrderEntity orderEntity = this.getOrder(params);
+                                                            if (orderEntity == null) {
+                                                                // 查询状态为预保洁的订单,及状态为0
+                                                                params.put("cleanStatusCode", 0);
+                                                                OrderEntity preOrderEntity = this.getOrder(params);
+                                                                //判断是否有预排单信息,如果有直接更新即可
+                                                                if (null != preOrderEntity) {
+                                                                    //通过订单号查询订单详细信息
+                                                                    OrderRecordEntity orderRecordEntity = orderRecordService.getOrderRecordByOrderId(preOrderEntity.getOrderId());
 
-                                                                // 未查询到详细订单信息,直接保存
-                                                                if (orderRecordEntity == null) {
-                                                                    orderRecordEntity = new OrderRecordEntity();
-                                                                    orderRecordEntity.setOrderId(preOrderEntity.getOrderId());
+                                                                    // 未查询到详细订单信息,直接保存
+                                                                    if (orderRecordEntity == null) {
+                                                                        orderRecordEntity = new OrderRecordEntity();
+                                                                        orderRecordEntity.setOrderId(preOrderEntity.getOrderId());
+                                                                        orderRecordEntity.setIsFirst(1);
+                                                                        orderRecordEntity.setIsExtraBed(roomInfo.getIsExtraBed());
+                                                                        orderRecordEntity.setBossCost(roomInfo.getPrice());
+                                                                        orderRecordEntity.setStatus(0);
+                                                                        orderRecordEntity.setComments(comments);
+                                                                        orderRecordDao.insert(orderRecordEntity);
+                                                                    } else {
+                                                                        orderRecordEntity.setComments(comments);
+                                                                        orderRecordDao.updateById(orderRecordEntity);
+                                                                    }
+                                                                    // TODO 暂时默认当天日期
+                                                                    preOrderEntity.setPreStartCleanDate(preStartCleanDate + " 00:00");
+                                                                    preOrderEntity.setPreEndCleanDate(preStartCleanDate + " 23:59");
+                                                                    preOrderEntity.setCleanType(Integer.valueOf(clearType));
+                                                                    preOrderEntity.setIsCheckOut(Integer.valueOf(ischeckOut));
+                                                                    preOrderEntity.setCleanStatusCode(1);
+                                                                    if (StringUtils.isNotBlank(orderCost)) {
+                                                                        BigDecimal orderCostBigDecimal = new BigDecimal(orderCost);
+                                                                        preOrderEntity.setOrderCost(orderCostBigDecimal);
+                                                                    }
+                                                                    preOrderEntity.setRoomPassword(roomPassword);
+
+                                                                    //已经下过订单则只做更新处理
+                                                                    this.updateById(preOrderEntity);
+                                                                } else {
+                                                                    //没有预排单信息,新建订单
+                                                                    //订单表
+                                                                    orderEntity = new OrderEntity();
+
+                                                                    //订单详细表
+                                                                    OrderRecordEntity orderRecordEntity = new OrderRecordEntity();
+
+                                                                    orderEntity.setOrderId(OrderUtils.getOrderId());
+                                                                    orderEntity.setHomestayId(homestayId);
+                                                                    orderEntity.setCleanStatusCode(1);
+                                                                    orderEntity.setRoomId(roomNo);
+                                                                    orderEntity.setCleanType(Trans.trans(Integer.valueOf(clearType)));
+                                                                    orderEntity.setIsCheckOut(Trans.trans(Integer.valueOf(ischeckOut)));
+                                                                    // TODO 暂时默认当天日期
+                                                                    orderEntity.setPreStartCleanDate(preStartCleanDate + " 00:00");
+                                                                    orderEntity.setPreEndCleanDate(preStartCleanDate + " 23:59");
+                                                                    orderEntity.setCreateDate(SDF.format(new Date()));
+                                                                    if (StringUtils.isNotBlank(orderCost)) {
+                                                                        BigDecimal orderCostBigDecimal = new BigDecimal(orderCost);
+                                                                        orderEntity.setOrderCost(orderCostBigDecimal);
+                                                                    }
+                                                                    orderEntity.setRoomPassword(roomPassword);
+
+                                                                    orderRecordEntity.setBossCost(roomInfo.getPrice());
+                                                                    orderRecordEntity.setOrderId(orderEntity.getOrderId());
                                                                     orderRecordEntity.setIsFirst(1);
                                                                     orderRecordEntity.setIsExtraBed(roomInfo.getIsExtraBed());
-                                                                    orderRecordEntity.setBossCost(roomInfo.getPrice());
                                                                     orderRecordEntity.setStatus(0);
                                                                     orderRecordEntity.setComments(comments);
-                                                                    orderRecordDao.insert(orderRecordEntity);
-                                                                } else {
-                                                                    orderRecordEntity.setComments(comments);
-                                                                    orderRecordDao.updateById(orderRecordEntity);
-                                                                }
-                                                                // TODO 暂时默认当天日期
-                                                                preOrderEntity.setPreStartCleanDate(preStartCleanDate+" 00:00");
-                                                                preOrderEntity.setPreEndCleanDate(preStartCleanDate+" 23:59");
-                                                                preOrderEntity.setCleanType(Integer.valueOf(clearType));
-                                                                preOrderEntity.setIsCheckOut(Integer.valueOf(ischeckOut));
-                                                                preOrderEntity.setCleanStatusCode(1);
-                                                                if (StringUtils.isNotBlank(orderCost)) {
-                                                                    BigDecimal orderCostBigDecimal = new BigDecimal(orderCost);
-                                                                    preOrderEntity.setOrderCost(orderCostBigDecimal);
-                                                                }
-                                                                preOrderEntity.setRoomPassword(roomPassword);
+                                                                    try {
+                                                                        orderRecordDao.insert(orderRecordEntity);
+                                                                        baseMapper.insert(orderEntity);
+                                                                    } catch (Exception e) {
+                                                                        e.printStackTrace();
+                                                                        //回滚事务
+                                                                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                                                                        return R.error(0, "保存失败");
+                                                                    }
 
-                                                                //已经下过订单则只做更新处理
-                                                                this.updateById(preOrderEntity);
+                                                                }
                                                             } else {
-                                                                //没有预排单信息,新建订单
-                                                                //订单表
-                                                                orderEntity = new OrderEntity();
-
-                                                                //订单详细表
-                                                                OrderRecordEntity orderRecordEntity = new OrderRecordEntity();
-
-                                                                orderEntity.setOrderId(OrderUtils.getOrderId());
-                                                                orderEntity.setHomestayId(homestayId);
-                                                                orderEntity.setCleanStatusCode(1);
-                                                                orderEntity.setRoomId(roomNo);
-                                                                orderEntity.setCleanType(Trans.trans(Integer.valueOf(clearType)));
-                                                                orderEntity.setIsCheckOut(Trans.trans(Integer.valueOf(ischeckOut)));
-                                                                // TODO 暂时默认当天日期
-                                                                orderEntity.setPreStartCleanDate(preStartCleanDate+" 00:00");
-                                                                orderEntity.setPreEndCleanDate(preStartCleanDate+" 23:59");
-                                                                orderEntity.setCreateDate(SDF.format(new Date()));
-                                                                if (StringUtils.isNotBlank(orderCost)) {
-                                                                    BigDecimal orderCostBigDecimal = new BigDecimal(orderCost);
-                                                                    orderEntity.setOrderCost(orderCostBigDecimal);
-                                                                }
-                                                                orderEntity.setRoomPassword(roomPassword);
-
-                                                                orderRecordEntity.setBossCost(roomInfo.getPrice());
-                                                                orderRecordEntity.setOrderId(orderEntity.getOrderId());
-                                                                orderRecordEntity.setIsFirst(1);
-                                                                orderRecordEntity.setIsExtraBed(roomInfo.getIsExtraBed());
-                                                                orderRecordEntity.setStatus(0);
-                                                                orderRecordEntity.setComments(comments);
                                                                 try {
-                                                                    orderRecordDao.insert(orderRecordEntity);
-                                                                    baseMapper.insert(orderEntity);
-                                                                } catch (Exception e) {
-                                                                    e.printStackTrace();
-                                                                    //回滚事务
+                                                                    throw new RuntimeException("存在日期相同订单");
+                                                                } catch (RuntimeException e) {
+                                                                } finally {
                                                                     TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                                                                    return R.error(0,"保存失败");
+                                                                    return R.error(0, "存在日期相同订单");
                                                                 }
-
-                                                            }
-                                                        } else {
-                                                            try {
-                                                                throw new RuntimeException("存在日期相同订单");
-                                                            } catch (RuntimeException e) {
-                                                            } finally {
-                                                                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                                                                return R.error(0, "存在日期相同订单");
                                                             }
                                                         }
                                                     }
@@ -504,59 +508,64 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                                             return R.error(0, "请输入正确的日期格式yyyy-MM-dd hh:mm");
                                         }
                                         if (null != dateList && dateList.size() > 0) {
-                                            //房间信息
-                                            QueryWrapper<RoomInfoEntity> roomInfoEntityQueryWrapper = new QueryWrapper<RoomInfoEntity>();
-                                            roomInfoEntityQueryWrapper.eq("homestay_id", homestayId);
-                                            roomInfoEntityQueryWrapper.eq("room_id", roomNo);
-                                            // 获取房间新信息
-                                            RoomInfoEntity roomInfo = roomInfoDao.selectOne(roomInfoEntityQueryWrapper);
-                                            if (null == roomInfo) {
-                                                return R.error(0, "未找到对应房间信息,请输入正确的民宿id和房间号");
+                                            // 目前要求只支持下一天订单,包含多天日期时返回错误
+                                            if (dateList.size() > 1) {
+                                                return R.error(0, "日期错误,开始日期和结束日期仅允许一天");
                                             } else {
-                                                Map<String, Object> map = new HashMap<>();
-                                                map.put("homestayId", homestayId);
-                                                map.put("roomId", roomNo);
-                                                map.put("cleanStatusCode", 0);
-                                                for (String preStartCleanDate : dateList) {
-                                                    // 添加预打扫日期
-                                                    map.put("preStartCleanDate", preStartCleanDate);
 
-                                                    // 只查询为预保洁的订单
-                                                    OrderEntity orderEntity = getOrderByHomestayIdANdRoomIdAndStatusCode(map);
-                                                    OrderRecordEntity orderRecordEntity = null;
-                                                    if (null == orderEntity) {
-                                                        //订单表
-                                                        orderEntity = new OrderEntity();
-                                                        orderEntity.setOrderId(OrderUtils.getOrderId());
-                                                        orderEntity.setHomestayId(homestayId);
-                                                        orderEntity.setRoomId(roomNo);
-                                                        orderEntity.setCleanStatusCode(0);
-                                                        orderEntity.setCreateDate(SDF.format(new Date()));
-                                                        orderEntity.setCleanType(Trans.trans(Integer.valueOf(clearType)));
-                                                        orderEntity.setIsCheckOut(Trans.trans(Integer.valueOf(ischeckOut)));
-                                                        // TODO 暂时默认为当前日期
-                                                        orderEntity.setPreStartCleanDate(preStartCleanDate+" 00:00");
-                                                        orderEntity.setPreEndCleanDate(preStartCleanDate+" 23:59");
+                                                //房间信息
+                                                QueryWrapper<RoomInfoEntity> roomInfoEntityQueryWrapper = new QueryWrapper<RoomInfoEntity>();
+                                                roomInfoEntityQueryWrapper.eq("homestay_id", homestayId);
+                                                roomInfoEntityQueryWrapper.eq("room_id", roomNo);
+                                                // 获取房间新信息
+                                                RoomInfoEntity roomInfo = roomInfoDao.selectOne(roomInfoEntityQueryWrapper);
+                                                if (null == roomInfo) {
+                                                    return R.error(0, "未找到对应房间信息,请输入正确的民宿id和房间号");
+                                                } else {
+                                                    Map<String, Object> map = new HashMap<>();
+                                                    map.put("homestayId", homestayId);
+                                                    map.put("roomId", roomNo);
+                                                    map.put("cleanStatusCode", 0);
+                                                    for (String preStartCleanDate : dateList) {
+                                                        // 添加预打扫日期
+                                                        map.put("preStartCleanDate", preStartCleanDate);
+
+                                                        // 只查询为预保洁的订单
+                                                        OrderEntity orderEntity = getOrderByHomestayIdANdRoomIdAndStatusCode(map);
+                                                        OrderRecordEntity orderRecordEntity = null;
+                                                        if (null == orderEntity) {
+                                                            //订单表
+                                                            orderEntity = new OrderEntity();
+                                                            orderEntity.setOrderId(OrderUtils.getOrderId());
+                                                            orderEntity.setHomestayId(homestayId);
+                                                            orderEntity.setRoomId(roomNo);
+                                                            orderEntity.setCleanStatusCode(0);
+                                                            orderEntity.setCreateDate(SDF.format(new Date()));
+                                                            orderEntity.setCleanType(Trans.trans(Integer.valueOf(clearType)));
+                                                            orderEntity.setIsCheckOut(Trans.trans(Integer.valueOf(ischeckOut)));
+                                                            // TODO 暂时默认为当前日期
+                                                            orderEntity.setPreStartCleanDate(preStartCleanDate + " 00:00");
+                                                            orderEntity.setPreEndCleanDate(preStartCleanDate + " 23:59");
 
 
-                                                        //订单记录表
-                                                        orderRecordEntity = new OrderRecordEntity();
-                                                        orderRecordEntity.setOrderId(orderEntity.getOrderId());
-                                                        orderRecordEntity.setBossCost(roomInfo.getPrice());
-                                                        orderRecordEntity.setIsFirst(1);
-                                                        orderRecordEntity.setIsExtraBed(roomInfo.getIsExtraBed());
-                                                        orderRecordEntity.setStatus(0);
-                                                        orderRecordEntity.setComments(comments);
-                                                        baseMapper.insert(orderEntity);
-                                                        orderRecordDao.insert(orderRecordEntity);
-                                                    } else {
-                                                        try {
-                                                            throw new RuntimeException("存在日期相同订单");
-                                                        } catch (RuntimeException e) {
-                                                        } finally {
-                                                            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                                                            return R.error(0, "存在日期相同订单");
-                                                        }
+                                                            //订单记录表
+                                                            orderRecordEntity = new OrderRecordEntity();
+                                                            orderRecordEntity.setOrderId(orderEntity.getOrderId());
+                                                            orderRecordEntity.setBossCost(roomInfo.getPrice());
+                                                            orderRecordEntity.setIsFirst(1);
+                                                            orderRecordEntity.setIsExtraBed(roomInfo.getIsExtraBed());
+                                                            orderRecordEntity.setStatus(0);
+                                                            orderRecordEntity.setComments(comments);
+                                                            baseMapper.insert(orderEntity);
+                                                            orderRecordDao.insert(orderRecordEntity);
+                                                        } else {
+                                                            try {
+                                                                throw new RuntimeException("存在日期相同订单");
+                                                            } catch (RuntimeException e) {
+                                                            } finally {
+                                                                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                                                                return R.error(0, "存在日期相同订单");
+                                                            }
 //                                                        orderEntity.setCreateDate(SDF.format(new Date()));
 //                                                        orderEntity.setCleanType(Trans.trans(Integer.valueOf(clearType)));
 //                                                        orderEntity.setIsCheckOut(Trans.trans(Integer.valueOf(ischeckOut)));
@@ -570,6 +579,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 //                                                        orderRecordEntity.setComments(comments);
 //                                                        baseMapper.updateById(orderEntity);
 //                                                        orderRecordDao.updateById(orderRecordEntity);
+
+                                                        }
 
                                                     }
                                                 }

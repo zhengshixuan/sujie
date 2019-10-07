@@ -7,6 +7,7 @@ $(function () {
             {label: '房间号', name: 'roomId', sortable: false, width: 60},
             {label: '地址', name: 'homestayAddress', width: 120,formatter:huanhang},
             {label: '品牌名', name: 'homestayName', width: 80},
+            {label: '下单时间', name: 'createDate', width: 80},
             {label: '保洁时间', name: 'preCleanDate', width: 80},
             {label: '保洁老板费用', name: 'bossCost', classes:'bossCost',width: 80,formatter:transInput},
             {label: '优先打扫', name: 'isFirst', width: 80, formatter: isFirst},
